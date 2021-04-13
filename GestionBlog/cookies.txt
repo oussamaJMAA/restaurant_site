@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+.web3canvas.com	TRUE	/	FALSE	1999999999	__cfduid	df10f4a1a846cfff6d0f1602c0a5b15d41617495285
+demo.web3canvas.com	TRUE	/	FALSE	1999999999	SameSite	Lax
+
