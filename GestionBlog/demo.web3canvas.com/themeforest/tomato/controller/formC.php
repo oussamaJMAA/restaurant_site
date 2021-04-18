@@ -1,6 +1,5 @@
 <?php
-include "../config.php";
-require_once '../model/form.php';
+include"../model/form.php";
  
 class  FormC{
 

@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:40 GMT -->
 <head>
 <meta charset="utf-8">
 <title>Tomato Responsive Restaurant HTML5 Template</title>
 <meta name="author" content="Surjith S M">
-
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
-
-<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
+<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+<link rel="shortcut icon" href="img/favicon.ico">
 
 <meta name="viewport" content="width=device-width">
 
@@ -18,15 +17,8 @@
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
-<!--[if lt IE 9]>
-            <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
-        <![endif]-->
 </head>
 <body>
-<!--[if lt IE 8]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-
 <div class="preloder animated">
 <div class="scoket">
 <img src="img/preloader.svg" alt="" />
@@ -35,70 +27,106 @@
 <div class="body">
 <div class="main-wrapper">
 
-<!-- nav -->
+
+
+<!--***********************************Header********************************************* -->
+<?php include_once 'header.php'; ?> 
+
+
+
 
 <section class="page_header">
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Contact</h2>
-<p>Tomato is a delicious restaurant website template</p>
+<h2 class="text-uppercase">Account</h2>
+<p>Please login or signup to continue with your purchase</p>
 </div>
 </div>
 </div>
 </section>
 
-<section class="main-content contact-content">
+<section class="shop-content">
 <div class="container">
-<div class="col-md-10 col-md-offset-1">
 <div class="row">
+<div class="col-md-12">
+<div class="row shop-login">
 <div class="col-md-6">
-<h3 class="text-left no-margin-top">Address</h3>
-<div class="footer-address contact-info">
-<p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
-<p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
-<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ec9f999c9c839e98ac9e899f988d999e8d8298c28f8381">[email&#160;protected]</a></p>
-</div>
+<div class="box-content">
+<h3 class="text-center">Existing Customer</h3>
 <br>
-<h3 class="text-left no-margin-top">Working hours</h3>
-<div class="contact-info text-muted">
-<p>10:00 am to 11:00 pm on Weekdays</p>
-<p>11:00 am to 11:30 pm on Weekends</p>
-</div>
-<br>
-<h3 class="text-left no-margin-top">Follow Us</h3>
-<div class="contact-social">
-<a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
-<a href="https://www.twitter.com/"><i class="fa fa-twitter"></i></a>
-<a href="https://www.dribbble.com/"><i class="fa fa-dribbble"></i></a>
-<a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
-</div>
-</div>
-<div class="col-md-6">
-<form class="contact-form" id="contactForm" action="https://demo.web3canvas.com/themeforest/tomato/php/contact.php" method="post">
+
+
+<form class="logregform" method="post" action="veriflogin.php">
+<div class="row">
 <div class="form-group">
-<input class="form-control" name="name" id="name" placeholder="Full Name" type="text" required="required" />
-</div>
-<div class="form-group">
-<input class="form-control" type="email" name="email" id="email" placeholder="Email Address" required="required" />
-</div>
-<div class="form-group">
-<input class="form-control" placeholder="Subject" type="text" id="subject" name="subject">
-</div>
-<div class="form-group">
-<textarea class="form-control" name="message" id="message" placeholder="Message" rows="5"></textarea>
-</div>
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Send message</button>
+<div class="col-md-12">
+<label>Username or E-mail Address</label>
+ <input type="text" id="login" name="login" value="admin" class="form-control"></div></div></div>
+
+<div class="clearfix"></div><div class="row"><div class="form-group"><div class="col-md-12">
+<a class="pull-right" href="index-2.html">(Lost Password?)</a>
+<label>Password</label>
+<input type="password" name="mdp" id="mdp"  value="123456789" class="form-control"></div></div></div>
+
+
+<div class="clearfix"></div><div class="row"><div class="col-md-6"><span class="remember-box checkbox">
+<label for="rememberme">
+<input type="checkbox" id="rememberme" name="rememberme">Remember Me
+</label> </span></div><div class="col-md-6">
+
+
+<button type="submit" class="btn btn-default pull-right">Login</button>
+
+</div></div>
 </form>
-<div id="js-contact-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>
+
+
+</div>
+</div>
+
+
+
+<div class="col-md-6">
+<div class="box-content">
+<h3 class="text-center">Register An Account</h3>
+<br>
+<form class="logregform">
+<div class="row">
+<div class="form-group">
+<div class="col-md-12">
+<label>E-mail Address</label>
+<input type="text" value="" class="form-control">
+</div>
+</div>
+</div>
+<div class="clearfix space20"></div>
+<div class="row">
+<div class="form-group">
+<div class="col-md-6">
+<label>Password</label>
+<input type="password" value="" class="form-control">
+</div>
+<div class="col-md-6">
+<label>Re-enter Password</label>
+<input type="password" value="" class="form-control">
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+ <div class="space20"></div>
+<button type="submit" class="btn btn-default pull-right">Register</button>
+</div>
+</div>
+</form>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 </section>
-
-
-<div id="map" data-latitude="40.6700" data-longitude="-73.9400"></div>
 
 <section class="subscribe">
 <div class="container">
@@ -150,7 +178,7 @@
 <a href="https://www.facebook.com/">
 <i class="fa fa-facebook-square"></i>
 </a>
- <a href="https://www.twitter.com/">
+<a href="https://www.twitter.com/">
 <i class="fa fa-twitter"></i>
 </a>
 <a href="https://plus.google.com/">
@@ -172,7 +200,7 @@
 <div class="footer-address">
 <p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
 <p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
-<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="790a0c0909160b0d390b1c0a0d180c0b18170d571a1614">[email&#160;protected]</a></p>
+<p><i class="fa fa-envelope-o"></i>s<a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="700500001f02043002150304110502111e045e131f1d">[email&#160;protected]</a></p>
 </div>
 </div>
 </div>
@@ -251,16 +279,10 @@ Wide
 <script src="js/vendor/vegas/vegas.min.js"></script>
 <script src="js/vendor/jquery.mb.YTPlayer.js"></script>
 <script src="js/vendor/jquery.stellar.js"></script>
+<script src="js/main.js"></script>
 <script src="js/vendor/mc/jquery.ketchup.all.min.js"></script>
 <script src="js/vendor/mc/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script src="js/vendor/map.js"></script>
-
-<script src="js/vendor/validate.js"></script>
-<script src="js/contact.js"></script>
-
-<script src="js/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:04 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:40 GMT -->
 </html>

@@ -11,7 +11,7 @@ if(isset($_POST['login']) && isset($_POST['mdp']))
    
 	if($result->count==0)
 	{
-	header("location:shop_account.html"); 
+	header("location:signin.php"); 
 	
 	}
 	else
@@ -27,12 +27,15 @@ if(isset($_POST['login']) && isset($_POST['mdp']))
 	if ( $role == 'role_admin')
 	{
 	echo "admin";
-		header("location:afficherStatut.php");
+	$chaine="location:back-end/dist/index.php?id=";
+	$chaine2=strval($_SESSION['id']);
+	$chaine=$chaine.$chaine2;
+	header($chaine);
 	}
 	else
 	{
 	echo "mch admin";
-	//header("location:blog.php"); 
+	header("location:afficherStatut.php"); 
 	}
 
 

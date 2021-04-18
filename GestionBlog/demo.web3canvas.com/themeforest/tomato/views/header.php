@@ -48,7 +48,7 @@
 <li><a href="about.html">About</a></li>
 <li><a href="gallery.html">Gallery</a></li>
 <li><a href="elements.html">Shortcodes</a></li>
-<li><a href="shop_account.html">Login / Signup</a></li>
+<li><a href="signin.php">Login / Signup</a></li>
 <li><a href="404.html">404 Page</a></li>
 </ul>
 </li>
@@ -65,10 +65,7 @@
 <li><a href="recipe_detail-image.html">Recipe - Image</a></li>
 <li><a href="recipe_detail-slider.html">Recipe - Gallery</a></li>
 <li><a href="recipe_detail-video.html">Recipe - Video</a></li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li></ul></li>
 <li><a href="blog.php">Blog</a></li>
 <li class="dropdown">
 <a href="shop_fullwidth.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop<span class="caret"></span></a>

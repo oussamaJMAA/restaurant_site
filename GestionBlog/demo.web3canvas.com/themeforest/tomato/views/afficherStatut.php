@@ -7,7 +7,7 @@ include "../controller/formC.php";
  {
      echo "<script type='text/javascript'>";
 echo "alert('Please Login First');
-window.location.href='shop_account.html';";
+window.location.href='signin.php';";
 echo "</script>";
     
 
@@ -69,12 +69,18 @@ $listeForms=$FormC->afficherlist_form();
 <hr>
 <a href="ajouterStatut.php" class="btn btn-default" style="text-align: center;border-radius: 10px;">Ajouter Post</a>
 <hr>
+
 <?php
 
-
-
 foreach($listeForms as $row) 
-{echo $row['id'];?>
+{echo $row['id'];
+	if($_SESSION['id']==$row['id_User'])
+	{
+		$myPost=1;
+	}
+	else
+		$myPost=0;
+?>
 
 <article class="wow fadeInUp" style="background-color:#ffeaea4f;" >
 
@@ -86,18 +92,22 @@ foreach($listeForms as $row)
 <div class="col-md-7 col-sm-7">
 <h4><a  href="blog_single_image.html"><?php echo $row['titre'] ?></a></h4>
 </div>
- <div class="col-md-12 col-sm-5" style="margin-top: -11%;">
+ <div class="col-md-7 col-sm-7" style="margin-left: -20%;margin-top:-3%;text-align: right;">
 <div class="post-date">
 	<?php echo $row['likes'] ?>
 	<a href="" ><img src="img/like.png" style="height: 30px; margin-bottom: 5px;">Likes</a>|
 
 	20
-	<a href="afficherComments.php"><img src="img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a>| 
-	<a href=""><img src="img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
-	 <a href=""><img src="img/Remove.png"
+	<a href="afficherComments.php"><img src="img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
+	if($myPost==1)
+	{echo'
+	 |<a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
+	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/Remove.png"
 	 style="width: 20px; margin-bottom:6px ;" >Remove</a>  
-	<br>
+	<br>';
+	}?>
 	<a style="color:#8e8e8e ;margin-left: 75%;"><?php echo $row['Date'] ?> </a>
+
 
 </div>
 </div>
