@@ -1,5 +1,7 @@
 <?php
-include"../model/form.php";
+include "C:/xampp/htdocs/GestionBlog/demo.web3canvas.com/themeforest/tomato/config.php";
+require_once 
+		"C:/xampp/htdocs/GestionBlog/demo.web3canvas.com/themeforest/tomato/model/form.php";
  
 class  FormC{
 
@@ -9,7 +11,7 @@ function ajouterform($form)
 	$dates = new \DateTime();
 	$string = $dates->format(DATE_RFC2822);
 
- 	$sql="INSERT INTO `form`( `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`) VALUES (:titre,:image,:contenu,0,'17/04/2021',2)";
+ 	$sql="INSERT INTO `form`( `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`) VALUES (:titre,:image,:contenu,0,'2021/04/15',2)";
  	$db = config::getConnexion();
  		try{
 		$req=$db->prepare($sql);		

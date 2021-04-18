@@ -1,5 +1,6 @@
 <?php
-include"../model/user.php";
+include "C:/xampp/htdocs/GestionBlog/demo.web3canvas.com/themeforest/tomato/config.php";
+require_once'C:/xampp/htdocs/GestionBlog/demo.web3canvas.com/themeforest/tomato/model/user.php';
 
 class  UserC {
 	

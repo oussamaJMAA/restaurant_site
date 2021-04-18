@@ -27,10 +27,7 @@ if(isset($_POST['login']) && isset($_POST['mdp']))
 	if ( $role == 'role_admin')
 	{
 	echo "admin";
-	$chaine="location:back-end/dist/index.php?id=";
-	$chaine2=strval($_SESSION['id']);
-	$chaine=$chaine.$chaine2;
-	header($chaine);
+	header("location:back-end/dist/index.php");
 	}
 	else
 	{
@@ -44,7 +41,7 @@ if(isset($_POST['login']) && isset($_POST['mdp']))
 
 else
 {
-	header("location:shop_account.html"); 
+	header("location:signin.php"); 
 }
 
 

@@ -1,5 +1,4 @@
 <?php 
-
 include "../controller/formC.php";
  
  session_start();
@@ -48,7 +47,13 @@ $listeForms=$FormC->afficherlist_form();
 
 <!--***********************************Header********************************************* -->
 <?php include_once 'header.php'; ?> 
-
+<nav class="navbar navbar-fixed-top">
+	<div id="navbar" class="navbar-collapse collapse">
+	<div class="container">
+	<li><a href="logout.php">logout</a></li>
+</div>
+</div>
+</nav>
 
 <section class="page_header">
 <div class="container">

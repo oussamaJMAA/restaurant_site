@@ -1,3 +1,21 @@
+<?php 
+include "../../../controller/formC.php";
+ session_start(); 
+ if (empty($_SESSION['id']))
+ {
+     echo "<script type='text/javascript'>";
+echo "alert('Please Login First');
+window.location.href='../../signin.php';";
+echo "</script>";
+    
+
+ }
+ $FormC=new FormC();
+
+$listeForms=$FormC->afficherlist_form(); 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,11 +24,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Static Navigation - SB Admin</title>
+        <title>Tables - SB Admin</title>
         <link href="css/styles.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="index.php">Admin</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
@@ -31,7 +50,7 @@
                         <a class="dropdown-item" href="#">Settings</a>
                         <a class="dropdown-item" href="#">Activity Log</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="login.html">Logout</a>
+                        <a class="dropdown-item" href="../../logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -98,7 +117,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
-                            <a class="nav-link" href="Table-Blog.php">
+                            <a class="nav-link" href="">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Consulter Blog
                             </a>
@@ -113,24 +132,90 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Static Navigation</h1>
+                        <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Static Navigation</li>
+                            <li class="breadcrumb-item active">Tables</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p class="mb-0">
-                                    This page is an example of using static navigation. By removing the
-                                    <code>.sb-nav-fixed</code>
-                                    class from the
-                                    <code>body</code>
-                                    , the top navigation and side navigation will become static on scroll. Scroll down this page to see an example.
-                                </p>
+                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
+                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                                .
                             </div>
                         </div>
-                        <div style="height: 100vh"></div>
-                        <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                Table Blog
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Image</th>
+                                                <th>Titre</th>
+                                                <th>Contenu</th>
+                                                <th>Date</th>
+                                                <th>Likes</th>
+                                                <th>Ecrite par</th>
+                                                <th>Comments</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                                <th>#</th>
+                                                <th>Image</th>
+                                                <th>Titre</th>
+                                                <th>Contenu</th>
+                                                <th>Date</th>
+                                                <th>Likes</th>
+                                                <th>Ecrite par</th>
+                                                <th>Comments</th>
+                                                <th>Delete</th>
+                                        </tfoot>
+                                        <tbody>
+                                             <?PHP
+
+                                                foreach($listeForms as $row){
+
+
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $row['id'] ?></td>
+
+                                                <td>
+                                                    <img style="width: 150px;" src="../../img/blog/<?php echo $row['image'] ?>">
+                                                </td>
+
+                                                <td><?php echo $row['titre'] ?></td>
+                                                <td><?php echo $row['contenu'] ?></td>
+                                                <td><?php echo $row['Date'] ?></td>
+                                                <td><?php echo $row['likes'] ?></td>
+                                                <td><?php echo $row['nom']." ".$row['prenom'] ?></td>
+                                                <td>
+                                                    <a class="btn btn-primary"  
+                                                        href="AfficherComments.php?id=<?PHP 
+                                                        echo $row['id']; ?>">
+                                                        <i class="fa fa-bars"></i>
+                                                    </a>
+                                                </td>
+                                                <td> 
+                                                    <form method="POST" action="supprimerStatut.php">
+                                                    <button  class="btn btn-danger">
+                                                    <i class="fa fa-trash"></i></button>
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['id']; ?>" name="id"></form>
+                                                </td>
+                                            </tr>
+                                            <?PHP }?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
@@ -150,5 +235,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/datatables-demo.js"></script>
     </body>
 </html>
