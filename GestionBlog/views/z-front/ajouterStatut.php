@@ -48,6 +48,15 @@
 	<h3>Charger Post</h3>
 </div>
 <hr>
+
+
+
+
+
+<!--**************************** Ajouter Statuts ************************************ -->
+
+
+
 <form class="contact-form" id="contactForm" action="ajoutPost.php" method="post">
 <div class="form-group">
 <input class="form-control" name="titre" id="titre" placeholder="Titre" type="text" required="required" />
@@ -60,6 +69,20 @@
 </div>
 <button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Publier</button>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="clearfix"></div>
 </div></div></div></div>

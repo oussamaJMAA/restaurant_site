@@ -1,12 +1,11 @@
 <?php
-include "../../controller/formC.php";
+include_once "../../controller/formC.php";
 
 
     $error = "";
 
     // create form
     $form = null;
-    echo ($_POST['image']);
     // create an instance of the controller
     $FormC = new FormC();
     if ( isset($_POST["titre"]) && isset($_POST["contenu"]) && isset($_POST["image"]) ) 

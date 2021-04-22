@@ -103,7 +103,7 @@ foreach($listeForms as $row)
 	<a href="afficherComments.php"><img src="img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
 	if($myPost==1)
 	{echo'
-	 |<a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
+	 |<a href="modifierStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
 	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/Remove.png"
 	 style="width: 20px; margin-bottom:6px ;" >Remove</a>  
 	<br>';

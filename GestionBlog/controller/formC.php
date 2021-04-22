@@ -66,26 +66,18 @@ function afficherlist_form_user($id_User)
 function modifierform($form,$id)
 	{
  	$db = config::getConnexion();
- 	$sql="UPDATE `form` SET `titre`=:titre,`image`=:image,`contenu`=:contenu,`likes`=:likes,`Date`=:Datte,`id_User`=:id_User WHERE `id`=:id";
+ 	$sql="UPDATE `form` SET `titre`=:titre,`image`=:image,`contenu`=:contenu WHERE `id`=:id";
  		try{
 
         $req=$db->prepare($sql);		
 		$titre=$form->gettitre();
 		$image=$form->getimage();	
 		$contenu=$form->getcontenu();
-		$likes=$form->getlikes();
-		$Datte=$form->getDate();
-		$id_User=$form->getid_User();
-
-
 
 
 		$req->bindValue(':titre',$titre);
 		$req->bindValue(':image',$image);
 		$req->bindValue(':contenu',$contenu);
-		$req->bindValue(':likes',$likes);
-		$req->bindValue(':Datte',$Datte);
-		$req->bindValue(':id_User',$id_User);
 		$req->bindValue(':id',$id);		
         $req->execute();
         }
