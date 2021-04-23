@@ -10,13 +10,13 @@ class form
 	private $Date;
 	private $id_User;
 	
-function __construct($titre,$image,$contenu)//,$likes,$Date,$id_User
+function __construct($titre,$image,$contenu,$id_User)//,$likes,$Date,$id_User
 	{
 		
 		$this->titre=$titre;
 		$this->image=$image;
 		$this->contenu=$contenu;
-		//$this->id_User=$id_User;
+		$this->id_User=$id_User;
 	}
 	
 function getid(){return $this->id;}

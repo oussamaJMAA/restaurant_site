@@ -3,7 +3,8 @@ include_once "../../controller/formC.php";
 
 
     $error = "";
-
+    
+    session_start();
     // create form
     $form = null;
     // create an instance of the controller
@@ -12,7 +13,7 @@ include_once "../../controller/formC.php";
     {
         if ( !empty($_POST["titre"]) && !empty($_POST["contenu"]) && !empty($_POST["image"]) ) 
         {
-            $form = new form( $_POST['titre'],$_POST['image'],$_POST['contenu'] );
+        $form = new form( $_POST['titre'],$_POST['image'],$_POST['contenu'],$_SESSION['id']);
             $FormC->ajouterform($form);
             header('Location:blog.php');
         }

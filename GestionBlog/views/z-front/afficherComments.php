@@ -1,7 +1,48 @@
+<?php 
+include "../../controller/formC.php";
+include_once "../../controller/commentsC.php";
+ 
+session_start();
+ 
+
+ //$LikesC=new LikesC();
+ if (empty($_SESSION['id']))
+ {
+    echo "<script type='text/javascript'>";	
+	echo "alert('Please Login First');window.location.href='signin.php';";
+	echo "</script>";
+ }
+
+if(isset($_GET['id']))
+{
+	$FormC=new FormC();
+	$listeForms=$FormC->recupererform($_GET['id']); 
+
+	foreach($listeForms as $row) 
+	{
+	$titre=$row->titre;
+	$contenu=$row->contenu;
+	$image=$row->image;
+
+	}
+
+     $CommentsC=new CommentsC();
+ 	 $listeComments=$CommentsC->afficherlist_comments($_GET['id']); 
+
+ 	$nbrComments=0;
+
+ 	$nbrComments=$CommentsC->count($_GET['id']);
+
+
+}
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/blog_single_image.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:55 GMT -->
 <head>
 <meta charset="utf-8">
 <title>Tomato Responsive Restaurant HTML5 Template</title>
@@ -9,23 +50,14 @@
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
-
 <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
-
 <meta name="viewport" content="width=device-width">
-
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
-<!--[if lt IE 9]>
-            <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
-        <![endif]-->
 </head>
 <body>
-<!--[if lt IE 8]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
 
 <div class="preloder animated">
 <div class="scoket">
@@ -35,7 +67,11 @@
 <div class="body">
 <div class="main-wrapper">
 
+
 <?php include 'header.php'; ?> <!--***************************Header***************************** -->
+
+
+
 
 <section class="page_header">
 <div class="container">
@@ -52,68 +88,86 @@
 <div class="container">
 <div class="row">
 <div class="col-md-9">
+
+	
+
 <article>
+
+<!-------------------------------AFFICHER comments----------------------------------- -->
+
+
+
 <div class="post-img">
-<img src="img/blog/1.jpg" class="img-responsive" alt="" />
+<img src="img/blog/<?php echo $image ?>" class="img-responsive" alt="" style="border-radius: 30px;"/>
 <div class="post-format"><i class="fa fa-picture-o"></i></div>
 </div>
-<h4><a href="blog_single_image.html">Blog Heading Here</a></h4>
+<h4><a ><?php echo $titre ?></a></h4>
 <hr>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.</p>
-<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
-<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+<p><?php echo $contenu ?></p>
 <hr>
 <div class="comments-area">
-<h3>3 Comments</h3>
+<h3><?php echo $nbrComments ?> Comments</h3>
+
+
+
 <ul class="commentlist">
+<?php 
+
+foreach($listeComments as $row) {  
+
+  ?>
 <li>
 <div class="comment">
 <span class="comment-image">
 <img alt="avatar image" src="img/xtra/1.jpg" class="avatar" height="70" width="70">
 </span>
 <span class="comment-info d-text-c">
-<span>5 days ago &nbsp; / &nbsp; <a class="comment-reply-link d-text-c" href="index-2.html">Reply</a></span> Jonny Doe
- </span>
-<p>If this generates a title of a book or short story already in existence, I assure you, it was completely random. If it generates a title you'd like to use, go right ahead a title of a book or short story already in existence, I assure you, it was completely random. .</p>
+<span>5 days ago &nbsp; / &nbsp; <a class="comment-reply-link d-text-c" href="index-2.html">Reply</a>
+</span><?php echo $row->nom." ". $row->prenom ?></span>
+
+<p><?php echo $row->contenu ?></p>
+
+<?php if ($_SESSION['id'] == $row->id_User ) { ?>
+
+<form method="POST" action="supprimerComments.php?id=<?php echo $_GET['id'];?>">
+	<button  class="btn btn-danger" style="margin-left: 85%;">
+	<i class="fa fa-trash"></i></button>
+    <input type="hidden" value="<?php echo $row->id; ?>" name="id_Comment">       
+</form>
+
+<form method="POST" action="modifierComments.php?id=<?php echo $_GET['id'];?>">
+	<button  class="btn btn-warning" style="margin-left: 93%;margin-top:-61px;">
+	<i class="fa fa-edit"></i></button>
+    <input type="hidden" value="<?php echo $row->id; ?>" name="id_Comment">       
+</form>
+
+<?php } ?>
+
+
 </div>
-<ul class="children">
-<li>
-<div class="comment">
-<span class="comment-image">
-<img alt="avatar image" src="img/xtra/2.jpg" class="avatar" height="70" width="70">
-</span>
-<span class="comment-info d-text-c">
-<span>3 days ago &nbsp; / &nbsp; <a class="comment-reply-link d-text-c" href="index-2.html">Reply</a></span> Jana Doe
-</span>
-<p>Vel te tritani consequuntur. Pri oblique deterruisset ad, sed id recusabo elaboraret. Ex quo alii elit, vivendo referrentur pri ne. Ad eam integre ornatus volutpat, vel alia incorrupte liberavisse.</p>
-</div>
-</li>
-</ul>
-</li>
-<li>
-<div class="comment">
-<span class="comment-image">
-<img alt="avatar image" src="img/xtra/1.jpg" class="avatar" height="70" width="70">
-</span>
-<span class="comment-info d-text-c">
-<span>1 day ago &nbsp; / &nbsp; <a class="comment-reply-link d-text-c" href="index-2.html">Reply</a></span> Albert Doe
-</span>
-<p>Lorem ipsum dolor sit amet, pro sanctus ullamcorper ei, sonet commodo ad sed. Ne exerci dolorum sit. Mea evertitur signiferumque et. Doctus probatus intellegat nec ne. Vim an bonorum efficiantur, in assum primis euismod duo, tritani labitur has ei.</p>
-</div>
-</li>
-</ul>
+<?php } ?>
+
+
+
+
+
+
+<hr>
 <div id="respond" class="comment-respond">
 <h3>Leave a Comment</h3>
-<form method="post" id="commentform" class="comment-form">
+
+
+<form method="post" id="commentform" class="comment-form" 
+action="ajouterComments.php?id=<?php echo $_GET['id'];?>">
+
 <div class="row">
 <div class="col-md-6">
-<input name="author" placeholder="Name" type="text">
-<input name="email" placeholder="E-mail" type="text">
-<input name="url" placeholder="Website" type="text">
+
 </div>
-<div class="col-md-6">
-<textarea placeholder="Comment"></textarea>
+<div style="margin-left: 10%;margin-right: 10%;">
+<textarea placeholder="Comment" name="contenu" id="contenu" style="border-top-left-radius: 30px; resize: none;"></textarea>
 </div>
+
 <div class="col-md-12">
 <button class="btn btn-default btn-block">Post Comment</button>
 </div>
@@ -122,6 +176,10 @@
  </div>
 </div>
 </article>
+
+
+
+
 </div>
 <aside class="col-md-3">
 <div class="side-widget">

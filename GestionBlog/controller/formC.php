@@ -5,12 +5,11 @@ require_once 'C:/xampp/htdocs/GestionBlog/model/form.php';
 class  FormC{
 
 function ajouterform($form)
-	{
-	
-	$dates = new \DateTime();
-	$string = $dates->format('Y/m/d');
+{
+	$Date=date('Y-m-d');
+	strval($Date);
 
- 	$sql="INSERT INTO `form`( `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`) VALUES (:titre,:image,:contenu,0,'2021/04/15',2)";
+ 	$sql="INSERT INTO `form`( `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`) VALUES (:titre,:image,:contenu,0,:datee,:id_User)";
  	$db = config::getConnexion();
  		try{
 		$req=$db->prepare($sql);		
@@ -24,7 +23,8 @@ function ajouterform($form)
 		$req->bindValue(':titre',$titre);
 		$req->bindValue(':image',$image);
 		$req->bindValue(':contenu',$contenu);
-/*		$req->bindValue(':id_User',$id_User);*/
+		$req->bindValue(':datee',$Date);
+		$req->bindValue(':id_User',$id_User);
             
             $req->execute();
         }
@@ -38,9 +38,11 @@ function afficherlist_form()
 {
 		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN user u where u.id = f.id_User";
 		$db = config::getConnexion();
-		try{
-		$liste=$db->query($sql);
-		return $liste;
+		try
+		{
+			$liste=$db->query($sql);
+			
+			return $liste;
 		}
         catch (Exception $e){
             die('Erreur: '.$e->getMessage());

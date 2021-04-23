@@ -4,13 +4,12 @@ require_once "C:/xampp/htdocs/GestionBlog/model/user.php";
 
 class  UserC {
 	
-
-
 function ajouteruser($user)
-	{
- 	$sql="INSERT INTO `user`( `nom`, `prenom`, `mail`, `mdp`, `role`, `username`) VALUES (:nom,:prenom,:mail,:mdp,:role,:username)";
- 	$db = config::getConnexion();
- 		try{
+{
+ $sql="INSERT INTO `user`( `nom`, `prenom`, `mail`, `mdp`, `role`, `username`) VALUES (:nom,:prenom,:mail,:mdp,:role,:username)";
+ $db = config::getConnexion();
+ 	try
+ 	{
 		$req=$db->prepare($sql);		
 		$nom=$user->getnom();
 		$mdp=$user->getmdp(); 
@@ -26,14 +25,13 @@ function ajouteruser($user)
 		$req->bindValue(':username',$username);
           
           $req->execute();
-        }
-        catch (Exception $e){
+    }
+    catch (Exception $e)
+    	{	echo 'Erreur: '.$e->getMessage();}
+}
 
-            echo 'Erreur: '.$e->getMessage();
-        }
-	}
 function modifieruser($user,$id)
-	{
+{
  	$db = config::getConnexion();
  	$sql="UPDATE `user` SET `nom`=:nom,`prenom`=:prenom,`mail`=:mail,`mdp`=:mdp,`username`=:username WHERE `id`=:id";
  		try{
@@ -59,7 +57,7 @@ function modifieruser($user,$id)
 
             echo 'Erreur: '.$e->getMessage();
         }
-	}
+}
 
 
 
