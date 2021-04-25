@@ -147,11 +147,30 @@ $listePlat=$PlatC->afficherlist_plat();
 
 <input class="form-control" name="val_promo" id="val_promo" placeholder="Remise" type="number" max="100" min="0" required="required" 
 style="margin-left: 40%; width: 20%; margin-top:2%;" />
+<div style="margin-left: 40%; width: 20%; margin-top:2%; text-align: center;" >
+<label for="pet-select" >Choisir un plat :</label>
 
-<input class="form-control" name="id_plat" id="id_plat" placeholder="Id Plat" type="number" min="0" required="required" 
-style="margin-left: 40%; width: 20%; margin-top:2%;" />
+<select name="id_plat" id="id_plat">
+<?php 
 
-<label style="margin-left: 30%;margin-top: 40px;" for="cheese">Date Activation</label>
+foreach ($listePlat as $row ) 
+{
+   
+    echo '<option value="';echo $row['id_plat'];echo '">';
+    echo $row['id_plat'];
+    echo " ";
+    echo $row['nom'];
+    echo '</option>"';
+
+}
+?>
+
+</select>
+
+</div>
+
+
+<label style="margin-left: 20%;margin-top: 40px;" for="cheese">Date Activation</label>
 <input type="date" id="date_activation" name="date_activation" 
 min="<?php $Date=date('Y-m-d');strval($Date);echo $Date;?>" value="<?php echo $Date;?>" >
 <label for="cheese">Date Expiration</label>

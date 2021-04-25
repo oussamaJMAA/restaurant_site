@@ -185,11 +185,20 @@ $listePlat=$PlatC->afficherlist_plat();
                                                 <td><?php echo $row['prix'] ?></td>
                                     
                                                 <td>
-                                                    <a class="btn btn-primary"  
-                                                        href="AfficherComments.php?id=<?PHP 
-                                                        echo $row['id_plat']; ?>">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
+                                                    <form method="POST" action="modifierPlat.php">
+                                                    <button  class="btn btn-primary">
+                                                    <i class="fa fa-edit"></i></button>
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['id_plat']; ?>" name="id_plat">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['image']; ?>" name="image">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['nom']; ?>" name="nom">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['description']; ?>"name="description">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['prix']; ?>" name="prix">
+                                                    </form>
                                                 </td>
                                                 <td> 
                                                     <form method="POST" action="supprimerPlat.php">
@@ -262,11 +271,21 @@ $listePlat=$PlatC->afficherlist_plat();
                                                 <td><?php echo $row['id_plat'] ?></td>
                                     
                                                 <td>
-                                                    <a class="btn btn-primary"  
-                                                        href="AfficherComments.php?id=<?PHP 
-                                                        echo $row['id_plat']; ?>">
-                                                        <i class="fa fa-edit"></i>
-                                                    </a>
+                                                    <form method="POST" action="modifierPromotion.php">
+                                                    <button  class="btn btn-primary">
+                                                    <i class="fa fa-edit"></i></button>
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['id_promo']; ?>" name="id_promo">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['val_promo']; ?>" name="val_promo">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['date_activation']; ?>" name="date_activation">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['date_expiration']; ?>" name="date_expiration">
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $row['id_plat']; ?>"name="id_plat">
+                                                    
+                                                    </form>
                                                 </td>
                                                 <td> 
                                                     <form method="POST" action="supprimerPromotion.php">

@@ -139,20 +139,24 @@ $listePlat=$PlatC->afficherlist_plat();
                         <div class="card mb-4">
                            
 
-<form class="form-group" id="ajouterPlat-form" action="ajouterPlatC.php" method="post"
+<form class="form-group" id="ajouterPlat-form" action="modifierPlatC.php" method="post"
 style="width: 20%;margin-left: 40%;margin-top: 2%;">
 <div class="form-group">
-<input class="form-control" name="nom" id="nom" placeholder="Nom" type="text" required="required" />
+
+<input class="form-control" name="nom" id="nom" placeholder="Nom" type="text" required="required" value="<?php echo $_POST['nom'] ?>" />
+
 </div>
 <div class="form-group">
-<textarea class="form-control" name="description" id="description" placeholder="Description" rows="5" style="resize: none;" ></textarea>
+<textarea class="form-control" name="description" id="description" placeholder="Description" rows="5" style="resize: none;" ><?php echo $_POST['description'] ?></textarea>
 </div>
 <div>
+<input type="hidden" value="<?php echo $_POST['id_plat'];?>" name="id_plat">
+
 <input class="btn btn-default" type="file" name="image" style="margin:auto;"><br>
 </div>
-<input class="form-control" name="prix" id="prix" placeholder="Prix" type="number" step="0.01" min="0" required="required" />
+<input class="form-control" name="prix" id="prix" placeholder="Prix" type="number" step="0.01" min="0" required="required" value="<?php echo $_POST['prix'] ?>" />
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Ajouter</button>
+<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Modifier</button>
 </form>
 
 

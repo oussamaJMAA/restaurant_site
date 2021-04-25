@@ -38,6 +38,38 @@ function ajouterplat($plat)
 
 }
 
+
+function modifierplat($plat,$id)
+	{
+ 	$db = config::getConnexion();
+ 	$sql="UPDATE `plat` SET `nom`=:nom ,`image`=:image,`description`=:description,`prix`=:prix WHERE `plat`.`id_plat`=:id";
+
+ 		try{
+
+        $req=$db->prepare($sql);	
+
+
+		$nom        =$plat->getnom();
+		$image      =$plat->getimage();	
+		$description=$plat->getdescription();
+		$prix       =$plat->getprix();
+
+
+		$req->bindValue(':nom',$nom);
+		$req->bindValue(':image',$image);
+		$req->bindValue(':description',$description);
+		$req->bindValue(':prix',$prix);
+		$req->bindValue(':id',$id);		
+        $req->execute();
+        }
+        catch (Exception $e){
+
+            echo 'Erreur: '.$e->getMessage();
+        }
+}
+
+
+
 function afficherlist_plat()
 {
 		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat`;";

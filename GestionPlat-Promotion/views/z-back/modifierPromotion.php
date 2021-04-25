@@ -133,26 +133,58 @@ $listePlat=$PlatC->afficherlist_plat();
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4 " style="text-align: center;" >Ajouter Plat</h1>
+                        <h1 class="mt-4 " style="text-align: center;" >Modifier Promotion</h1>
 
 
                         <div class="card mb-4">
                            
 
-<form class="form-group" id="ajouterPlat-form" action="ajouterPlatC.php" method="post"
-style="width: 20%;margin-left: 40%;margin-top: 2%;">
+<form class="form-group" id="ajouterPromotion-form" action="modifierPromotionC.php" method="post">
 <div class="form-group">
-<input class="form-control" name="nom" id="nom" placeholder="Nom" type="text" required="required" />
-</div>
-<div class="form-group">
-<textarea class="form-control" name="description" id="description" placeholder="Description" rows="5" style="resize: none;" ></textarea>
-</div>
-<div>
-<input class="btn btn-default" type="file" name="image" style="margin:auto;"><br>
-</div>
-<input class="form-control" name="prix" id="prix" placeholder="Prix" type="number" step="0.01" min="0" required="required" />
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Ajouter</button>
+
+<div>
+<input type="hidden" value="<?PHP echo $_POST['id_promo']; ?>" name="id_promo">
+<input class="form-control" name="val_promo" id="val_promo" placeholder="Remise" type="number" max="100" min="0" required="required" 
+style="margin-left: 40%; width: 20%; margin-top:2%;" 
+value="<?php echo $_POST['val_promo'];?>" />
+<div style="margin-left: 40%; width: 20%; margin-top:2%; text-align: center;" >
+<label for="pet-select" >Choisir un plat :</label>
+
+<select name="id_plat" id="id_plat">
+<?php 
+
+foreach ($listePlat as $row ) 
+{
+   
+    echo '<option value="';echo $row['id_plat'];echo '">';
+    echo $row['id_plat'];
+    echo " ";
+    echo $row['nom'];
+    echo '</option>"';
+
+}
+
+
+$Date=date('Y-m-d');strval($Date);
+?>
+
+</select>
+
+</div>
+
+
+<label style="margin-left: 20%;margin-top: 40px;" for="cheese">Date Activation</label>
+<input type="date" id="date_activation" name="date_activation" 
+min="<?php echo $Date;?>" value="<?php echo $_POST['date_activation'];?>" >
+<label for="cheese">Date Expiration</label>
+<input type="date" id="date_expiration" name="date_expiration" min="<?php echo $Date;?>"
+value="<?php echo $_POST['date_expiration'];?>" 
+style="margin-right: 20%;">
+
+
+<button class="btn btn-default btn-lg btn-block" id="js-contact-btn" style="margin-top:20px;">Modifier</button>
+</div>
 </form>
 
 
