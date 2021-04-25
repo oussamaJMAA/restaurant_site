@@ -1,0 +1,77 @@
+<?php
+
+include_once __DIR__ . '/../config.php';
+include_once __DIR__ . '/../model/plat.php';
+
+class PlatC 
+{
+	
+function ajouterplat($plat)
+{
+	$sql="INSERT INTO `plat`(`id_plat`,`nom`, `image`, `description`, `prix`) VALUES 
+  (NULL,:nom,:image,:description,:prix)";
+ 	
+
+
+ 	$db = config::getConnexion();
+ 		try{
+		$req=$db->prepare($sql);	
+
+		$nom        =$plat->getnom();
+		$image      =$plat->getimage();	
+		$description=$plat->getdescription();
+		$prix       =$plat->getprix();
+
+
+		$req->bindValue(':nom',$nom);
+		$req->bindValue(':image',$image);
+		$req->bindValue(':description',$description);
+		$req->bindValue(':prix',$prix);
+            
+            $req->execute();
+        }
+        catch (Exception $e){
+
+            echo 'Erreur: '.$e->getMessage();
+        }
+
+
+}
+
+function afficherlist_plat()
+{
+		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat`;";
+		$db = config::getConnexion();
+		try
+		{
+			$liste=$db->query($sql);
+			
+			return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+}
+
+function Supprimerplat($id)
+{
+    $sql="DELETE  from plat where  id_plat=:id ";
+    $db = config::getConnexion();
+    try{
+    $req=$db->prepare($sql);
+      $req->bindValue(':id',$id);
+      $req->execute();
+    }
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }
+}
+
+
+
+
+
+
+}
+
+?>
