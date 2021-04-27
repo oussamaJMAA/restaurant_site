@@ -99,6 +99,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
+                            <a class="nav-link" href="afficherPlat&Promotion.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Consulter Menu
+                            </a>
                             <a class="nav-link" href="Table-Blog.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Consulter Blog

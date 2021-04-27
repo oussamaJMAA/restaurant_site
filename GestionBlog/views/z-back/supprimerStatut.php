@@ -1,5 +1,5 @@
 <?php
-include "../../controller/FormC.php";
+include "../../controller/formC.php";
 
 
 

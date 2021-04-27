@@ -1,5 +1,5 @@
 <?php
-include_once '../../controller/userC.php';
+include "../../controller/userC.php";
 
 
 if(isset($_POST['login']) && isset($_POST['mdp']))

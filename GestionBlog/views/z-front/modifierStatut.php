@@ -1,6 +1,5 @@
  <?php
 include "../../controller/formC.php";
-include_once"../../model/form.php";
 
 $FormC= new FormC();
 session_start();
@@ -86,7 +85,7 @@ $_SESSION['ID_POST']=$_GET['id'];
 
 
 
-<form class="contact-form" id="contactForm" action="modifierPost.php" method="post">
+<form class="contact-form" id="form-statut-modifier" action="modifierPost.php" method="post">
 <div class="form-group">
 <input class="form-control" value="<?php echo($titre);?>" name="titre" id="titre" placeholder="Titre" type="text" required="required" />
 </div>
@@ -96,12 +95,11 @@ $_SESSION['ID_POST']=$_GET['id'];
 <div>
 <input class="btn btn-default" type="file" name="image" style="margin:auto;"><br>
 </div>
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Publier</button>
+<button type="submit" class="btn btn-default btn-lg btn-block" id="js-contact-btn">Publier</button>
 </form>
 
 
-
-
+<script src="js/modifierStatut.js"></script>
 
 
 

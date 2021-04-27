@@ -1,5 +1,5 @@
 <?php
-include_once "../../controller/formC.php";
+include"../../controller/formC.php";
 
 
     $error = "";

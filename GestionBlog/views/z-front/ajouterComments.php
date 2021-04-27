@@ -1,5 +1,5 @@
 <?php 
-include_once "../../controller/commentsC.php";
+include "../../controller/commentsC.php";
 
 
 

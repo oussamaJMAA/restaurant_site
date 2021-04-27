@@ -1,7 +1,6 @@
-<?php
-include "C:/xampp/htdocs/GestionBlog/config.php";
-require_once "C:/xampp/htdocs/GestionBlog/model/user.php";
-
+<?PHP
+	include __DIR__ . '/../config.php';
+	include_once __DIR__ . '/../model/userC.php';
 class  UserC {
 	
 function ajouteruser($user)

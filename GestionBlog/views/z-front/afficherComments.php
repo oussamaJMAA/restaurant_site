@@ -1,6 +1,6 @@
 <?php 
 include "../../controller/formC.php";
-include_once "../../controller/commentsC.php";
+include "../../controller/commentsC.php";
  
 session_start();
  
@@ -157,7 +157,7 @@ foreach($listeComments as $row) {
 <h3>Leave a Comment</h3>
 
 
-<form method="post" id="commentform" class="comment-form" 
+<form method="post" id="ajouter-commentaire" class="comment-form" 
 action="ajouterComments.php?id=<?php echo $_GET['id'];?>">
 
 <div class="row">
@@ -167,12 +167,15 @@ action="ajouterComments.php?id=<?php echo $_GET['id'];?>">
 <div style="margin-left: 10%;margin-right: 10%;">
 <textarea placeholder="Comment" name="contenu" id="contenu" style="border-top-left-radius: 30px; resize: none;"></textarea>
 </div>
-
 <div class="col-md-12">
 <button class="btn btn-default btn-block">Post Comment</button>
 </div>
 </div>
 </form>
+
+<script src="js/ajouterCommente.js"></script>
+
+
  </div>
 </div>
 </article>

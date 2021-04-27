@@ -1,5 +1,5 @@
 <?php
-include_once "../../controller/formC.php";
+include "../../controller/formC.php";
 
 
     $error = "";
@@ -15,7 +15,7 @@ include_once "../../controller/formC.php";
         {
         $form = new form( $_POST['titre'],$_POST['image'],$_POST['contenu'],$_SESSION['id']);
             $FormC->ajouterform($form);
-            header('Location:blog.php');
+            header('Location:afficherStatut.php');
         }
         else
             $error = "Missing information";

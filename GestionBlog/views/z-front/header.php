@@ -25,31 +25,12 @@
  <li><a href="index_animation.html">Home - Scroll Animation</a></li>
 </ul>
 </li>
-<li class="dropdown">
-<a href="menu_all.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="menu_list.html">Menu - List</a></li>
-<li><a href="menu_overlay.html">Menu - Overlay</a></li>
-<li><a href="menu_tile.html">Menu - Tile</a></li>
-<li><a href="menu_grid.html">Menu - Grid</a></li>
-<li><a href="menu_all.html">Menu All</a></li>
-</ul>
-</li>
+<li><a href="afficherPlat&Promotion.php">Menu</a></li>
 <li class="dropdown">
 <a href="reservation.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservation<span class="caret"></span></a>
 <ul class="dropdown-menu">
 <li><a href="reservation.html">Reservation</a></li>
 <li><a href="reservation-ot.html">Reservation - Opentable</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="about.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="about.html">About</a></li>
-<li><a href="gallery.html">Gallery</a></li>
-<li><a href="elements.html">Shortcodes</a></li>
-<li><a href="signin.php">Login / Signup</a></li>
-<li><a href="404.html">404 Page</a></li>
 </ul>
 </li>
 <li class="dropdown">
@@ -66,7 +47,7 @@
 <li><a href="recipe_detail-slider.html">Recipe - Gallery</a></li>
 <li><a href="recipe_detail-video.html">Recipe - Video</a></li>
 </ul></li></ul></li>
-<li><a href="blog.php">Blog</a></li>
+<li><a href="afficherStatut.php">Blog</a></li>
 <li class="dropdown">
 <a href="shop_fullwidth.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop<span class="caret"></span></a>
 <ul class="dropdown-menu">
@@ -124,6 +105,16 @@
 </div>
 </div>
 </li>
+
+<?php
+
+
+if (empty($_SESSION['id']))
+ 	echo '<li><a href="signin.php">Login</a></li>';
+else
+	echo '<li><a href="logout.php">Logout</a></li>';
+?>
+
 </ul>
 </div>
 

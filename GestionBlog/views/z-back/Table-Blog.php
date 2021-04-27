@@ -1,6 +1,8 @@
 <?php 
 include "../../controller/formC.php";
+
  session_start(); 
+
  if (empty($_SESSION['id']))
  {
      echo "<script type='text/javascript'>";
@@ -117,6 +119,10 @@ $listeForms=$FormC->afficherlist_form();
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Tables
                             </a>
+                            <a class="nav-link" href="afficherPlat&Promotion.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Consulter Menu
+                            </a>
                             <a class="nav-link" href="">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Consulter Blog
@@ -132,18 +138,8 @@ $listeForms=$FormC->afficherlist_form();
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Tables</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                                <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                                .
-                            </div>
-                        </div>
+                        <h1 class="mt-4" style="text-align: center;">Gestion Blog</h1>
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
@@ -154,7 +150,6 @@ $listeForms=$FormC->afficherlist_form();
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
                                                 <th>Image</th>
                                                 <th>Titre</th>
                                                 <th>Contenu</th>
@@ -166,7 +161,6 @@ $listeForms=$FormC->afficherlist_form();
                                             </tr>
                                         </thead>
                                         <tfoot>
-                                                <th>#</th>
                                                 <th>Image</th>
                                                 <th>Titre</th>
                                                 <th>Contenu</th>
@@ -176,7 +170,7 @@ $listeForms=$FormC->afficherlist_form();
                                                 <th>Comments</th>
                                                 <th>Delete</th>
                                         </tfoot>
-                                        <tbody>
+                                        <tbody align="center">
                                              <?PHP
 
                                                 foreach($listeForms as $row){
@@ -184,23 +178,24 @@ $listeForms=$FormC->afficherlist_form();
 
                                                 ?>
                                             <tr>
-                                                <td><?php echo $row['id'] ?></td>
-
                                                 <td>
-                                                    <img style="width: 150px;" src="../z-front/img/blog/<?php echo $row['image'] ?>">
+                                                    <img style="width: 100px;" src="../z-front/img/blog/<?php echo $row['image'] ?>">
                                                 </td>
 
                                                 <td><?php echo $row['titre'] ?></td>
                                                 <td><?php echo $row['contenu'] ?></td>
-                                                <td><?php echo $row['Date'] ?></td>
+                                                <td style="width: 85px;"><?php echo $row['Date'] ?></td>
                                                 <td><?php echo $row['likes'] ?></td>
                                                 <td><?php echo $row['nom']." ".$row['prenom'] ?></td>
                                                 <td>
-                                                    <a class="btn btn-primary"  
-                                                        href="AfficherComments.php?id=<?PHP 
-                                                        echo $row['id']; ?>">
-                                                        <i class="fa fa-bars"></i>
-                                                    </a>
+                                                    <form method="POST" action="AfficherComments.php?id=<?php echo $row['id']; ?>">
+                                                    <button  class="btn btn-primary">
+                                                    <i class="fa fa-bars"></i></button>
+                                                    
+                                                    <input type="hidden" name="image"
+                                                    value="<?php 
+                                                    $_SESSION["image_commentaire_supprimer"]=$row['image']; ?>">
+                                                    </form>
                                                 </td>
                                                 <td> 
                                                     <form method="POST" action="supprimerStatut.php">

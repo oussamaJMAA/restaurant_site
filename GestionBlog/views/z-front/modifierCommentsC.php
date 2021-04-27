@@ -1,5 +1,5 @@
 <?php 
-include_once "../../controller/commentsC.php";
+include "../../controller/commentsC.php";
 
 
 
@@ -9,8 +9,7 @@ if( isset($_GET['id']) and isset($_POST['contenu']) )
 	{
     	echo "<script type='text/javascript'>";	
 		echo "alert(' not accept the empty  comment ');";
-		echo "window.location.href='blog.php'";
-
+		echo "window.location.href='afficherStatut.php'";
 		echo "</script>";
  	}
 

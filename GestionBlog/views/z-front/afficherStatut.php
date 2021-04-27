@@ -1,6 +1,6 @@
 <?php 
 include "../../controller/formC.php";
-include_once"../../controller/commentsC.php";
+include"../../controller/commentsC.php";
  
  session_start();
  if (empty($_SESSION['id']))
@@ -59,9 +59,8 @@ $listeForms=$FormC->afficherlist_form();
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-	<a href="logout.php" style="color: white;font-size: 50px;">LOGOUT</a>
-<h2 class="text-uppercase wow fadeInDown">Blog Page</h2>
-<p class="wow fadeInUp">Tomato is a delicious restaurant website template</p>
+<h2 class="text-uppercase wow fadeInDown">Accueil</h2>
+<p class="wow fadeInUp">Tomato is a delicious restaurant</p>
 </div>
 </div>
 </div>
@@ -119,7 +118,7 @@ foreach($listeForms as $row)
 	 style="width: 20px; margin-bottom:6px ;" >Remove</a>  
 	<br>';
 	}?>
-	<a style="color:#8e8e8e ;margin-left: 75%;"><?php echo $row['Date'] ?> </a>
+	<a style="color:#8e8e8e ;margin-left: 70%;"><?php echo $row['Date'] ?> </a>
 </div>
 </div>
 </div>
@@ -188,14 +187,14 @@ foreach($listeForms as $row)
 <a href="blog_right_sidebar.html">
 <img src="img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Hand picked ingredients for our best customers</p>
-<p class="footer-blog-date">29 may 2015</p>
+<p class="footer-blog-date">24 Apr 2021</p>
 </a>
 </div>
 <div class="footer-blog clearfix last">
 <a href="blog_right_sidebar.html">
 <img src="img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Daily special foods that you will going to love</p>
-<p class="footer-blog-date">29 may 2015</p>
+<p class="footer-blog-date">24 Apr 2021</p>
 </a>
 </div>
 </div>

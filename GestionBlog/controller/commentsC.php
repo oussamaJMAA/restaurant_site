@@ -1,6 +1,8 @@
 <?php
-require_once 'C:/xampp/htdocs/GestionBlog/model/comments.php';
-require_once "C:/xampp/htdocs/GestionBlog/config.php";
+
+include_once __DIR__ . '/../config.php';
+include_once __DIR__ . '/../model/comments.php';
+
 class  CommentsC{
 	
 function ajouterComments($Comments)
@@ -119,8 +121,6 @@ $db = config::getConnexion();
     catch (Exception $e)
     	{die('Erreur: '.$e->getMessage());}	
 }
-
-
 
 
 

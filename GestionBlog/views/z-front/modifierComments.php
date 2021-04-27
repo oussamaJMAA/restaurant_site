@@ -1,6 +1,6 @@
 <?php 
 include "../../controller/formC.php";
-include_once "../../controller/commentsC.php";
+include "../../controller/commentsC.php";
  
 session_start();
  
@@ -67,11 +67,10 @@ session_start();
 <h3>Update Comment</h3>
 
 
-<form method="post" id="commentform" class="comment-form" 
+<form method="post" id="modifier-commentaire" class="comment-form" 
 action="modifierCommentsC.php?id=<?php echo $_GET['id'];?>">
 
 <input type="hidden" value="<?php echo $_POST['id_Comment']; ?>" name="id_Comment">
-
 <div class="row">
 <div class="col-md-6">
 
@@ -79,12 +78,15 @@ action="modifierCommentsC.php?id=<?php echo $_GET['id'];?>">
 <div style="margin-left: 10%;margin-right: 10%;">
 <textarea placeholder="Comment" name="contenu" id="contenu" style="border-top-left-radius: 30px; resize: none;margin-top: 100px; margin-bottom: 100px;"></textarea>
 </div>
-
 <div class="col-md-5" style="margin-left: 30%;">
-<button class="btn btn-default btn-block">Modifier Comment</button>
+<button type="submit" class="btn btn-default btn-block">Modifier Comment</button>
 </div>
 </div>
 </form>
+
+<script src="js/modifierCommente.js"></script>
+
+
  </div>
 </div>
 </article>

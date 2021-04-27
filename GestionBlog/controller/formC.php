@@ -1,7 +1,8 @@
 <?php
-include "C:/xampp/htdocs/GestionBlog/config.php";
-require_once 'C:/xampp/htdocs/GestionBlog/model/form.php';
- 
+
+include_once __DIR__ . '/../config.php';
+include_once __DIR__ . '/../model/form.php';
+
 class  FormC{
 
 function ajouterform($form)
@@ -36,7 +37,7 @@ function ajouterform($form)
 
 function afficherlist_form()
 {
-		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN user u where u.id = f.id_User";
+		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN user u where u.id = f.id_User order by `Date` DESC ;";
 		$db = config::getConnexion();
 		try
 		{
@@ -87,7 +88,7 @@ function modifierform($form,$id)
 
             echo 'Erreur: '.$e->getMessage();
         }
-	}
+}
 
 
 
@@ -105,7 +106,8 @@ function recupererform($id){
             die('Erreur: '.$e->getMessage());
         }
     }
-function Supprimerform($id){
+function Supprimerform($id)
+{
 		$sql="DELETE  from form where  id=:id ";
 		$db = config::getConnexion();
 		try{
@@ -116,7 +118,7 @@ function Supprimerform($id){
         catch (Exception $e){
             die('Erreur: '.$e->getMessage());
         }
-	}
+}
 	
 function incrementerlike($id){
 		$sql="SELECT * FROM `form` WHERE  id=:id ";

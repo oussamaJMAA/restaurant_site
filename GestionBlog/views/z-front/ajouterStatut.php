@@ -57,21 +57,20 @@
 
 
 
-<form class="contact-form" id="contactForm" action="ajoutPost.php" method="post">
+<form class="contact-form" id="form-statut" action="ajoutPost.php" method="post">
 <div class="form-group">
 <input class="form-control" name="titre" id="titre" placeholder="Titre" type="text" required="required" />
 </div>
 <div class="form-group">
-<textarea class="form-control" name="contenu" id="contenu" placeholder="Contenu" rows="5" style="resize: none;"></textarea>
+<textarea class="form-control" name="contenu" accept="image/jpeg,image/png" id="contenu" placeholder="Contenu" rows="5" style="resize: none;"></textarea>
 </div>
 <div>
-<input class="btn btn-default" type="file" name="image" style="margin:auto;"><br>
+<input class="btn btn-default" type="file" id="image" name="image" style="margin:auto;"><br>
 </div>
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Publier</button>
+<button  class="btn btn-default btn-lg btn-block" id="js-statut-btn">Publier</button>
 </form>
 
-
-
+<script src="js/ajouterStatut.js"></script>
 
 
 
