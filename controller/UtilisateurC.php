@@ -75,20 +75,7 @@
 			} catch (PDOException $e) {
 				$e->getMessage();
 			}
-		}
-		function recupererUtilisateur($id){
-			$sql="SELECT * from Utilisateur where id=$id";
-			$db = config::getConnexion();
-			try{
-				$query=$db->prepare($sql);
-				$query->execute();
 
-				$user=$query->fetch();
-				return $user;
-			}
-			catch (Exception $e){
-				die('Erreur: '.$e->getMessage());
-			}
 		}
 
 		function recupererUtilisateur1($id){
