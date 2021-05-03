@@ -7,6 +7,7 @@ class reclamation
     private ?string $email;
     private ?string $sujet;
     private ?string $message;
+    
    
 
     function __construct(string $nom,string $email,string $sujet,string $message)

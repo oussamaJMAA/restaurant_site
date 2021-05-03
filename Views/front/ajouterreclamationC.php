@@ -1,5 +1,5 @@
 <?php
-include "../../Controller/reclamationC.php";
+include "../../Controller/ReclamationC.php";
     $error = "";
     
     // create form
@@ -17,7 +17,7 @@ include "../../Controller/reclamationC.php";
         echo "1";
     
     $reclamation = new reclamation( $_POST['nom'],$_POST['email'],$_POST['sujet'],$_POST['message']);
-        $reclamationC->ajouterReclamation($reclamation);
+    $reclamationC->ajouterReclamation($reclamation);
 
         header('Location:Table-Reclamation.php');
     }

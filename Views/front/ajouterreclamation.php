@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +28,11 @@
 
 
 <script> 
+
+
+
+
+
 
          function validateForm()                                 
          { 
@@ -307,18 +314,21 @@ if (prenom.value.substring(0,1)<'A'||prenom.value.substring(0,1)>'Z' ){
 <div class="col-md-6">
 <form class="contact-form" id="contactForm" method="POST" action="ajouterreclamationC.php">
 <div class="form-group">
-<input class="form-control" name="name" id="name" placeholder="Full Name" type="text" required="required" />
+<input class="form-control" name="nom" id="nom" placeholder="Full Name" type="text" required="required" />
 </div>
 <div class="form-group">
 <input class="form-control" type="email" name="email" id="email" placeholder="Email Address" required="required" />
 </div>
 <div class="form-group">
-<input class="form-control" placeholder="Subject" type="text" id="subject" name="subject">
+<input class="form-control" placeholder="Subject" type="text" id="sujet" name="sujet">
 </div>
 <div class="form-group">
 <textarea class="form-control" name="message" id="message" placeholder="Message" rows="5"></textarea>
 </div>
-<a href="ajouterreclamationC.php"><input type="button" value="Send Message"  /></a>
+<!--<a href="ajouterreclamationC.php"><input type="button" value="Send Message"  /></a>-->
+<!--<div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block"  href="ajouterreclamationC.php">Send Message</a></div>-->
+<div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" >Send Message</button></div>
+
 </form>
  <div id="js-contact-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>  
 </div>

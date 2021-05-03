@@ -1,5 +1,5 @@
 <?php 
-include "../../controller/reclamationC.php";
+include "../../Controller/ReclamationC.php";
  
  $reclamationC=new reclamationC();
 
@@ -152,6 +152,9 @@ $listereclamation=$reclamationC->afficherReclamation();
                                                 <th>Sujet</th>
                                                 <th>Message</th>
                                                 <th>Supprimer Reclamation</th>
+                                                <th>Imprimer Reclamation</th>
+
+
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -162,6 +165,8 @@ $listereclamation=$reclamationC->afficherReclamation();
                                                 <th>Sujet</th>
                                                 <th>Message</th>
                                                 <th>Supprimer Reclamation</th>
+                                                <th>Imprimer Reclamation</th>
+
                                         </tfoot>
                                         <tbody>
                                              <?PHP
@@ -202,6 +207,22 @@ $listereclamation=$reclamationC->afficherReclamation();
                                                     <i class="fa fa-trash"></i></button>
                                                         <input type="hidden" value="<?PHP 
                                                         echo $row['id']; ?>" name="id"></form>
+                                                </td>
+
+                                                <td> 
+                                                    <form method="POST" action="pdf.php">
+                                                    <button  class="btn" name="paste">Imprimer
+                                                   </button>
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['id']; ?>" name="id">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['nom']; ?>" name="nom">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['email']; ?>" name="email">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['sujet']; ?>" name="sujet">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['message']; ?>" name="message"></form>
                                                 </td>
 
 

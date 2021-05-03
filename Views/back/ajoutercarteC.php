@@ -1,5 +1,7 @@
 <?php
 include "../../Controller/carteC.php";
+require_once 'mail.php';
+
     $error = "";
     
     // create form
@@ -26,6 +28,13 @@ include "../../Controller/carteC.php";
         $error = "Missing information";
 
 
+
+$mail->setFrom('yummyfoodd3@gmail.com', 'Chebbi Meriem');
+$mail->addAddress($_POST["email"]); 
+$mail->Subject = 'Carte Fidélité';
+$mail->Body    = 'Votre Carte Fidélité a été ajoutée avec succes <b>Bravo</b>';
+
+$mail->send();
 
 
     
