@@ -10,6 +10,7 @@ $listePlatPromo=$PromotionC->afficherlist_promo();
 $PlatC=new PlatC();
 $listePlat=$PlatC->afficherlist_plat();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +69,30 @@ $listePlat=$PlatC->afficherlist_plat();
 <h2 class="text-uppercase">Menu</h2>
 <p>Tomato is a delicious restaurant website template</p>
 </div>
+</div>
+<div class="cart-item clearfix " >
+<?php 
+	$listeplatt=$PlatC->afficherlist_plat_desc();
+	$nbrimage=0;
+
+	foreach ($listeplatt as $roww) 
+	{ 
+		
+		if($nbrimage <3)
+		{
+			echo '<img src="img/menu/1/';
+			echo $roww['image'];
+			echo '">';
+		}
+
+		$nbrimage++;
+
+	}
+
+?>
+
+
+	
 </div>
 </div>
 </section>

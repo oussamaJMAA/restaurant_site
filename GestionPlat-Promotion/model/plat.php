@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 
+
+ */
 class plat 
 {
 	private $id_plat;

@@ -25,6 +25,8 @@ $listePlat=$PlatC->afficherlist_plat();
         <link href="css/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+
+        
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -135,8 +137,8 @@ $listePlat=$PlatC->afficherlist_plat();
                     <div class="container-fluid">
                         <h1 class="mt-4 " style="text-align: center;" >Modifier Promotion</h1>
 
-
-                        <div class="card mb-4">
+                         <center>
+                        <div class="card mb-4" style="background: rgb(183 193 199); width: 70%; border-radius: 20px; margin-top: 50px; color: white;">
                            
 
 <form class="form-group" id="ajouterPromotion-form" action="modifierPromotionC.php" method="post">
@@ -146,9 +148,9 @@ $listePlat=$PlatC->afficherlist_plat();
 <div>
 <input type="hidden" value="<?PHP echo $_POST['id_promo']; ?>" name="id_promo">
 <input class="form-control" name="val_promo" id="val_promo" placeholder="Remise" type="number" max="100" min="0" required="required" 
-style="margin-left: 40%; width: 20%; margin-top:2%;" 
+style=" width: 20%; margin-top:2%;" 
 value="<?php echo $_POST['val_promo'];?>" />
-<div style="margin-left: 40%; width: 20%; margin-top:2%; text-align: center;" >
+<div style=" width: 20%; margin-top:2%; text-align: center;" >
 <label for="pet-select" >Choisir un plat :</label>
 
 <select name="id_plat" id="id_plat">
@@ -157,16 +159,12 @@ value="<?php echo $_POST['val_promo'];?>" />
 foreach ($listePlat as $row ) 
 {
    
-    echo '<option value="';echo $row['id_plat'];echo '">';
-    echo $row['id_plat'];
-    echo " ";
-    echo $row['nom'];
-    echo '</option>"';
+    echo '<option value="'.$row['id_plat'].'">'.$row['id_plat']." ".$row['nom'].'</option>"';
 
 }
 
 
-$Date=date('Y-m-d');strval($Date);
+$Date=date('Y-m-d');//strval($Date);
 ?>
 
 </select>
@@ -175,15 +173,19 @@ $Date=date('Y-m-d');strval($Date);
 
 
 <label style="margin-left: 20%;margin-top: 40px;" for="cheese">Date Activation</label>
+
 <input type="date" id="date_activation" name="date_activation" 
 min="<?php echo $Date;?>" value="<?php echo $_POST['date_activation'];?>" >
+
 <label for="cheese">Date Expiration</label>
+
 <input type="date" id="date_expiration" name="date_expiration" min="<?php echo $Date;?>"
 value="<?php echo $_POST['date_expiration'];?>" 
 style="margin-right: 20%;">
 
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn" style="margin-top:20px;">Modifier</button>
+<button  class="btn btn-default btn-lg btn-block" id="js-contact-btn" style="margin-top:20px; "
+>Modifier</button>
 </div>
 </form>
 
@@ -201,6 +203,7 @@ style="margin-right: 20%;">
 
 
                         </div>
+                        </center>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

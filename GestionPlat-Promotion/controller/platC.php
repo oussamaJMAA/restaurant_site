@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../config.php';
+include_once __DIR__ . '/../config2.php';
 include_once __DIR__ . '/../model/plat.php';
 
 class PlatC 
@@ -73,6 +73,21 @@ function modifierplat($plat,$id)
 function afficherlist_plat()
 {
 		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat`;";
+		$db = config::getConnexion();
+		try
+		{
+			$liste=$db->query($sql);
+			
+			return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+}
+
+function afficherlist_plat_desc()
+{
+		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat` order by id_plat DESC ;";
 		$db = config::getConnexion();
 		try
 		{

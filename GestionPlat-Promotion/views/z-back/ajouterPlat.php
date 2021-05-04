@@ -135,27 +135,37 @@ $listePlat=$PlatC->afficherlist_plat();
                     <div class="container-fluid">
                         <h1 class="mt-4 " style="text-align: center;" >Ajouter Plat</h1>
 
-
-                        <div class="card mb-4">
+                        <center>
+                        <div class="card mb-4" style="background: rgb(183 193 199); width: 70%; border-radius: 20px; margin-top: 50px; color: white;">
                            
-
+<center>
 <form class="form-group" id="ajouterPlat-form" action="ajouterPlatC.php" method="post"
-style="width: 20%;margin-left: 40%;margin-top: 2%;">
+style="width: 20%;margin-top: 2%;">
 <div class="form-group">
-<input class="form-control" name="nom" id="nom" placeholder="Nom" type="text" required="required" />
+<input class="form-control" name="nom" id="nom" placeholder="Nom" type="text" required="required"
+
+style="margin-top: 30%;"  />
 </div>
 <div class="form-group">
 <textarea class="form-control" name="description" id="description" placeholder="Description" rows="5" style="resize: none;" ></textarea>
 </div>
-<div>
-<input class="btn btn-default" type="file" name="image" style="margin:auto;"><br>
-</div>
 <input class="form-control" name="prix" id="prix" placeholder="Prix" type="number" step="0.01" min="0" required="required" />
+<div>
+<input class="btn btn-default" type="file" id="image" name="image" 
+style="margin-top:20px;margin-left: -3%;width: 300%;"><br>
+</div>
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Ajouter</button>
+
+<button class="btn btn-default btn-lg btn-block" id="js-contact-btn"
+style="background:#0012946e; width: 100%;margin-left: 150%; margin-top: 40%;color: white; border-radius: 30px;" 
+>Ajouter</button>
 </form>
 
 
+<script src="js/ajouterPlat.js"></script>
+
+
+</center>
 
 
 
@@ -164,11 +174,7 @@ style="width: 20%;margin-left: 40%;margin-top: 2%;">
 
 
 
-
-
-
-
-                        </div>
+                        </div></center>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

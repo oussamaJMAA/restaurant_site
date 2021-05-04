@@ -1,7 +1,19 @@
 <?php
 include"../../controller/promotionC.php";
     
-
+    $Date1= new DateTime($_POST['date_activation']);
+    $Date2= new DateTime($_POST['date_expiration']);
+    if($Date1>$Date2)
+    {  
+        echo "False";
+         echo "<script type='text/javascript'>";
+        echo "alert('Date activation obligatoirement <  Date date_expiration');
+        window.location.href='../z-back/afficherPlat&Promotion.php';";
+        echo "</script>";
+    }
+    else
+    {    
+        echo "True";
 
     $promotion = null;
     $PromotionC = new PromotionC();
@@ -17,5 +29,5 @@ include"../../controller/promotionC.php";
     }
 
 
-    
+    }
 ?>

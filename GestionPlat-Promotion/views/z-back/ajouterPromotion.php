@@ -135,19 +135,21 @@ $listePlat=$PlatC->afficherlist_plat();
                     <div class="container-fluid">
                         <h1 class="mt-4 " style="text-align: center;" >Ajouter Promotion</h1>
 
-
-                        <div class="card mb-4">
+<center>
+                        <div class="card mb-4" style="background: rgb(183 193 199); width: 70%; border-radius: 20px; margin-top: 50px; color: white;">
                            
 
-<form class="form-group" id="ajouterPromotion-form" action="ajouterPromotionC.php" method="post">
-<div class="form-group">
+<form class="form-group" id="ajouterPromotion-form" action="ajouterPromotionC.php" method="post"
+
+>
+<div class="form-group" >
 
 
-<div>
+<div >
 
 <input class="form-control" name="val_promo" id="val_promo" placeholder="Remise" type="number" max="100" min="0" required="required" 
-style="margin-left: 40%; width: 20%; margin-top:2%;" />
-<div style="margin-left: 40%; width: 20%; margin-top:2%; text-align: center;" >
+style=" width: 20%; margin-top:2%;" />
+<div style=" width: 20%; margin-top:2%; text-align: center;" >
 <label for="pet-select" >Choisir un plat :</label>
 
 <select name="id_plat" id="id_plat">
@@ -170,16 +172,19 @@ foreach ($listePlat as $row )
 </div>
 
 
-<label style="margin-left: 20%;margin-top: 40px;" for="cheese">Date Activation</label>
+<label style="margin-top: 40px;" for="cheese">Date Activation</label>
 <input type="date" id="date_activation" name="date_activation" 
 min="<?php $Date=date('Y-m-d');strval($Date);echo $Date;?>" value="<?php echo $Date;?>" >
 <label for="cheese">Date Expiration</label>
 <input type="date" id="date_expiration" name="date_expiration" min="<?php echo $Date;?>"
 value="<?php echo $Date;?>" 
-style="margin-right: 20%;">
+style="">
 
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Ajouter</button>
+<button class="btn btn-default btn-lg btn-block" id="js-contact-btn"
+style="background:#0012946e; width: 20%;margin-left: 65%; margin-top: 10%;color: white; border-radius: 30px;" 
+
+>Ajouter</button>
 </div>
 </form>
 
@@ -187,16 +192,9 @@ style="margin-right: 20%;">
 
 
 
-
-
-
-
-
-
-
-
-
                         </div>
+
+                        </center>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

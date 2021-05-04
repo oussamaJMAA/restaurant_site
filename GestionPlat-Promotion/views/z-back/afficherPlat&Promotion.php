@@ -2,7 +2,7 @@
 include "../../controller/promotionC.php"; 
 include "../../controller/platC.php";
 
-
+session_start();
 
 $PromotionC=new PromotionC();
 $listePlatPromo=$PromotionC->afficherlist_promo();
@@ -31,11 +31,13 @@ $listePlat=$PlatC->afficherlist_plat();
             <a class="navbar-brand" href="index.php">Admin</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <form method="post" action="rechercherPlat.php" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="recherche" name="recherche" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"
+
+                            ></i></button>
                     </div>
                 </div>
             </form>
@@ -188,6 +190,9 @@ $listePlat=$PlatC->afficherlist_plat();
                                                     <form method="POST" action="modifierPlat.php">
                                                     <button  class="btn btn-primary">
                                                     <i class="fa fa-edit"></i></button>
+                                                    <input type="hidden" value="<?PHP 
+                                                    echo $_row['image']; ?>" name="image"  >
+
                                                     <input type="hidden" value="<?PHP 
                                                     echo $row['id_plat']; ?>" name="id_plat">
                                                     <input type="hidden" value="<?PHP 

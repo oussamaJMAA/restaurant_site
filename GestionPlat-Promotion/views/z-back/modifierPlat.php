@@ -2,6 +2,7 @@
 include "../../controller/promotionC.php"; 
 include "../../controller/platC.php";
 
+session_start();
 
 
 $PromotionC=new PromotionC();
@@ -10,6 +11,7 @@ $listePlatPromo=$PromotionC->afficherlist_promo();
 $PlatC=new PlatC();
 $listePlat=$PlatC->afficherlist_plat();
  
+$_SESSION['image_modifier_plat']=$_POST['image'];
 
 ?>
 
@@ -137,9 +139,10 @@ $listePlat=$PlatC->afficherlist_plat();
 
 
                         <div class="card mb-4">
-                           
+                        
 
-<form class="form-group" id="ajouterPlat-form" action="modifierPlatC.php" method="post"
+
+<form class="form-group" id="modifierPlat-form" action="modifierPlatC.php" method="post"
 style="width: 20%;margin-left: 40%;margin-top: 2%;">
 <div class="form-group">
 
@@ -156,10 +159,11 @@ style="width: 20%;margin-left: 40%;margin-top: 2%;">
 </div>
 <input class="form-control" name="prix" id="prix" placeholder="Prix" type="number" step="0.01" min="0" required="required" value="<?php echo $_POST['prix'] ?>" />
 
-<button class="btn btn-default btn-lg btn-block" id="js-contact-btn">Modifier</button>
+<button type="submit"  class="btn btn-default btn-lg btn-block" id="js-contact-btn">Modifier</button>
 </form>
 
 
+<script src="js/modifierPlat.js"></script>
 
 
 
