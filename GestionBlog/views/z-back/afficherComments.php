@@ -1,5 +1,5 @@
 <?php 
-include "../../controller/commentsC.php";
+include_once "../../controller/commentsC.php";
 
  session_start(); 
 
