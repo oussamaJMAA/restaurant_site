@@ -1,4 +1,39 @@
 
+<?php
+
+include_once "../model/reservation.php";
+include "../controller/reservationC.php";
+
+
+
+
+
+
+session_start();
+// On teste si la variable de session existe et contient une valeur
+if(empty($_SESSION['e']))
+{
+    // Si inexistante ou nulle, on redirige vers le formulaire de login
+    header('Location: cnx.php');
+ 
+   }
+   else {
+    try
+         {
+    $user_id = $_SESSION['e'];
+    $db = config::getConnexion();
+    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
+     $stmt->execute(array(":user_id"=>$user_id));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+         }
+         catch(PDOException $e)
+         {
+             $e->getMessage();
+         }		
+     }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +96,7 @@
 			
 					<div class="shop-meta">
 
-
+ 
 				<form method="POST" action="ajouter_card.php">
 <!--<a href="shop_cart.php"  class="pull-left"><i class="fa fa-shopping-cart"></i> Add to cart</a>-->
 <input type="submit" name="addtocart" value="Add to Cart" style="background-color: rgba(0,0,0,0); border-color:rgba(0,0,0,0);font-size:18px" class="pull-left"><i class="fa fa-heart-o  pull-left"></i>	
@@ -69,6 +104,10 @@
 <input type="hidden" value=<?PHP echo $row['nom_plat']; ?> name="nom_plat">
 <input type="hidden" value=<?PHP echo $row['prix_plat']; ?> name="prix_plat">
 <input type="hidden" value=<?PHP echo $row['image_plat']; ?> name="image_plat">
+<input type="hidden" value=<?PHP echo $userRow['id']; ?> name="idclient">
+
+
+
 	</form>
 
 
@@ -92,7 +131,8 @@
         </div>
 		</div>
 	<?php
-	}
+
+}
 	?>
 
 </div></body>

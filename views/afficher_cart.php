@@ -1,12 +1,8 @@
 
 <?php
 
-include_once "../model/commande.php";
-include "../controller/commandeC.php";
-
-require_once "../model/lcommande.php";
-
-
+include_once "../model/commandes.php";
+include "../controller/commandesC.php";
 session_start();
 // On teste si la variable de session existe et contient une valeur
 if(empty($_SESSION['e']))
@@ -33,57 +29,14 @@ if(empty($_SESSION['e']))
 
 
 
-     $aa=new commandeC();
-     $liste=$aa->afficher_commande($userRow['id']);
-     foreach($liste as $aa){
-
-
-        $idp=$aa['idplat'];
-        require_once "dbconfig.php";
-        $select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-        $select_stmt->execute(array(
-        ':idp'=>$idp
-        
-        ));
-        while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
-        {
-        
-
-
-
-     $suc=0;
-     $a1=null;
-     $error="";
-     if (isset($_POST['adr']) && isset($_POST['phone']) && isset($_POST['date'])) {
-        
-             $adr = $_POST['adr'];
-             $phone = $_POST['phone'];
-             $date = $_POST['date'];
-    $idp=$aa['idplat'];
-     $p=$_POST['payment'];
-      $price=$row['prix_plat'];   
-     $a1=new lcommande($userRow["id"],$idp,$adr,$phone,$p,$date);
-     $commandeC=new commandeC();
-     $suc=1;
-     }
-     else $error="missing information";
-
-
-
-
-    }
-     }
 
 ?>
-
-
-<!DOCTYPE html>
 <html lang="en">
 
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Tomato Responsive Restaurant HTML5 Template</title>
+<title>Affiche Cart</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -105,21 +58,24 @@ if(empty($_SESSION['e']))
 <!--[if lt IE 8]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
-<?php
-	if($suc==1)
-	$commandeC-> ajouter_lcommande($a1);
-    if(isset($_POST["paynow"])){
-        header("Location:shop_account_detail.php");
-    }
-    
-   	
-	?>
+
+
+	
+
+<div class="preloder animated">
+<div class="scoket">
+<img src="img/preloader.svg" alt="" />
+</div>
+</div>
+<div class="body">
+<div class="main-wrapper">
+
 <section class="page_header">
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Shop Cart</h2>
-<p>Checkout or add some items to your Shop Cart</p>
+<h2 class="text-uppercase">Cart</h2>
+<p>Checkout or add some items to your cart</p>
 </div>
 </div>
 </div>
@@ -128,284 +84,128 @@ if(empty($_SESSION['e']))
 <section class="shop-content">
 <div class="container">
 <div class="row">
-
 <div class="col-md-10 col-md-offset-1">
 <table class="cart-table table table-bordered">
 <thead>
 <tr>
-<th>remove </th> 
-<th> USER </th> 
-  
-<th>Product ID</th>
-<th>Price</th>
+<th>&nbsp;</th> <!-- delete-->
+<th>&nbsp;</th> <!-- image plat-->
+<th>NOM PLAT</th>
+<th>CLIENT(E)</th>
+<th>QUANTITE</th>
+<th>PRIX TOTAL</th>
 
-<th>Image</th>
 </tr>
 </thead>
-<tbody>
 <?php
 
-$com=new commandeC();
-$liste=$com->afficher_commande($userRow['id']);
-foreach($liste as $com){
+$c=new commandesC();
+$a=new commandesC();
+$liste=$c->afficher_panier();
+foreach($liste as $c){
 
 ?>
+<tbody>
+
+<?php
+	require_once "dbconfig.php";
+    try{
+    $idp=$c['idplat'];
+	$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp");	
+	$select_stmt->execute(
+        array('idp' => $idp)
+    );
+}catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
+	?>
 
 <tr>
-<td>
-<form method="POST" action="delete_shop.php">
-						<input type="submit" name="supprimer" value="supprimer">
-						<input type="hidden" value=<?PHP echo $com['idplat']; ?> name="idplat">
-						</form>
-
-</td>
-
-
-<?php
-
-$idp=$com['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
-
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
-{
-
-
-?>
-
-<form method="POST">
-<td>
-
-<input type="text" name="user" value="<?php echo $userRow['login']; ?>" style="border-color:rgba(0,0,0,0);text-align:center">
-
-</td>
-
 
 <td>
 
-<input type="text" name="idplat" value="<?php echo $com['idplat']; ?>" style="border-color:rgba(0,0,0,0);text-align:center">
-</td>
-<td>
+<form method="post" action="supprimerpanier.php" >
 
-<input type="text" name="prix" value="<?php echo $row['prix_plat']; ?>" style="border-color:rgba(0,0,0,0);text-align:center">
-</td>
+<button class="btn btn-success" type="submit" name="efface">Delete</button>
+<!--<input type="submit" name="modif" value="Update Cart">-->
 
+<input type="hidden" name="idpf" value=<?php echo $row["id_plat"] ?>>
+
+<input type="hidden" name="idcf" value=<?php echo $c["idclient"] ?>>
+
+
+</form>
+
+
+
+
+
+
+
+</td>
 
 <td>
 <img  src="img/shop/<?php echo $row['image_plat']; ?>">
 </td>
+<td>
+<a href="test3.php"><?php echo $row['nom_plat']; ?></a>
+</td>
+
+<td>
+<span class="amount"><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
+</td>
+<td>
+
+<form method="post" action="modiferpanier.php">
+<input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
+<br>
+<br>
+<button class="btn btn-success" type="submit" name="modif">Update</button>
+<!--<input type="submit" name="modif" value="Update Cart">-->
+
+<input type="hidden" name="idplat" value=<?php echo $c["idplat"] ?>>
+
+<input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
+<input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
+</form>
+
+
+</td>
+<td>
+<span class="amount"><?php echo $c['prixtotal']; ?></span>
+</td>
+
+</tr>
+
 <?php
-}
+    
     }
+}
 ?>
+<tr>
+<td colspan="6" class="actions">
+<div class="col-md-6">
+
+</div>
+<div class="col-md-6">
+<div class="cart-btn">
+
+<!--
+<button class="btn btn-success" type="submit" onclick="window.open('shop_checkout.html', '_self')">Checkout</button>
+-->
+
+</div>
+</div>
+</td>
+</tr>
 </tbody>
 </table>
 
-<div class="btn btn-default pull-left" style="display:none">
-<form name ="form-btn" method="post" >
-<input type="submit" id="btn-check" name="checkout" value="Checkout">
-
-</form>
-<br>
-</div>
-<form method="post" style="display:none">
-<div class="btn btn-default">
-<input type="submit" name="update_recu" value="Update Receit" style="background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0)" >
-<?php
-
-if(isset($_POST["update_recu"])){
-    header("Location:shop_cart_updated.php");
-}
-?>
-</form>
-
-
-</div>
-</form>
-
-
-
-
-<br>
-<br>
-<br>
-<script>
-function verif(){
-var phone = document.getElementById('phone');
-
-var t = /^\d{8}$/;
-if (!(isNaN(phone)) || phone.value.match(t) ){
-
-    document.getElementById('errorname').innerHTML=""; 
-          
-        }
-        else{
-           document.getElementById('errorname').innerHTML="Votre Telephone est Invalide";  
-        return false ;
-        }
-
-        var date = document.getElementById('date');
-        var today=new Date();
-     var dd=today.getDate();
-     var mm=today.getMonth()+1;
-     var yy=today.getFullYear();
-var dispo= dd+'-'+mm+'-'+yy;
-     if(date === ""){
-    document.getElementById('errorname').innerHTML="Vous Devez Choisir Un date <br> Nous Somme Disponible a partir de " +dispo;
-return false;
-
-}
-
- var adr=document.getElementById('adr');
-
-
-for(let i=0;i<adr.length;i++)
-{
-    if(!isNaN(adr.charAt(i))){
-        document.getElementById('errorname').innerHTML="Votre Adresse Doit Etre Detaillé Qui Contient Le Code Postal";  
-        return false;
-    }
-}
-
-
-}
-
-    </script>
-
-<style>
-         .error{
-            color: #D8000C;
-            background-color: #FFBABA;
-            text-align:center;
-            border-radius:25px;
-            
-         }
-     
-      </style>
-
-
-<form name="form-checkn" id="form-check" method="POST" onsubmit="return verif()">
-
-<p class="error" id="errorname"></p>
-<div class="clearfix space20"></div>
-<div class="row">
-<div class="col-md-6">
-<label>First Name </label>
-<input class="form-control" value="<?php echo $userRow["prenom"]?>"  type="text" disabled>
-</div>
-<div class="col-md-6">
-<label>Last Name </label>
-<input class="form-control" placeholder="" value="<?php echo $userRow["nom"]?>" type="text" disabled>
-</div>
-</div>
-
-<div class="clearfix space20"></div>
-<label>Address </label>
-<input class="form-control" name="adr" id="adr" placeholder="Detailed Street address + PostCode" type="text">
-
-<div class="clearfix space20"></div>
-<label>Email Address </label>
-<input class="form-control" placeholder="" value="<?php echo $userRow["email"]?>" type="text" disabled>
-<div class="clearfix space20"></div>
-<label>Phone </label>
-<input class="form-control" id="phone" name="phone" placeholder="+216 12 345 678"  type="text">
-<div class="clearfix space20"></div>
-<label>Date</label>
-<input class="form-control" name="date" id="date" type="date">
-
-
-
-
-
-
-<br>
-
-<br>
-<br>
-<h4 class="text-left">Payment Method</h4>
-<br>
-<div class="payment-method">
-<div class="row">
-
-<div class="col-md-4">
-<label>
-<input name="payment" id="radio1" class="css-checkbox" type="radio" value="Direct Bank Transfer"><span>Direct Bank Transfer</span></label>
-<div class="space20"></div>
-<p>Make payment directly into our bank account and use your Order ID as the reference. </p>
-</div>
-<div class="col-md-4">
-<label>
-<input name="payment" id="radio2" class="css-checkbox" type="radio" value="Cheque Payment"><span>Cheque Payment</span></label>
-<div class="space20"></div>
-<p>Please send your cheque to BLVCK Fashion House, Oatland Rood, UK, LS71JR</p>
-</div>
-<div class="col-md-4">
-<label>
-<input name="payment" id="radio3" class="css-checkbox" type="radio" value="Paypal"><span>Paypal</span></label>
-<div class="space20"></div>
-<p>Pay via PayPal; you can pay with your credit card if you don't have a PayPal account</p>
-</div>
-
-</div>
-
-<div class="btn btn-default pull-left">
-
-<input type="submit" value="PAY NOW" name="paynow" style="background-color:rgba(0,0,0,0);border-color:rgba(0,0,0,0)">
-
-
-</form>
-</div>
-</div>
-
-<br>
-<br>
-<?php
-
-$com=new commandeC();
-$result=$com->affiche_somme($userRow["id"]);
-
-
-?>
-
-<br>
-<br>
-<table class="table table-bordered extra-padding">
-<tbody>
-<tr>
-<th>Cart Subtotal</th>
-<td><?php echo $result ?></td>
-</tr>
-<tr>
-<th>Shipping and Handling</th>
-<td>
-Free Shipping
-</td>
-</tr>
-<tr>
-<th>Order Total</th>
-<td><strong><?php echo $result ?></strong> </td>
-</tr>
-</tbody>
- </table>
-
-
-
 </div>
 </div>
 </div>
-</div>
-</section>
-
-
-
-</div>
-
-</div>
-</div>
-
 </section>
 
 <section class="subscribe">
@@ -414,9 +214,9 @@ Free Shipping
 <div class="col-md-12">
 <h1>Subscribe</h1>
 <p>Get updates about new dishes and upcoming events</p>
-<form class="form-inline" id="invite" method="POST">
+<form class="form-inline" action="https://demo.web3canvas.com/themeforest/tomato/php/subscribe.php" id="invite" method="POST">
 <div class="form-group">
-<input class="e-mail form-control" name="email" id="address" type="email" placeholder="Your Email Address">
+<input class="e-mail form-control" name="email" id="address" type="email" placeholder="Your Email Address" required>
 </div>
 <button type="submit" class="btn btn-default">
 <i class="fa fa-angle-right"></i>
