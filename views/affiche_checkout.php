@@ -33,10 +33,10 @@ if(empty($_SESSION['e']))
 ?>
 <html lang="en">
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account_detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Affiche Cart</title>
+<title>Tomato Responsive Restaurant HTML5 Template</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -59,9 +59,6 @@ if(empty($_SESSION['e']))
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-
-	
-
 <div class="preloder animated">
 <div class="scoket">
 <img src="img/preloader.svg" alt="" />
@@ -70,12 +67,13 @@ if(empty($_SESSION['e']))
 <div class="body">
 <div class="main-wrapper">
 
+
 <section class="page_header">
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Cart</h2>
-<p>Checkout or add some items to your cart</p>
+<h2 class="text-uppercase">Your Orders</h2>
+<p>Your recent orders, shipping &amp; delivery addresses</p>
 </div>
 </div>
 </div>
@@ -84,28 +82,35 @@ if(empty($_SESSION['e']))
 <section class="shop-content">
 <div class="container">
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
-<table class="cart-table table table-bordered">
+<div class="col-md-12">
+<h3>Recent Orders</h3>
+<br>
+<table class="cart-table account-table table table-bordered">
 <thead>
 <tr>
-<th>&nbsp;</th> <!-- delete-->
-<th>&nbsp;</th> <!-- image plat-->
-<th>NOM PLAT</th>
 <th>CLIENT(E)</th>
+<th>PLAT</th>
 <th>QUANTITE</th>
 <th>PRIX TOTAL</th>
-
+<th>DATE</th>
+<th>PHONE</th>
+<th>LOCATION</th>
 </tr>
 </thead>
 <?php
 
+
 $c=new commandesC();
-$a=new commandesC();
-$liste=$c->afficher_panier();
+$client=$userRow['id'];
+$liste=$c->afficher_commandes($client);
 foreach($liste as $c){
 
 ?>
 <tbody>
+<tr>
+<td>
+<?php echo $userRow['nom'].' '.$userRow['prenom'] ?>
+</td>
 
 <?php
 	require_once "dbconfig.php";
@@ -122,74 +127,40 @@ foreach($liste as $c){
 	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
 	?>
 
-<tr>
-
-<td>
-
-<form method="post" action="supprimerpanier.php" >
-
-<button class="btn btn-success" type="submit" name="efface">Delete</button>
-<!--<input type="submit" name="modif" value="Update Cart">-->
-
-<input type="hidden" name="idpf" value=<?php echo $row["id_plat"] ?>>
-
-<input type="hidden" name="idcf" value=<?php echo $c["idclient"] ?>>
-
-
-</form>
-
-
-
-
-
-
-
-</td>
-
 <td>
 <img  src="img/shop/<?php echo $row['image_plat']; ?>">
 </td>
-<td>
-<a href="test3.php"><?php echo $row['nom_plat']; ?></a>
-</td>
-
-<td>
-<span class="amount"><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
+ <td>
+<?php echo $c['quantite'] ?>
 </td>
 <td>
-
-<form method="post" action="modiferpanier.php">
-<input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
-<br>
-<br>
-<button class="btn btn-success" type="submit" name="modif">Update</button>
-<!--<input type="submit" name="modif" value="Update Cart">-->
-
-<input type="hidden" name="idplat" value=<?php echo $c["idplat"] ?>>
-
-<input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
-<input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
-</form>
-
-
+<?php echo $c['prixtotal']?>
 </td>
 <td>
-<span class="amount"><?php echo $c['prixtotal']; ?></span>
+<?php echo $c["date"] ?>
 </td>
-
+<td>
+<?php echo $c["phone"] ?>
+</td>
+<td>
+<?php echo $c["location"] ?>
+</td>
 </tr>
 
 <?php
-    
     }
 }
 ?>
-
 </tbody>
 </table>
-<div class="text-center top-space-lg">
-<button class="btn btn-success" type="submit" onclick="window.open('shop_checkout.php', '_self')">Checkout</button>
+
+
+
+
+
+
 </div>
+ </div>
 </div>
 </div>
 </div>
@@ -267,7 +238,7 @@ foreach($liste as $c){
 <div class="footer-address">
 <p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
 <p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
-<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e0d0b0e0e110c0a3e0c1b0d0a1f0b0c1f100a501d1113">[email&#160;protected]</a></p>
+<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bac9cfcacad5c8cefac8dfc9cedbcfc8dbd4ce94d9d5d7">[email&#160;protected]</a></p>
 </div>
 </div>
 </div>
@@ -351,5 +322,5 @@ Wide
 <script src="js/vendor/mc/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/shop_account_detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:16:03 GMT -->
 </html>

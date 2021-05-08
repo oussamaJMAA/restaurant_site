@@ -178,18 +178,91 @@ foreach($liste as $c){
 </td>
 
 </tr>
-
 <?php
     
     }
 }
 ?>
 
+
 </tbody>
 </table>
+
+
 <div class="text-center top-space-lg">
 <button class="btn btn-success" type="submit" onclick="window.open('shop_checkout.php', '_self')">Checkout</button>
+
+    </div>
+<br>
+<br>
+<form method="post" action="shop_account_detail.php">
+
+<div class="row">
+
+
+<div class="col-md-6">
+<label>First Name </label>
+<input class="form-control" placeholder="" value=<?php echo $userRow["nom"] ?> type="text" disabled>
 </div>
+
+
+<div class="col-md-6">
+<label>Last Name </label>
+<input class="form-control" placeholder="" value=<?php echo $userRow["prenom"] ?> type="text" disabled>
+</div>
+</div>
+
+
+<div class="clearfix space20"></div>
+<label>Address </label>
+<input class="form-control" placeholder="Street address" value="" type="text" name="location">
+
+<div class="clearfix space20"></div>
+<label>Email Address </label>
+<input class="form-control" placeholder="" value=<?php echo $userRow["email"] ?> type="text" disabled>
+
+<div class="clearfix space20"></div>
+<label>Date </label>
+<?php 
+
+$month = date('m');
+$day = date('d');
+$year = date('Y');
+
+$today = $year . '-' . $month . '-' . $day;
+?>
+<input type="date" value="<?php echo $today; ?>" class="form-control" id="date" name="date">
+
+
+
+<div class="clearfix space20"></div>
+<label>Phone </label>
+<input class="form-control" id="billing_phone" placeholder="" value="" type="text" name="phone">
+<br>
+
+<?php
+
+
+$a=new commandesC();
+$liste=$a->afficher_panier();
+foreach($liste as $a){
+
+?>
+
+</div>
+<div class="text-center top-space-lg">
+<button class="btn btn-default btn-lg" type="submit" name="pay">Pay Now</button>
+<input type="hidden" name="idcom" value=<?php echo $a["idcommande"] ?>>
+<?php
+}
+?>
+
+</div>
+</form>
+
+
+
+
 </div>
 </div>
 </div>
