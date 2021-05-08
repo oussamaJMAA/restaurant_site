@@ -50,12 +50,11 @@ return $liste;
         }
     }
 
- 
-    public function update_panier($idplat,$idclient,$quantite,$prixtotal){
+    public function update_panier($idplat,$idclient,$quantite,$prixtotal,$idcommande){
         //update quantite et prixtotal
         //boutton update card
         //update panier 
-        $sql="UPDATE commandes SET  quantite  = :quantite, prixtotal = :prixtotal * :quantite where idplat = :idplat and idclient=:idclient" ;
+        $sql="UPDATE commandes SET  quantite  = :quantite, prixtotal = :prixtotal * :quantite where idcommande=:idcommande and idplat = :idplat and idclient=:idclient" ;
 
         $db=config::getConnexion();
         try
@@ -66,7 +65,8 @@ return $liste;
               
                 'idplat'=>$idplat,
                 'idclient'=>$idclient,
-                'prixtotal'=>$prixtotal
+                'prixtotal'=>$prixtotal,
+                'idcommande'=>$idcommande
 
             
                 
@@ -80,38 +80,37 @@ return $liste;
 
     }
 
-
     public function delete_panier($idplat,$idclient){
-//supprimer m panier
-        $sql="DELETE FROM commandes where idplat = :idplat and idclient=:idclient"  ;
-        $db=config::getConnexion();
-
-        try
-        {
-            $query=$db->prepare($sql);
-         $query->execute([
-                'idplat'=>$idplat,
-                'idclient'=>$idclient
-                
-
-               
-                
-            ]);
-            
-        }
-        catch(Exeption $e)
-        {
-            die('Erreur: '.$e->getMessage());
-        }
-      
-        }
+        //supprimer m panier
+                $sql="DELETE FROM commandes where idplat = :idplat and idclient=:idclient"  ;
+                $db=config::getConnexion();
+        
+                try
+                {
+                    $query=$db->prepare($sql);
+                 $query->execute([
+                        'idplat'=>$idplat,
+                        'idclient'=>$idclient
+                        
+        
+                       
+                        
+                    ]);
+                    
+                }
+                catch(Exeption $e)
+                {
+                    die('Erreur: '.$e->getMessage());
+                }
+              
+                }
 
 //Cruds Commandes
 //all included
 
-public function ajouter_cart($idcommande,$date,$phone,$location)
+public function ajouter_cart($idclient,$date,$phone,$location)
 { //ajout au panier mais pas encore confirmer
-    $sql="update commandes set date=:date , phone=:phone , location =:location where idcommande=:idcommande";
+    $sql="update commandes set date=:date , phone=:phone , location =:location where idclient=:idclient";
     $db=config::getConnexion();
 
     try
@@ -121,7 +120,7 @@ public function ajouter_cart($idcommande,$date,$phone,$location)
         $query->execute(array(
                
             ':date'=>$date,
-            ':idcommande'=>$idcommande,
+            ':idclient'=>$idclient,
             ':phone'=>$phone,
             ':location'=>$location,
            
@@ -174,6 +173,124 @@ return $req;
         die('Erreur: '.$e->getMessage());
     }
 }
+
+
+public function delete_panier_after_checkout($idcommande){
+    //supprimer m panier
+            $sql="DELETE FROM commandes where idplat = :idplat and idclient=:idclient"  ;
+            $db=config::getConnexion();
+    
+            try
+            {
+                $query=$db->prepare($sql);
+             $query->execute([
+                    'idplat'=>$idplat,
+                    'idclient'=>$idclient
+                    
+    
+                   
+                    
+                ]);
+                
+            }
+            catch(Exeption $e)
+            {
+                die('Erreur: '.$e->getMessage());
+            }
+          
+            }
+
+            
+public function somme_commandes($idclient)
+{ //affichage tout les commandes
+    $sql="SELECT SUM(prixtotal) as SumV FROM commandes WHERE idclient=:idc";
+    $db=config::getConnexion();
+
+    try
+    {
+       
+       $query=$db->prepare($sql);
+       $query->execute([
+
+        'idc'=>$idclient,
+       ]);
+$result = $query-> fetch(PDO::FETCH_ASSOC);
+$sum = $result["SumV"];
+
+return $sum;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+
+
+
+public function afficher_commandes_all()
+{ //affichage tout les commandes
+    $sql="select * from commandes";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+public function tri_com()
+{ //affichage tout les commandes
+    $sql="select * from commandes order by date,prixtotal";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+
+
+
+public function recherche_com($s){
+    $sql="SELECT * from commandes where idclient= :s or idplat=:s or prixtotal= :s or quantite =:s";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+    $req->bindValue(':s',$s);
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+
+}
+
+
 
 }
 

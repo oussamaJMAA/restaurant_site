@@ -1,4 +1,3 @@
-
 <?php
 
 include_once "../model/commandes.php";
@@ -93,7 +92,7 @@ if(empty($_SESSION['e']))
 <th>NOM PLAT</th>
 <th>CLIENT(E)</th>
 <th>QUANTITE</th>
-<th>PRIX TOTAL</th>
+<th>PRIX</th>
 
 </tr>
 </thead>
@@ -169,12 +168,13 @@ foreach($liste as $c){
 
 <input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
 <input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
+<input type="hidden" name="idcomm" value=<?php echo $c["idcommande"] ?>>
 </form>
 
 
 </td>
 <td>
-<span class="amount"><?php echo $c['prixtotal']; ?></span>
+<span class="amount"><?php echo $c['prixtotal'].'DT'; ?></span>
 </td>
 
 </tr>

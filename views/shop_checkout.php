@@ -1,4 +1,3 @@
-
 <?php
 
 include_once "../model/commandes.php";
@@ -26,8 +25,6 @@ if(empty($_SESSION['e']))
              $e->getMessage();
          }		
      }
-
-
 
 
 ?>
@@ -152,24 +149,14 @@ foreach($liste as $c){
 <td>
 <a href="test3.php"><?php echo $row['nom_plat']; ?></a>
 </td>
-
+<input type="hidden" value=<?php echo $row['nom_plat']; ?> name="plat">
 <td>
 <span class="amount"><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
 </td>
 <td>
 
-<form method="post" action="modiferpanier.php">
-<input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
-<br>
-<br>
-<button class="btn btn-success" type="submit" name="modif">Update</button>
-<!--<input type="submit" name="modif" value="Update Cart">-->
+<input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px;border-color:rgba(0,0,0,0)" disabled>
 
-<input type="hidden" name="idplat" value=<?php echo $c["idplat"] ?>>
-
-<input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
-<input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
-</form>
 
 
 </td>
@@ -219,7 +206,7 @@ foreach($liste as $c){
 
 <div class="clearfix space20"></div>
 <label>Email Address </label>
-<input class="form-control" placeholder="" value=<?php echo $userRow["email"] ?> type="text" disabled>
+<input class="form-control" placeholder="" value=<?php echo $userRow["email"] ?> type="text" name="email" disabled>
 
 <div class="clearfix space20"></div>
 <label>Date </label>
@@ -240,24 +227,53 @@ $today = $year . '-' . $month . '-' . $day;
 <input class="form-control" id="billing_phone" placeholder="" value="" type="text" name="phone">
 <br>
 
+
+
 <?php
 
+$com=new commandesC();
+$result=$com->somme_commandes($userRow["id"]);
 
-$a=new commandesC();
-$liste=$a->afficher_panier();
-foreach($liste as $a){
 
 ?>
+
+
+<table class="table table-bordered extra-padding">
+<tbody>
+<tr>
+<th>Cart Subtotal</th>
+<td><?php echo $result ?></td>
+</tr>
+<tr>
+<th>Shipping and Handling</th>
+<td>
+Free Shipping
+</td>
+</tr>
+<tr>
+<th>Order Total</th>
+<td><strong><?php echo $result ?></strong> </td>
+</tr>
+</tbody>
+ </table>
+
 
 </div>
 <div class="text-center top-space-lg">
 <button class="btn btn-default btn-lg" type="submit" name="pay">Pay Now</button>
-<input type="hidden" name="idcom" value=<?php echo $a["idcommande"] ?>>
-<?php
-}
-?>
+<input type="hidden" name="idc" value=<?php echo $c["idclient"] ?>>
+<input type="hidden" name="idcomm" value=<?php echo $c["idcommande"] ?>>
+
 
 </div>
+
+
+
+
+
+
+
+
 </form>
 
 
@@ -265,6 +281,7 @@ foreach($liste as $a){
 
 </div>
 </div>
+
 </div>
 </section>
 

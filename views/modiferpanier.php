@@ -7,7 +7,8 @@ include "../controller/commandesC.php";
     $idp=$_POST["idplat"];
     $idc=$_POST["idclient"];
     $p=$_POST["prixtotal"];
-   $C->update_panier($idp,$idc,$test,$p);
+    $idcc=$_POST["idcomm"];
+   $C->update_panier($idp,$idc,$test,$p,$idcc);
   header('Location:afficher_cart.php');
 
 ?>

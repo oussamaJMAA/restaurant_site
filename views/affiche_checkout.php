@@ -1,4 +1,3 @@
-
 <?php
 
 include_once "../model/commandes.php";
@@ -91,7 +90,7 @@ if(empty($_SESSION['e']))
 <th>CLIENT(E)</th>
 <th>PLAT</th>
 <th>QUANTITE</th>
-<th>PRIX TOTAL</th>
+<th>PRIX</th>
 <th>DATE</th>
 <th>PHONE</th>
 <th>LOCATION</th>
@@ -134,7 +133,7 @@ foreach($liste as $c){
 <?php echo $c['quantite'] ?>
 </td>
 <td>
-<?php echo $c['prixtotal']?>
+<?php echo $c['prixtotal'].'DT'?>
 </td>
 <td>
 <?php echo $c["date"] ?>
@@ -153,6 +152,7 @@ foreach($liste as $c){
 ?>
 </tbody>
 </table>
+
 
 
 
