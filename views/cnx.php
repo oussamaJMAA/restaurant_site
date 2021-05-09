@@ -2,7 +2,7 @@
 
 
 include "../controller/UtilisateurC.php";
-
+require_once('recaptcha/recaptchalib.php');
 session_start();
 
 if(isset($_SESSION["e"]))	//check condition user login not direct back to index.php page
@@ -10,13 +10,20 @@ if(isset($_SESSION["e"]))	//check condition user login not direct back to index.
 	header("ProfilUser.php");
 }
 
+
+
+
+
+
+
 if(isset($_POST['btn_register'])) //button name "btn_register"
 {
 	$username=$_POST["login"];	//textbox name "txt_username_email"
 	$email=$_POST["email"];	//textbox name "txt_username_email"
 	$password=$_POST["password"];	
     $nom=$_POST["nom"];
-    $prenom=$_POST["prenom"];		//textbox name "txt_password"
+    $prenom=$_POST["prenom"];	
+    $gender=$_POST["genre"];	//textbox name "txt_password"
 			//textbox name "txt_password"
             if(empty($prenom)){
                 $errorMsg[]="Please enter your  first name";	//check email textbox not empty 
@@ -33,6 +40,7 @@ if(isset($_POST['btn_register'])) //button name "btn_register"
 	else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 		$errorMsg[]="Please enter a valid email address";	//check proper email format 
 	}
+  
     /*
 	else if(empty($password)){
 		$errorMsg[]="Please enter password";	//check passowrd textbox not empty
@@ -42,51 +50,431 @@ if(isset($_POST['btn_register'])) //button name "btn_register"
 	}*/
 	else
 	{	
-		try
-		{	
+        try {
             $db = config::getConnexion();
-			$select_stmt=$db->prepare("SELECT login, email FROM utilisateur
-										WHERE login=:uname OR email=:uemail"); // sql select query
-			
-			$select_stmt->execute(array(':uname'=>$username, ':uemail'=>$email)); //execute query 
-			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);	
-			if($select_stmt->rowCount() > 0){
-			if($row["login"]== $username){
-				$errorMsg[]="Sorry username already exists";	//check condition username already exists 
+            $stmt =$db->prepare("SELECT COUNT(*) AS count from utilisateur where email = :uemail"); 
+            $stmt->execute(array(':uemail'=>$email));
+              $result = $stmt->fetchAll();
+              if ($result[0]["count"] > 0) {
+               $errorMsg[]= "Email already exist";
               
-			}
-			else if($row["email"]== $email){
-				$errorMsg[]="Sorry email already exists";	//check condition email already exists 
-               
-			}
-        }
-			else if(!isset($errorMsg)) //check no "$errorMsg" show then continue
-			{
-				$new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
-				
-				$insert_stmt=$db->prepare("INSERT INTO utilisateur (nom,prenom,email,login,password) VALUES
-																(:uname,:uprenom,:uemail,:ulogin,:upassword)"); 		//sql insert query					
-				
-				if($insert_stmt->execute(array(
+              }
+              else {
+                $new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
+            
+                $stmt=$db->prepare("INSERT INTO utilisateur (nom,prenom,email,login,password,gender) VALUES
+                                                                (:uname,:uprenom,:uemail,:ulogin,:upassword,:ugender)"); 		//sql insert query					
+                
+                $stmt->execute(array(
                     ':uname'	=>$nom, 
                     ':uprenom'	=>$prenom, 
                     ':uemail'	=>$email, 
-                    ':ulogin'	=>$username, 					    			
-				':upassword'=>$new_password))){
-													
-					$registerMsg="Register Successfully..... Please Enter your username & email and password to Log In"; //execute query success message
-                    
-				}
-			}
-        
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
-	}
-}
+                    ':ulogin'	=>$username,
+                    'ugender' =>$gender, 					    			
+                ':upassword'=>$new_password));
+                $loginMsg = "Please verify your email";	
 
+                $result = $stmt->rowCount();
+                
+                if ($result > 0) {
+   
+                    $lastID = $db->lastInsertId();
+                    
+                    $url="http://localhost/final/views/activate.php?id=" . base64_encode($lastID) . "";
+                    $message=" 
+            <html>
+              <head>
+                <meta name='viewport' content='width=device-width' />
+                <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+                <title>Simple Transactional Email</title>
+                <style>
+                  /* -------------------------------------
+                      GLOBAL RESETS
+                  ------------------------------------- */
+                  img {
+                    border: none;
+                    -ms-interpolation-mode: bicubic;
+                    max-width: 100%; }
+            
+                  body {
+                    background-color: #f6f6f6;
+                    font-family: sans-serif;
+                    -webkit-font-smoothing: antialiased;
+                    font-size: 14px;
+                    line-height: 1.4;
+                    margin: 0;
+                    padding: 0;
+                    -ms-text-size-adjust: 100%;
+                    -webkit-text-size-adjust: 100%; }
+            
+                  table {
+                    border-collapse: separate;
+                    mso-table-lspace: 0pt;
+                    mso-table-rspace: 0pt;
+                    width: 100%; }
+                    table td {
+                      font-family: sans-serif;
+                      font-size: 14px;
+                      vertical-align: top; }
+            
+                  /* -------------------------------------
+                      BODY & CONTAINER
+                  ------------------------------------- */
+            
+                  .body {
+                    background-color: #f6f6f6;
+                    width: 100%; }
+            
+                  /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+                  .container {
+                    display: block;
+                    Margin: 0 auto !important;
+                    /* makes it centered */
+                    max-width: 580px;
+                    padding: 10px;
+                    width: 580px; }
+            
+                  /* This should also be a block element, so that it will fill 100% of the .container */
+                  .content {
+                    box-sizing: border-box;
+                    display: block;
+                    Margin: 0 auto;
+                    max-width: 580px;
+                    padding: 10px; }
+            
+                  /* -------------------------------------
+                      HEADER, FOOTER, MAIN
+                  ------------------------------------- */
+                  .main {
+                    background: #ffffff;
+                    border-radius: 3px;
+                    width: 100%; }
+            
+                  .wrapper {
+                    box-sizing: border-box;
+                    padding: 20px; }
+            
+                  .content-block {
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                  }
+            
+                  .footer {
+                    clear: both;
+                    Margin-top: 10px;
+                    text-align: center;
+                    width: 100%; }
+                    .footer td,
+                    .footer p,
+                    .footer span,
+                    .footer a {
+                      color: #999999;
+                      font-size: 12px;
+                      text-align: center; }
+            
+                  /* -------------------------------------
+                      TYPOGRAPHY
+                  ------------------------------------- */
+                  h1,
+                  h2,
+                  h3,
+                  h4 {
+                    color: #000000;
+                    font-family: sans-serif;
+                    font-weight: 400;
+                    line-height: 1.4;
+                    margin: 0;
+                    Margin-bottom: 30px; }
+            
+                  h1 {
+                    font-size: 35px;
+                    font-weight: 300;
+                    text-align: center;
+                    text-transform: capitalize; }
+            
+                  p,
+                  ul,
+                  ol {
+                    font-family: sans-serif;
+                    font-size: 14px;
+                    font-weight: normal;
+                    margin: 0;
+                    Margin-bottom: 15px; }
+                    p li,
+                    ul li,
+                    ol li {
+                      list-style-position: inside;
+                      margin-left: 5px; }
+            
+                  a {
+                    color: #3498db;
+                    text-decoration: underline; }
+            
+                  /* -------------------------------------
+                      BUTTONS
+                  ------------------------------------- */
+                  .btn {
+                    box-sizing: border-box;
+                    width: 100%; }
+                    .btn > tbody > tr > td {
+                      padding-bottom: 15px; }
+                    .btn table {
+                      width: auto; }
+                    .btn table td {
+                      background-color: #ffffff;
+                      border-radius: 5px;
+                      text-align: center; }
+                    .btn a {
+                      background-color: #ffffff;
+                      border: solid 1px #3498db;
+                      border-radius: 5px;
+                      box-sizing: border-box;
+                      color: #3498db;
+                      cursor: pointer;
+                      display: inline-block;
+                      font-size: 14px;
+                      font-weight: bold;
+                      margin: 0;
+                      padding: 12px 25px;
+                      text-decoration: none;
+                      text-transform: capitalize; }
+            
+                  .btn-primary table td {
+                    background-color: #3498db; }
+            
+                  .btn-primary a {
+                    background-color: #3498db;
+                    border-color: #3498db;
+                    color: #ffffff; }
+            
+                  /* -------------------------------------
+                      OTHER STYLES THAT MIGHT BE USEFUL
+                  ------------------------------------- */
+                  .last {
+                    margin-bottom: 0; }
+            
+                  .first {
+                    margin-top: 0; }
+            
+                  .align-center {
+                    text-align: center; }
+            
+                  .align-right {
+                    text-align: right; }
+            
+                  .align-left {
+                    text-align: left; }
+            
+                  .clear {
+                    clear: both; }
+            
+                  .mt0 {
+                    margin-top: 0; }
+            
+                  .mb0 {
+                    margin-bottom: 0; }
+            
+                  .preheader {
+                    color: transparent;
+                    display: none;
+                    height: 0;
+                    max-height: 0;
+                    max-width: 0;
+                    opacity: 0;
+                    overflow: hidden;
+                    mso-hide: all;
+                    visibility: hidden;
+                    width: 0; }
+            
+                  .powered-by a {
+                    text-decoration: none; }
+            
+                  hr {
+                    border: 0;
+                    border-bottom: 1px solid #f6f6f6;
+                    Margin: 20px 0; }
+            
+                  /* -------------------------------------
+                      RESPONSIVE AND MOBILE FRIENDLY STYLES
+                  ------------------------------------- */
+                  @media only screen and (max-width: 620px) {
+                    table[class=body] h1 {
+                      font-size: 28px !important;
+                      margin-bottom: 10px !important; }
+                    table[class=body] p,
+                    table[class=body] ul,
+                    table[class=body] ol,
+                    table[class=body] td,
+                    table[class=body] span,
+                    table[class=body] a {
+                      font-size: 16px !important; }
+                    table[class=body] .wrapper,
+                    table[class=body] .article {
+                      padding: 10px !important; }
+                    table[class=body] .content {
+                      padding: 0 !important; }
+                    table[class=body] .container {
+                      padding: 0 !important;
+                      width: 100% !important; }
+                    table[class=body] .main {
+                      border-left-width: 0 !important;
+                      border-radius: 0 !important;
+                      border-right-width: 0 !important; }
+                    table[class=body] .btn table {
+                      width: 100% !important; }
+                    table[class=body] .btn a {
+                      width: 100% !important; }
+                    table[class=body] .img-responsive {
+                      height: auto !important;
+                      max-width: 100% !important;
+                      width: auto !important; }}
+            
+                  /* -------------------------------------
+                      PRESERVE THESE STYLES IN THE HEAD
+                  ------------------------------------- */
+                  @media all {
+                    .ExternalClass {
+                      width: 100%; }
+                    .ExternalClass,
+                    .ExternalClass p,
+                    .ExternalClass span,
+                    .ExternalClass font,
+                    .ExternalClass td,
+                    .ExternalClass div {
+                      line-height: 100%; }
+                    .apple-link a {
+                      color: inherit !important;
+                      font-family: inherit !important;
+                      font-size: inherit !important;
+                      font-weight: inherit !important;
+                      line-height: inherit !important;
+                      text-decoration: none !important; }
+                    .btn-primary table td:hover {
+                      background-color: #34495e !important; }
+                    .btn-primary a:hover {
+                      background-color: #34495e !important;
+                      border-color: #34495e !important; } }
+            
+                </style>
+              </head>
+              <body>
+                <table border='0' cellpadding='0' cellspacing='0' class='body' style='padding-top:2%'>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class='container'>
+                      <div class='content'>
+            
+                        <!-- START CENTERED WHITE CONTAINER -->
+                        <span class='preheader'>New Contact Form Entry.</span>
+                        <table class='main'>
+            
+                        <tr>
+                            <td class='wrapper'>
+                              <table border='0' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                  <td><center>
+                                    <p><img src='https://i.pinimg.com/originals/de/0a/ed/de0aedebc6d17dc16a269a13921f5492.jpg' width='70%' height='20%'></p>
+                                    <p><h2>New user registration</h2></p></center>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                          
+                          <!-- START MAIN CONTENT AREA -->
+                          <tr>
+                            <td class='wrapper'>
+                              <table border='0' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                  <td>
+                                    <p>Hi, $nom</p>
+                                    <p>We have received a new signup request from this email address.</p>
+                                    <p>Click on the button below to confirm your email address.</p>
+                                    <p> <center><a href=".$url." target='_blank' style='width:80%; display: inline-block; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db;'>Verify Email</a></center></p>
+                                    <p>Thanks for registring with us.</p>
+                                    <p>If you have not performed this activity, then please ignore this email.</p>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+            
+                        <!-- END MAIN CONTENT AREA -->
+                        </table>
+            
+                        <!-- START FOOTER -->
+                        <div class='footer'>
+                          <table border='0' cellpadding='0' cellspacing='0'>
+                            <tr>
+                              <td class='content-block'>
+                                <span class='apple-link'>Yummyfood, Tunisia</span>
+                                <br> This is mandatory service email sent to you by Yummyfood.
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class='content-block powered-by'>
+                                Powered by <a href='#'>yummyfood</a>.
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                        <!-- END FOOTER -->
+            
+                      <!-- END CENTERED WHITE CONTAINER -->
+                      </div>
+                    </td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+              </body>
+            </html>";
+                    
+            require_once "phpmailer/class.phpmailer.php";
+                    // php mailer code starts
+                    $mail = new PHPMailer(true);
+                    $mail->IsSMTP(); // telling the class to use SMTP
+            
+                    //$mail->SMTPDebug = 0;                     // enables SMTP debug information (for testing)
+                    $mail->SMTPAuth = true;                  // enable SMTP authentication
+                    $mail->SMTPSecure = "tls";                 // sets the prefix to the server
+                    $mail->Host = 'smtp.gmail.com';     // replace with your SMTP server
+                    $mail->Port = 587;                   // set the SMTP port for the your server
+            
+                    $mail->Username = 'jemaaoussama64@gmail.com';          // SMTP username
+            $mail->Password = 'rourousousou9899@.'; //put the password here
+            
+            $mail->setFrom('jemaaoussama64@gmail.com', 'oussama jemaa'); //replace with your values
+                    $mail->AddAddress($email);
+            
+                    $mail->Subject = trim("Email Verification - Yummyfood"); //email subject body
+                    $mail->MsgHTML($message);
+            
+                    try {
+                      $mail->send();
+                      $msg = "Successfully Registered! Please verify your email.";
+                      $msgType = "success";
+                    } catch (Exception $ex) {
+                      $msg = $ex->getMessage();
+                    }
+                  } else {
+                    $msg = "Failed to create User";
+                    $msgType = "danger";
+                  }
+                }
+              } catch (Exception $ex) {
+                echo $ex->getMessage();
+              }
+            }
+
+
+
+
+
+
+
+
+
+              }     
 
 if(isset($_POST['btn_login']))	//button name is "btn_login" 
 {
@@ -113,19 +501,35 @@ if(isset($_POST['btn_login']))	//button name is "btn_login"
 			$select_stmt->execute(array(':ulogin'=>$username, ':uemail'=>$email));	//execute query with bind parameter
 			$row=$select_stmt->fetch(PDO::FETCH_ASSOC);
 			
-			if($select_stmt->rowCount() > 0)	//check condition database record greater zero after continue
+			if($select_stmt->rowCount() > 0)	
 			{ 
-                if( $_POST["email"]=="admin"&&$_POST["password"]=="admin"){
+
+
+
+
+if (($row['role']=='admin')&&($username==$row["login"])&&($password==$row["password"])){
+ 
+
+  $_SESSION["e"] = $row["email"];	//session name is "user_login"
+							//user login success message
+						header("Location: tables.php");
+}
+
+             /*   if( $_POST["email"]=="admin"&&$_POST["password"]=="admin"){
                     
-                    header('Location:tables.php');
-            }
+              
+            }*/
                
 				if($username==$row["login"] OR $email==$row["email"]) //check condition user taypable "username or email" are both match from database "username or email" after continue
 				{
                     if(password_verify($password, $row["password"]))
 					//if($password==$row["password"])check condition user taypable "password" are match from database "password" using password_verify() after continue
 					{
-						$_SESSION["e"] = $row["email"];	//session name is "user_login"
+						$_SESSION["e"] = $row["email"];
+        
+            
+            
+            	//session name is "user_login"
 						$loginMsg = "Successfully Login...";		//user login success message
 						header("refresh:2; ProfilUser.php");			//refresh 2 second after redirect to "welcome.php" page
 					}
@@ -419,8 +823,22 @@ var password = document.getElementById("pass").value;
                 </div>
                 </div>
 
+                <div class="row">
+                <div class="form-group">
+                <div class="col-md-12">
+                <label>Gender</label>
+<br><br>
+<label class="radio-inline"><input type="radio" name="genre" value="Male"required>Male</label>
+<label class="radio-inline"><input type="radio" name="genre" value="Female"required>Female</label>
 
 
+
+
+
+</div>
+</div>
+</div>
+<br>
                 <div class="row">
                     <div class="form-group">
                     <div class="col-md-12">
@@ -430,6 +848,10 @@ var password = document.getElementById("pass").value;
                     </div>
                     </div>
 
+
+
+
+
                     <div class="row">
                         <div class="form-group">
                         <div class="col-md-12">
@@ -438,14 +860,6 @@ var password = document.getElementById("pass").value;
                         </div>
                         </div>
                         </div>
-
-
-
-
-
-
-
-
 
         <div class="clearfix space20"></div>
         <div class="row">
@@ -464,6 +878,8 @@ var password = document.getElementById("pass").value;
         <div class="col-md-12">
          <div class="space20"></div>
          <span class="error" id="errorname1"></span>
+         
+        
         <button type="submit" name="btn_register" class="btn btn-default pull-right">Register</button>
         </div>
         </div>
@@ -664,7 +1080,7 @@ Wide
 <div class="btn-settings"></div>
 </div>
 
-
+<script src='https://www.google.com/recaptcha/api.js' async defer ></script>
 <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/vendor/jquery-1.11.2.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/jquery.flexslider-min.js"></script>

@@ -1,3 +1,5 @@
+
+
 <?php
 include_once "../model/utilisateur.php";
 include "../controller/UtilisateurC.php";
@@ -44,7 +46,7 @@ hedha iji ta7t el body <div id="error">
   $error="";
   if(isset($_POST['nom']) && isset($_POST['prenom'])
   &&isset($_POST['email'])&& isset($_POST['login'])
-  && isset($_POST['password']))
+  && isset($_POST['password'])&&!empty($_POST['password']))
   {
       $nom=$_POST['nom'];
       $prenom=$_POST['prenom'];
@@ -60,8 +62,11 @@ hedha iji ta7t el body <div id="error">
   }
   else
       $error="";
-?>
 
+   
+
+  
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -82,94 +87,11 @@ hedha iji ta7t el body <div id="error">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
-<link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="bootstrap/css/style.css">
-<script src="bootstrap/js/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <!--[if lt IE 9]>
             <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
         <![endif]-->
 </head>
-
-
-<script> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-         function validateForm()                                 
-         { 
-
-     
-
-
-            
-             var pass=document.forms["form1"]["password"];
-             //contorle de saisie pour le prenom 
-            
-
-
-
-var password = document.getElementById("pass").value;
-        var confirmPassword = document.getElementById("pass1").value;
-        if (password != confirmPassword) {
-            //alert("Passwords do not match.");
-            document.getElementById('errorname1').innerHTML="password doesn't match";  
-                 
-            return false;
-        }
-        else{
-                 document.getElementById('errorname1').innerHTML=""; 
-  
-        }
-        var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-
-if(pass.value.match(passw)) {
-  
-    document.getElementById('errorname1').innerHTML=""; 
-            
-             }
-             else{
-                document.getElementById('errorname1').innerHTML="Invalid Password";  
-             return false ;
-             }
-
-
-
-
-
-         }
-
-
-
-
-*/
-
-
-
-      </script> 
-      <style>
+<style>
          .error{
             color: #D8000C;
             background-color: #FFBABA;
@@ -243,30 +165,53 @@ height: 225px;
 
 
 
-
-
-
-
-
-
 <body>
 <!--[if lt IE 8]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
+
 <div id="error">
 	<?php echo $error;?>
 	</div>
 	<div>
+ 
 	<?php
-	if($suc==1)
-	$userC->update($u1);?>	
-	
-    <?php
-if(isset($_POST['delete'])){
-  $userC->delete($u1);
-  header('Location:deconnexion.php');
-}
-?>
+	if($suc==1){
+        
+        if ( preg_match ( " /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/ " , $password ) )
+        {
+            $userC->update($u1);
+        ?>
+                                                                        
+<div class="alert alert-success">
+				<strong><?php echo "password changed succesfully"; ?></strong>
+			</div>
+        <?php
+        }  else {
+        ?>
+        <?php
+      
+?><div class="alert alert-danger">
+<strong><?php echo "wrong password" ?></strong>
+</div>
+<?php
+        }
+		?>
+<?php 
+  if(isset($_POST['delete'])){
+    
+    $userC->delete($u1);
+    header(" Location :deconnexion.php");}
+  }
+    ?>
+
+
+
+    
+
+
+
+ 
 	</div>
 	<div>
 
@@ -274,40 +219,24 @@ if(isset($_POST['delete'])){
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Settings</h2>
+<h2 class="text-uppercase">Reservation</h2>
 <p>Welcome to YummyFood !</p>
 </div>
 </div>
 </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="reservation">
 <div class="container">
 <div class="row">
 <div class="col-md-12">
 <div class="page-header wow fadeInDown">
-<h1>Account Settings<small>Change your password. Upload a photo. Delete your Account</small></h1>
+<h1>Reservations<small>Book a table online. Leads will reach in your email.</small></h1>
 </div>
 </div>
 </div>
 <div class="reservation-form wow fadeInUp">
-<p class="error" id="errorname1"></p>
-<form action=""  name="form1"  onsubmit="return validateForm()"method="POST">
+<form action="" method="POST">
 <div class="row">
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
@@ -318,15 +247,15 @@ if(isset($_POST['delete'])){
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label for="name">Enter your new password</label>
-<input type="password" class="form-control"  id="pass" name="password" placeholder="Enter your new password"  >
+<label for="name">Your Email Adress</label>
+<input type="text" class="form-control" value="<?php print($userRow['email']) ?>"   name="email" placeholder="Enter your Email Adress"  >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label  style="color:white" for="timepicker">Time</label>
-<input type="text" class="form-control"   value="<?php print($userRow['email']) ?>" name="email" placeholder="Pick a time"  style="display:none">
+<input type="text" class="form-control"  name="prenom" placeholder="Pick a time"  style="display:none">
 
 </div>
 </div>
@@ -346,8 +275,8 @@ if(isset($_POST['delete'])){
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label for="phone">Confirm your Password </label>
-<input type="password"   id="pass1" name="prenom" class="form-control"  placeholder="Enter your New Password" >
+<label for="phone">New Password </label>
+<input type="text"  name="password" class="form-control"  placeholder="Enter your New Password" >
 
 </div>
 </div>
@@ -357,22 +286,13 @@ if(isset($_POST['delete'])){
 <div id="js-reservation-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>
 <br>
 <br>
-
 <h6>To delete your Account press this button</h6>
-<form action=""  method="POST">
-
- 
 <button style="color:red" type="submit" name="delete" class="glyphicon glyphicon-trash" ></button>
-</form>
-
-
 </div>
 </div>
 </div>
 </form>
 </div>
-
-
 <!-- uplaod an image -->
 <form action="addim.php" method="post" enctype="multipart/form-data" name="addroom">
   
@@ -414,7 +334,15 @@ catch(PDOException $e)
 
 
 
+
+
+
+
+
+
+
 <div class="reservation-footer">
+
 
 </section>
 

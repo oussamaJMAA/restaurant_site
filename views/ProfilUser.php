@@ -3,6 +3,7 @@
 include "../controller/UtilisateurC.php";
 session_start();
 // On teste si la variable de session existe et contient une valeur
+
 if(empty($_SESSION['e']))
 {
     // Si inexistante ou nulle, on redirige vers le formulaire de login
@@ -53,9 +54,14 @@ if(empty($_SESSION['e']))
 <link rel="stylesheet" href="css/main.css">
 <!--[if lt IE 9]>
             <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
+       
         <![endif]-->
 
-
+<style>
+.sp{
+    margin-top:13px;
+}
+</style>
 <script>
     ! function(f, b, e, v, n, t, s) {
         if (f.fbq) return;
@@ -197,8 +203,8 @@ if(empty($_SESSION['e']))
 <a href="test2.php"  > <span class="glyphicon glyphicon-cog"></span></a>
 
 </li>
-<li><img  style ="margin-top:13px" src="<?php echo $userRow['location']; ?>" class="img-rounded" width="32x" height="32px" /></li>
-
+<li><img   id="current_photo" style ="margin-top:13px" src="<?php echo $userRow['location']; ?>"  onerror="this.onerror=null; this.src='img/default.png'" class="img-rounded" width="32x" height="32px" /></li>
+<li><a href="#"><?php echo $userRow['login']; ?></a></li>
 <!--
 <button><a href="deconnexion.php">Déconnecter</a></button>
 <button><a href="test2.php">Account settings</a></button> -->
@@ -219,7 +225,7 @@ if(empty($_SESSION['e']))
 </div>
 
 <h1>DELICIOUS Food</h1>
-<h2>Welcome <?php print($userRow['prenom']) ?> to YummyFood !</h2>
+<h2>Welcome <?php echo $userRow['prenom'];?> to YummyFood !</h2>
 </div>
 <div class="scroll-down hidden-xs">
 <a href="#about">
