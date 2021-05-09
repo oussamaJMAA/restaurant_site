@@ -98,7 +98,7 @@ if(empty($_SESSION['e']))
 
 $c=new commandesC();
 $a=new commandesC();
-$liste=$c->afficher_panier();
+$liste=$c->afficher_panier($userRow['id']);
 foreach($liste as $c){
 
 ?>
@@ -175,6 +175,44 @@ foreach($liste as $c){
 </tbody>
 </table>
 
+<script>
+
+function verif(){
+var phone =document.forms["form-checkout"]["phone"];
+
+
+var t = /^\d{8}$/;
+var t1 = /^\d{4}$/;
+if (!(isNaN(phone)) || phone.value.match(t) ){
+
+    document.getElementById('errorname').innerHTML=""; 
+          
+        }
+        else{
+           document.getElementById('errorname').innerHTML="Votre Telephone est Invalide";  
+        return false ;
+        }
+
+
+
+}
+
+
+</script>
+
+<style>
+         .error{
+            color: #D8000C;
+            background-color: #FFBABA;
+            text-align:center;
+            border-radius:25px;
+            
+         }
+     
+      </style>
+
+
+
 
 <div class="text-center top-space-lg">
 <button class="btn btn-success" type="submit" onclick="window.open('shop_checkout.php', '_self')">Checkout</button>
@@ -182,7 +220,9 @@ foreach($liste as $c){
     </div>
 <br>
 <br>
-<form method="post" action="shop_account_detail.php">
+
+<p class="error" id="errorname"></p>
+<form method="post" action="shop_account_detail.php" name="form-checkout" onsubmit="return verif()">
 
 <div class="row">
 
@@ -218,7 +258,7 @@ $year = date('Y');
 
 $today = $year . '-' . $month . '-' . $day;
 ?>
-<input type="date" value="<?php echo $today; ?>" class="form-control" id="date" name="date">
+<input type="date" value="<?php echo $today; ?>" class="form-control" id="date" name="date" min="<?php $Date=date('Y-m-d');echo $Date;?>">
 
 
 

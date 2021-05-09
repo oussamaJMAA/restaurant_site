@@ -67,7 +67,7 @@ $datee=$_POST['dater'];
 $timee=$_POST['time'];
 $geustss=$_POST['guests'];
 $phonee=$_POST['phone2'];
-$message='<h2>Bonjour</h2>'.'<h1>'.$fname.'</h1>'.'<h2>Votre Reservation est confirmé Merci D\'être à l\'heure :</h2>';
+$message='<h3>Bonjour, '.$fname.'</h3>'.'<h3>Votre Reservation est confirmé Merci D\'être à l\'heure :</h3>';
 $mail->isSMTP();                            // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                     // Enable SMTP authentication
@@ -82,11 +82,12 @@ $mail->addAddress($toemail);   // Add a recipient
 // $mail->addBCC('bcc@example.com');
 
 $mail->isHTML(true);  // Set email format to HTML
-$mail->AddEmbeddedImage("img/nav-logo11.png", "logo", "img/nav-logo11.png");
+$mail->AddEmbeddedImage("logo.png", "logo", "YummyFood!");
 
 $mail->Subject =$subject;
-
-$bodyContent = $message.'<h1>'.$datee.'</h1>'.'<h1>'.$timee.'</h1>';
+$nbinv='<h3>Le Nombre Des Invités : '.$geustss.'</h3>';
+$datentime='<h3>Reservation le : '.$datee.' à '.$timee.'</h3>';
+$bodyContent = $message.$datentime.$nbinv;
 
 $mail->Body = $bodyContent;
 
@@ -192,24 +193,6 @@ return false;
 }
  
 
-function dateMin(){
-    var today= new Date();
-var dd= today.getDate();
-var mm=today.getMonth()+1;
-var yyyy= today.getFullYear();
-if(dd<10){
-    dd='0'+dd;
-}
-if(mm<10){
-    mm='0'+mm;
-}
-today=yyyy+'-'+mm+'-'+dd;
-document.getElementById("dater").setAttribute("min",today);
-
-
-
-}
-
 
 </script>
       <style>
@@ -282,7 +265,15 @@ document.getElementById("dater").setAttribute("min",today);
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="datepicker">Date</label>
- <input type="date" name="dater" id ="dater" class="form-control" placeholder="Pick a date" title="Please choose a date">
+<?php 
+
+$month = date('m');
+$day = date('d');
+$year = date('Y');
+
+$today = $year . '-' . $month . '-' . $day;
+?>
+ <input type="date" name="dater" id ="dater" class="form-control" value="<?php echo $today; ?>" placeholder="Pick a date" title="Please choose a date" min="<?php $Date=date('Y-m-d');echo $Date;?>">
 
 </div>
 </div>
@@ -291,7 +282,7 @@ document.getElementById("dater").setAttribute("min",today);
 <div class="form-group">
 <label for="name" >Your Name</label>
 
-<input type="text" class="form-control name" id="name2" value="<?php print($userRow['login']) ?>" name="name" placeholder="Full Name" title="Your Full Name please" > 
+<input type="text" class="form-control name" id="name2" value="<?php print($userRow['login']) ?>" name="name" placeholder="Full Name" title="Your Full Name please" disabled > 
 
 <i class="fa fa-pencil-square-o"></i>
 
@@ -307,7 +298,7 @@ document.getElementById("dater").setAttribute("min",today);
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="email">Email Address</label>
-<input type="text" class="form-control" id="email" name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID" title="Please enter your email id" >
+<input type="text" class="form-control" id="email" name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID" title="Please enter your email id" disabled>
 <i class="fa fa-envelope-o"></i>
 
 
@@ -335,10 +326,6 @@ document.getElementById("dater").setAttribute("min",today);
 </div>
 </div>
 </div>
-
-<a href="modifier_res.php"> Modify a Reservation </a>
-<br>
-<a href="supprimer_res.php"> Delete a Reservation </a>
 
 </form>
 </div>

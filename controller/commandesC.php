@@ -31,24 +31,33 @@ class commandesC{
     }
 
 
-    public function afficher_panier()
-    { //affichage panier
-        $sql="select idcommande,idclient,idplat,quantite,prixtotal from commandes";
-        $db=config::getConnexion();
 
+
+
+
+    public function afficher_panier($idclient)
+    { //affichage tout les commandes
+        $sql="select * from commandes where idclient=:idclient";
+        $db=config::getConnexion();
+        $req=$db->prepare($sql);
+        $req->bindValue(':idclient',$idclient);
         try
         {
-            $liste=$db->query($sql);
-       
-return $liste;
+            $req->execute();
+           // $query->execute();
+    return $req;
             
-
+    
         }
         catch(Exeption $e)
         {
             die('Erreur: '.$e->getMessage());
         }
     }
+
+
+
+
 
     public function update_panier($idplat,$idclient,$quantite,$prixtotal,$idcommande){
         //update quantite et prixtotal
@@ -289,6 +298,29 @@ return $req;
     }
 
 }
+
+
+
+public function delete_cB($idcommande){
+    //supprimer m panier
+            $sql="DELETE FROM commandes where idcommande = :idcommande"  ;
+            $db=config::getConnexion();
+    
+            try
+            {
+                $query=$db->prepare($sql);
+             $query->execute([
+                    'idcommande'=>$idcommande
+               
+          ]);
+                
+            }
+            catch(Exeption $e)
+            {
+                die('Erreur: '.$e->getMessage());
+            }
+          
+            }
 
 
 

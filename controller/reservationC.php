@@ -73,22 +73,24 @@ return $liste;
         }
     }
     
-    public function update($res){
-        
-        $sql="UPDATE reservation SET  date  = :date, time = :time, guests = :guests where full_name = :full_name and phone= :phone and email= :email" ;
+
+
+    public function update($id,$date,$time,$guests,$phone,$email){
+      
+        $sql="UPDATE reservation SET  date  = :date, time = :time, guests = :guests , phone=:phone where id= :id and email=:email" ;
 
         $db=config::getConnexion();
         try
         {
             $query=$db->prepare($sql);
             $query->execute([
-                'date'=>$res->getdate(),
-                'time'=>$res->gettime(),
-                'guests'=>$res->getguests(),
-                'full_name'=>$res->getfull_name(),
-                'phone'=>$res->getphone(),
-                'email'=>$res->getemail()
-                
+                'id'=>$id,
+                'date'=>$date,
+                'time'=>$time,
+                'guests'=>$guests,
+                'phone'=>$phone,
+                'email'=>$email
+         
             ]);
         }
         catch(Exeption $e)
@@ -98,6 +100,9 @@ return $liste;
 
 
     }
+
+
+
 
     public function delete($res){
 
@@ -177,6 +182,25 @@ return $req;
 }
 
 
+public function afficher_res_client($s){
+    $sql="SELECT * from reservation where email= :s ";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+    $req->bindValue(':s',$s);
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+
+}
         
         }
 

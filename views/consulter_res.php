@@ -34,7 +34,7 @@ if(empty($_SESSION['e']))
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/reservation.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:31 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Ajout Reservation</title>
+<title>Afficher Reservation</title>
 <meta name="author" content="Surjith S M">
 
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
@@ -51,6 +51,29 @@ if(empty($_SESSION['e']))
 <!--[if lt IE 9]>
             <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
         <![endif]-->
+        
+<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/vendor/jquery-1.11.2.min.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/vendor/jquery.flexslider-min.js"></script>
+<script src="js/vendor/spectragram.js"></script>
+<script src="js/vendor/owl.carousel.min.js"></script>
+<script src="js/vendor/velocity.min.js"></script>
+<script src="js/vendor/velocity.ui.min.js"></script>
+<script src="js/vendor/bootstrap-datepicker.min.js"></script>
+<script src="js/vendor/bootstrap-clockpicker.min.js"></script>
+<script src="js/vendor/jquery.magnific-popup.min.js"></script>
+<script src="js/vendor/isotope.pkgd.min.js"></script>
+<script src="js/vendor/slick.min.js"></script>
+<script src="js/vendor/wow.min.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/vendor/vegas/vegas.min.js"></script>
+<script src="js/vendor/jquery.mb.YTPlayer.js"></script>
+<script src="js/vendor/jquery.stellar.js"></script>
+<script src="js/main.js"></script>
+<script src="js/vendor/mc/jquery.ketchup.all.min.js"></script>
+<script src="js/vendor/validate.js"></script>
+<script src="js/reservation.js"></script>
+<script src="js/vendor/mc/main.js"></script>
 </head>
 
 
@@ -148,12 +171,95 @@ if(empty($_SESSION['e']))
 <th> Guests </th>
 <th> DATE </th>
 <th>TIME</Th>
+<th> UPDATE </th>
+<th>DELETE</Th>
 </tr>
 
 
 
 
 
+
+
+<script>
+
+
+
+function verif()                                 
+         { 
+       
+     
+     var phone = document.forms["form1"]["phone"];
+              var adresse = document.forms["form1"]["email"];
+       
+        //Controle de saise pour le mail 
+
+        var  re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(adresse.value.match(re)) {
+  
+  document.getElementById('errorname').innerHTML=""; 
+          
+           }
+           else{
+              document.getElementById('errorname').innerHTML="Votre Email est Invalide";  
+           return false ;
+           }
+
+//Control de saisie de Tel
+
+
+var t = /^\d{8}$/;
+if (!(isNaN(phone)) || phone.value.match(t) ){
+
+    document.getElementById('errorname').innerHTML=""; 
+          
+        }
+        else{
+           document.getElementById('errorname').innerHTML="Votre Telephone est Invalide";  
+        return false ;
+        }
+
+     
+            var date=document.forms["form1"]["dater"];
+     var today=new Date();
+     var dd=today.getDate();
+     var mm=today.getMonth()+1;
+     var yy=today.getFullYear();
+var dispo= dd+'-'+mm+'-'+yy;
+     if(date.value === ""){
+    document.getElementById('errorname').innerHTML="Vous Devez Choisir Un date <br> Nous Somme Disponible a partir de " +dispo;
+return false;
+     }
+
+
+var time=document.forms["form1"]["timepicker"];
+if(time.value===""){
+    document.getElementById('errorname').innerHTML="Vous Devez Choisir L heure de reservation detaillé <br> Nous somme Disponible Jusqu a 11:00pm";
+    return false;
+}
+var guests=document.forms["form1"]["guests"];
+if(guests.value > 10 || guests.value < 1 ){
+    document.getElementById('errorname').innerHTML="Le Nombre Des Invites doit etre entre 1 et 10 ";
+return false;
+
+}
+
+
+}
+ 
+
+
+</script>
+      <style>
+         .error{
+            color: #D8000C;
+            background-color: #FFBABA;
+            text-align:center;
+            border-radius:25px;
+            
+         }
+     
+      </style>
 
 
 
@@ -168,20 +274,42 @@ $liste=$res->consulter_res($a);
 foreach($liste as $res){
 
 ?>
-
+<p class="error" id="errorname"></p>
 <tr>
 
-<td> <?php echo $res['full_name']; ?>
+<form method="post" action="updateres.php" name="form1" onsubmit="return verif()">
+<td> <input type="text" class="form-control" id="name" name="name" value="<?php print($userRow['login']) ?>" placeholder="Full Name" title="Your Full Name please" style="background-color:rgba(0,0,0,0);width:100px;border-color:rgba(0,0,0,0)"disabled>
 </td>
-<td> <?php echo $res['email']; ?>
+<td> <input type="text" class="form-control" id="name" name="name" value="<?php print($userRow['email']) ?>" placeholder="Full Name" title="Your Full Name please" style="background-color:rgba(0,0,0,0);width:210px;border-color:rgba(0,0,0,0)"disabled>
 </td>
-<td> <?php echo $res['phone']; ?>
+<td><input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your Phone Number" value="<?php print($res['phone']) ?>" title="Please enter your phone number" style="background-color:rgba(0,0,0,0);width:89px;border-color:rgba(0,0,0,0)" required>
 </td>
-<td> <?php echo $res['guests']; ?>
+<td> <input type="text" class="form-control" id="guests" name="guests" placeholder="Number of Guests" value="<?php print($res['guests']) ?>" title="Please enter your phone number" style="background-color:rgba(0,0,0,0);width:50px;border-color:rgba(0,0,0,0)" required>
 </td>
-<td> <?php echo $res['date']; ?>
+<td>  <input type="date" name="dater" class="form-control"  placeholder="Pick a date" value="<?php print($res['date']) ?>" title="Please choose a date" min="<?php $Date=date('Y-m-d');echo $Date;?>" style="background-color:rgba(0,0,0,0);width:170px;border-color:rgba(0,0,0,0)" required>
+
 </td>
-<td> <?php echo $res['time']; ?>
+<td><input type="text" class="form-control" id="timepicker" name="time" value="<?php print($res['time']) ?>" placeholder="Pick a time" title="Choose Preferred Time" style="background-color:rgba(0,0,0,0);width:80px;border-color:rgba(0,0,0,0)" required>
 </td>
+<td> <input type="submit" value="UPDATE" name="update">
+<input type="hidden" value=<?PHP echo $res['id']; ?> name="id">
+<input type="hidden" value=<?PHP echo $userRow['email']; ?> name="email">
+</td>
+
+
+
+</form>
+
+
+
+<form method="post" action="supprimer_res.php">
+<td> <input type="submit" value="DELETE" name="delete">
+<input type="hidden" value=<?PHP echo $res['id']; ?> name="id">
+</td>
+
+</form>
 </tr>
+
 <?php } ?>
+</body>
+</html>

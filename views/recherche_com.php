@@ -31,9 +31,7 @@
 if(isset($_POST['btn-search'])&& isset($_POST['search'])){
     header("Location:recherche_com.php");
 }
-else{
-    echo "Search ?";
-}
+
 ?>
 
             <!-- Navbar-->
@@ -155,6 +153,7 @@ else{
                                                 <th>PHONE</th>
                                                 <th>ADRESSE</th>
                                                 <th>PRIX COMMANDE</th>
+                                                <th>CONFIRMATION</th>
                                                 <th> DELETE</th>
                                                 <th> PRINT </th>
 				                                
@@ -200,7 +199,7 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 </td>
 <td> <?php echo $com['date']; ?>
 </td>
-<td> <?php echo $com['prixtotal']; ?>
+<td> <?php echo $com['prixtotal'].'DT'; ?>
 </td>
 <td> <?php echo $com['phone']; ?>
 </td>
@@ -216,18 +215,31 @@ $result=$bb->somme_commandes($com["idclient"]);
 ?>
 
 <td> 
-<?php echo $result ?>
+<?php echo $result.'DT' ?>
 </td>
 
 
+<?php
+if(($com["location"])==""&&($com["phone"])==0){
+    $confirmation="NOT CONFIRMED";
+}else{
+
+$confirmation="CONFIRMED";}
+?>
+
+
+<td> 
+<?php echo $confirmation ?>
+</td>
 
 <td>
 <form method="POST" action="supprimer_c.php">
 						<input type="submit" name="Delete" value="Delete">
 					
-                        <input type="hidden" value=<?PHP echo $com['date']; ?> name="date">
+                        <input type="hidden" value=<?PHP echo $com['idcommande']; ?> name="idcommande">
 						</form>
 					</td>
+	
 	
 <td>
 <form method="POST" action="printfact.php">

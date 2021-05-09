@@ -87,20 +87,22 @@ if(empty($_SESSION['e']))
 <table class="cart-table table table-bordered">
 <thead>
 <tr>
-<th>&nbsp;</th> <!-- delete-->
+
 <th>&nbsp;</th> <!-- image plat-->
 <th>NOM PLAT</th>
 <th>CLIENT(E)</th>
 <th>QUANTITE</th>
-<th>PRIX</th>
-
+<th>PRIX PLAT</th>
+<th>PRIX TOTAL</th>
+<th>UPDATE</th> <!-- Update-->
+<th>DELETE</th> <!-- delete-->
 </tr>
 </thead>
 <?php
 
 $c=new commandesC();
 $a=new commandesC();
-$liste=$c->afficher_panier();
+$liste=$c->afficher_panier($userRow['id']);
 foreach($liste as $c){
 
 ?>
@@ -121,63 +123,60 @@ foreach($liste as $c){
 	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
 	?>
 
+
+
+
 <tr>
 
-<td>
-
-<form method="post" action="supprimerpanier.php" >
-
-<button class="btn btn-success" type="submit" name="efface">Delete</button>
-<!--<input type="submit" name="modif" value="Update Cart">-->
-
-<input type="hidden" name="idpf" value=<?php echo $row["id_plat"] ?>>
-
-<input type="hidden" name="idcf" value=<?php echo $c["idclient"] ?>>
-
-
-</form>
-
-
-
-
-
-
-
-</td>
-
-<td>
-<img  src="img/shop/<?php echo $row['image_plat']; ?>">
-</td>
-<td>
-<a href="test3.php"><?php echo $row['nom_plat']; ?></a>
-</td>
-
-<td>
-<span class="amount"><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
-</td>
-<td>
-
 <form method="post" action="modiferpanier.php">
-<input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
-<br>
-<br>
-<button class="btn btn-success" type="submit" name="modif">Update</button>
-<!--<input type="submit" name="modif" value="Update Cart">-->
+<td> <img  src="img/shop/<?php echo $row['image_plat']; ?>">
+</td>
+<td><a href="test3.php"><?php echo $row['nom_plat']; ?></a>
+</td>
+<td><span class="amount" disabled><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
+</td>
+<td><input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
+</td>
+<td> <input type="text" value=<?php echo $row["prix_plat"].'DT' ?>  name="prixtotal" style="width:57px;border-color:rgba(0,0,0,0)" disabled>
+
+</td>
+<td><input type="text" class="amount" value=<?php echo $c['prixtotal'].'DT'; ?> style="width:57px;border-color:rgba(0,0,0,0)" disabled>
+</td>
+<td> <input type="submit" value="UPDATE" name="update">
 
 <input type="hidden" name="idplat" value=<?php echo $c["idplat"] ?>>
 
 <input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
 <input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
 <input type="hidden" name="idcomm" value=<?php echo $c["idcommande"] ?>>
+</td>
+
+
+
 </form>
 
 
-</td>
-<td>
-<span class="amount"><?php echo $c['prixtotal'].'DT'; ?></span>
+
+<form method="post" action="supprimerpanier.php">
+<td> <input type="submit" value="DELETE" name="delete">
+<input type="hidden" value=<?PHP echo $row['id_plat']; ?> name="idpf">
+<input type="hidden" value=<?PHP echo $c['idclient']; ?> name="idcf">
 </td>
 
+</form>
 </tr>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <?php
     
