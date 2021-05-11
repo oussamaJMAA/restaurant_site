@@ -140,7 +140,11 @@ img{
 height: 225px;
 }
 
-
+#del{
+    position:relative ; 
+    top:50%;
+    left:50%;
+}
 
 
 
@@ -196,12 +200,20 @@ height: 225px;
 </div>
 <?php
         }
-		?>
+        
+?>
+
+
+
+
+
+
+
+
+
+
+
 <?php 
-  if(isset($_POST['delete'])){
-    
-    $userC->delete($u1);
-    header(" Location :deconnexion.php");}
   }
     ?>
 
@@ -284,15 +296,20 @@ height: 225px;
 <div class="reservation-btn">
 <button type="submit"   class="btn btn-default btn-lg" >Save Changes</button>
 <div id="js-reservation-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>
+
 <br>
 <br>
-<h6>To delete your Account press this button</h6>
-<button style="color:red" type="submit" name="delete" class="glyphicon glyphicon-trash" ></button>
+
 </div>
 </div>
 </div>
 </form>
 </div>
+<form method="post" action="delete_account.php">
+<h6>To delete your Account press this button</h6>
+<button id="del" style="color:red" type="submit" name="delete" class="glyphicon glyphicon-trash" ></button>
+<input type="text" class="form-control" value="<?php print($userRow['email']) ?>"   name="email" placeholder="Enter your Email Adress" style="display:none" >
+</form>
 <!-- uplaod an image -->
 <form action="addim.php" method="post" enctype="multipart/form-data" name="addroom">
   
