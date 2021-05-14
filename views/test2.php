@@ -13,7 +13,6 @@ if(empty($_SESSION['email']))
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/reservation.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:31 GMT -->
 <head>
 <meta charset="utf-8">
 <title>Tomato Responsive Restaurant HTML5 Template</title>
@@ -30,15 +29,79 @@ if(empty($_SESSION['email']))
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
-<!--[if lt IE 9]>
-            <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
-        <![endif]-->
+
 </head>
+
+<script>
+
+
+function verifier()                                 
+         { 
+      
+            
+             var pass=document.forms["form1"]["password"];
+           
+            
+
+
+//controle de saise pour le mot de passe 
+ //To check a password between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter
+var passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+if(pass.value!=""){
+if(pass.value.match(passw)) {
+
+    document.getElementById('errorname1').innerHTML=""; 
+            
+             }
+             else{
+                document.getElementById('errorname1').innerHTML="wrong password";  
+             return false ;
+             }
+     
+
+
+
+var password = document.getElementById("pass").value;
+        var confirmPassword = document.getElementById("pass1").value;
+        if (password != confirmPassword) {
+            //alert("Passwords do not match.");
+            document.getElementById('errorname1').innerHTML="passwords don't match";  
+                 
+            return false;
+        }
+        else{
+                 document.getElementById('errorname1').innerHTML=""; 
+  
+        }
+
+
+         
+}
+
+
+         }
+
+
+      </script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
          .error{
             color: #D8000C;
             background-color: #FFBABA;
-            
+            font-size:20px;
          }
         button a{
              color:black;
@@ -95,7 +158,7 @@ height: 225px;
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Reservation</h2>
+<h2 class="text-uppercase">Account Settings</h2>
 <p>Welcome to YummyFood !</p>
 </div>
 </div>
@@ -107,31 +170,32 @@ height: 225px;
 <div class="row">
 <div class="col-md-12">
 <div class="page-header wow fadeInDown">
-<h1>Reservations<small>Book a table online. Leads will reach in your email.</small></h1>
+<h1>Update Account<small>Change your password.Upload a photo.Delete your Account</small></h1>
 </div>
 </div>
 </div>
 <div class="reservation-form wow fadeInUp">
-<form action="update.php" method="POST">
+<p class="error" id="errorname1"></p>
+<form  name="form1" action="update.php" method="POST"  onsubmit="return verifier()">
 <div class="row">
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label for="datepicker" >Date</label>
- <input type="text" name="nom" class="form-control"  placeholder="Pick a date" >
+<label for="datepicker" >Client :</label>
+ <input type="text" name="nom" class="form-control" value ="<?php echo $_SESSION['prenom'] . " ".$_SESSION['nom'] ?>"  placeholder="Pick a date" disabled >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="name">Enter your new password</label>
-<input type="text" class="form-control"    name="password" placeholder="Enter your new password"  >
+<input type="text" class="form-control"  id="pass"  name="password" placeholder="Enter your new password"  >
 <input type="hidden" class="form-control"  value ="<?php echo $_SESSION['password'] ?>"  name="cpassword" placeholder="Enter your new password"  >
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="timepicker">Current login</label>
-<input type="text" class="form-control"  name="clogin" value="<?php echo $_SESSION['login'] ?>"  placeholder="Current login" disabled >
+<input type="text" class="form-control"  name="clogin" value="<?php echo $_SESSION['login'] ?>"  placeholder="Current login" >
 
 </div>
 </div>
@@ -145,7 +209,7 @@ height: 225px;
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label   for="guests">Re-enter your password</label>
-<input class="form-control" type="text"   placeholder="How many of you?" >
+<input class="form-control" type="text" id="pass1"   placeholder="How many of you?" >
 
 </div>
 </div>
@@ -188,13 +252,29 @@ height: 225px;
 <br />
 <br />
 <?php
+try{
+    $user= $_SESSION['email'];
+$db = config::getConnexion();
+$select_stmt=$db->prepare("SELECT * FROM utilisateur WHERE email=:user "); //  lezem where email:=user_id 
+$select_stmt->execute(array(":user"=>$user));
+
+
+
+
+while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
+{
 echo '<div id="imagelist">';
-echo '<p><img src="'.$_SESSION['location'].'"></p>';
-echo '<p id="caption">'.$_SESSION['caption'].' </p>';
+echo '<p><img src="'.$row['location'].'"></p>';
+echo '<p id="caption">'.$row['caption'].' </p>';
 echo '</div>';
-
-
+}
+}
+catch(PDOException $e)
+		{
+			$e->getMessage();
+        }
 ?>
+
 <div class="reservation-footer">
 
 
