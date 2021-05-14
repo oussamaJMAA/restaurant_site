@@ -10,7 +10,21 @@ if(empty($_SESSION['email']))
     header('Location: cnx.php');
  
    }
-  
+   else {
+    try
+         {
+    $user_id = $_SESSION['email'];
+    $db = config::getConnexion();
+    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
+     $stmt->execute(array(":user_id"=>$user_id));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+         }
+         catch(PDOException $e)
+         {
+             $e->getMessage();
+         }		
+     }
     
 ?>
 
@@ -189,8 +203,8 @@ if(empty($_SESSION['email']))
 <a href="test2.php"  > <span class="glyphicon glyphicon-cog"></span></a>
 
 </li>
-<li><img   id="current_photo" style ="margin-top:13px" src="<?php echo $_SESSION['location'] ?>"  onerror="this.onerror=null; this.src='img/default.png'" class="img-rounded" width="32x" height="32px" /></li>
-<li><a href="#"><?php echo $_SESSION['login']; ?></a></li>
+<li><img   id="current_photo" style ="margin-top:13px" src="<?php echo $userRow['location']; ?>"  onerror="this.onerror=null; this.src='img/default.png'" class="img-rounded" width="32x" height="32px" /></li>
+<li><a href="#"><?php echo $userRow['login']; ?></a></li>
 <!--
 <button><a href="deconnexion.php">Déconnecter</a></button>
 <button><a href="test2.php">Account settings</a></button> -->
@@ -211,7 +225,7 @@ if(empty($_SESSION['email']))
 </div>
 
 <h1>DELICIOUS Food</h1>
-<h2>Welcome <?php echo $_SESSION['prenom'];?> to YummyFood !</h2>
+<h2>Welcome <?php echo $userRow['prenom'];?> to YummyFood !</h2>
 </div>
 <div class="scroll-down hidden-xs">
 <a href="#about">
