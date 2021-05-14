@@ -1,5 +1,3 @@
-
-
 <?php
 include_once "../model/utilisateur.php";
 include "../controller/UtilisateurC.php";
@@ -10,41 +8,7 @@ if(empty($_SESSION['e']))
     // Si inexistante ou nulle, on redirige vers le formulaire de login
     header('Location: cnx.php');
  
-   }
-   else  {
-    try
-         {
-    $user_id = $_SESSION['e'];
-    $db = config::getConnexion();
-    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
-     $stmt->execute(array(":user_id"=>$user_id));
-     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
-         }
-         catch(PDOException $e)
-         {
-             $e->getMessage();
-         }	
-        }
-
-/* 
-hedha iji ta7t el body <div id="error">
-	<?php echo $error;?>
-	</div>
-	<div>
-	<?php
-	if($suc==1)
-	$userC->update($u1);	
-    tetsaker el balise mta el php
-	
-	</div>
-	<div>*/
-  
- 
-
-   
-
-  
+   } 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,49 +89,8 @@ height: 225px;
     left:50%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       </style>
-
-
-
-
-
-
-
-
-
 <body>
-<!--[if lt IE 8]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-	
-
 <section class="page_header">
 <div class="container">
 <div class="row">
@@ -202,20 +125,20 @@ height: 225px;
 <div class="form-group">
 <label for="name">Enter your new password</label>
 <input type="text" class="form-control"    name="password" placeholder="Enter your new password"  >
-<input type="hidden" class="form-control"  value ="<?php print($userRow['password']) ?>"  name="cpassword" placeholder="Enter your new password"  >
+<input type="hidden" class="form-control"  value ="<?php echo $_SESSION['password'] ?>"  name="cpassword" placeholder="Enter your new password"  >
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="timepicker">Current login</label>
-<input type="text" class="form-control"  name="clogin" value="<?php print($userRow['login']) ?>" placeholder="Current login" disabled >
+<input type="text" class="form-control"  name="clogin" value="<?php echo $_SESSION['login'] ?>"  placeholder="Current login" disabled >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="email">Email Address</label>
-<input type="email" class="form-control"   name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID"  >
+<input type="email" class="form-control"   name="email" value="<?php echo $_SESSION['email'] ?>"  placeholder="Your Email ID"  >
 
 </div>
 </div>
@@ -249,14 +172,14 @@ height: 225px;
 <form method="post" action="delete_account.php">
 <h6>To delete your Account press this button</h6>
 <button id="del" style="color:red" type="submit" name="delete" class="glyphicon glyphicon-trash" ></button>
-<input type="text" class="form-control" value="<?php print($userRow['email']) ?>"   name="email" placeholder="Enter your Email Adress" style="display:none" >
+<input type="text" class="form-control" value="<?php echo $_SESSION['email'] ?>"    name="email" placeholder="Enter your Email Adress" style="display:none" >
 </form>
 <!-- uplaod an image -->
 <form action="addim.php" method="post" enctype="multipart/form-data" name="addroom">
   
  <input  type="file" name="image" class="ed"><br />
  
- <input  style ="display:none" value ="<?php echo $userRow['prenom'] ;?>"name="caption" type="text" class="ed" id="brnu" />
+ <input  style ="display:none" value ="<?php echo $_SESSION['prenom'] ?>" name="caption" type="text" class="ed" id="brnu" />
  <br />
  <input type="submit" class="btn btn-default btn-lg"    name="Submit" value="Upload a photo " id="button1" />
  </form>
@@ -265,40 +188,13 @@ height: 225px;
 <br />
 <br />
 <?php
-
-try{
-    $user= $_SESSION['e'];
-$db = config::getConnexion();
-$select_stmt=$db->prepare("SELECT * FROM utilisateur WHERE email=:user "); //  lezem where email:=user_id 
-$select_stmt->execute(array(":user"=>$user_id));
-
-
-
-//$result = mysql_query("SELECT * FROM photos");
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
-{
 echo '<div id="imagelist">';
-echo '<p><img src="'.$row['location'].'"></p>';
-echo '<p id="caption">'.$row['caption'].' </p>';
+echo '<p><img src="'.$_SESSION['location'].'"></p>';
+echo '<p id="caption">'.$_SESSION['caption'].' </p>';
 echo '</div>';
-}
-}
-catch(PDOException $e)
-		{
-			$e->getMessage();
-        }
+
+
 ?>
-
-
-
-
-
-
-
-
-
-
-
 <div class="reservation-footer">
 
 
