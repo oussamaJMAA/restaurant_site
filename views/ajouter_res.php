@@ -8,7 +8,7 @@ include "../controller/reservationC.php";
 
 session_start();
 // On teste si la variable de session existe et contient une valeur
-if(empty($_SESSION['e']))
+if(empty($_SESSION['email']))
 {
     // Si inexistante ou nulle, on redirige vers le formulaire de login
     header('Location: cnx.php');
@@ -17,7 +17,7 @@ if(empty($_SESSION['e']))
    else {
     try
          {
-    $user_id = $_SESSION['e'];
+    $user_id = $_SESSION['email'];
     $db = config::getConnexion();
     $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
      $stmt->execute(array(":user_id"=>$user_id));
@@ -72,7 +72,7 @@ $mail->isSMTP();                            // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                     // Enable SMTP authentication
 $mail->Username = 'roukaia70@gmail.com';          // SMTP username
-$mail->Password = 'u rly thought about it xD ?'; // SMTP password
+$mail->Password = 'sousourourou9899@'; // SMTP password
 $mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 587;                          // TCP port to connect to
 $mail->setFrom('roukaia70@gmail.com', 'roukaia khelifi');
@@ -85,9 +85,8 @@ $mail->isHTML(true);  // Set email format to HTML
 $mail->AddEmbeddedImage("logo.png", "logo", "YummyFood!");
 
 $mail->Subject =$subject;
-$nbinv='<h3>Le Nombre Des Invités : '.$geustss.'</h3>';
-$datentime='<h3>Reservation le : '.$datee.' à '.$timee.'</h3>';
-$bodyContent = $message.$datentime.$nbinv;
+
+$bodyContent = $message.'<h3>'.$datee.' à '.$timee.'</h3>'.'<h3>Le Nombres Des Invites : '.$geustss.'</h3>';
 
 $mail->Body = $bodyContent;
 
@@ -133,7 +132,7 @@ header('Location:consulter_res.php');
 function verif()                                 
          { 
        
-     
+       var name = document.forms["form1"]["name2"];
      var phone = document.forms["form1"]["phone"];
               var adresse = document.forms["form1"]["email"];
        
@@ -150,6 +149,23 @@ function verif()
            return false ;
            }
 
+
+//Controle de saisie pour le nom
+         if (name.value == ""){ 
+                 document.getElementById('errorname').innerHTML="Veuillez entrez Votre Nom";  
+                 name.focus(); 
+                 return false; 
+             }else{
+                 document.getElementById('errorname').innerHTML="";  
+             }
+
+             if (name.value.substring(0,1)<'A'||name.value.substring(0,1)>'Z' ){ 
+                 document.getElementById('errorname').innerHTML="Veuillez entrez un nom commancant par une lettre majuscule";  
+                 name.focus(); 
+                 return false; 
+             }else{
+                 document.getElementById('errorname').innerHTML="";  
+             }
 //Control de saisie de Tel
 
 
@@ -165,6 +181,9 @@ if (!(isNaN(phone)) || phone.value.match(t) ){
         }
 
      
+
+    
+       
             var date=document.forms["form1"]["dater"];
      var today=new Date();
      var dd=today.getDate();
@@ -192,6 +211,7 @@ return false;
 
 }
  
+
 
 
 </script>
@@ -273,7 +293,7 @@ $year = date('Y');
 
 $today = $year . '-' . $month . '-' . $day;
 ?>
- <input type="date" name="dater" id ="dater" class="form-control" value="<?php echo $today; ?>" placeholder="Pick a date" title="Please choose a date" min="<?php $Date=date('Y-m-d');echo $Date;?>">
+ <input type="date" name="dater" id ="dater" value="<?php echo $today; ?>"  min="<?php $Date=date('Y-m-d');echo $Date;?>" class="form-control" placeholder="Pick a date" title="Please choose a date">
 
 </div>
 </div>
@@ -282,7 +302,7 @@ $today = $year . '-' . $month . '-' . $day;
 <div class="form-group">
 <label for="name" >Your Name</label>
 
-<input type="text" class="form-control name" id="name2" value="<?php print($userRow['login']) ?>" name="name" placeholder="Full Name" title="Your Full Name please" disabled > 
+<input type="text" class="form-control name" id="name2" value="<?php print($userRow['prenom']) ?>" name="name" placeholder="Full Name" title="Your Full Name please" > 
 
 <i class="fa fa-pencil-square-o"></i>
 
@@ -298,11 +318,8 @@ $today = $year . '-' . $month . '-' . $day;
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
 <label for="email">Email Address</label>
-<input type="text" class="form-control" id="email" name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID" title="Please enter your email id" disabled>
+<input type="text" class="form-control" id="email" name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID" title="Please enter your email id" >
 <i class="fa fa-envelope-o"></i>
-
-
-
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
@@ -321,11 +338,15 @@ $today = $year . '-' . $month . '-' . $day;
 </div>
 <div class="col-md-12 col-sm-12">
 <div class="reservation-btn">
-<input type="submit" class="btn btn-default btn-lg" id="js-reservation-btn" name="res" value="Make Reservation">
+<input type="submit" class="btn btn-default btn-lg"  name="res" value="Make Reservation" >
 <div id="js-reservation-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>
 </div>
 </div>
 </div>
+
+<a href="modifier_res.php"> Modify a Reservation </a>
+<br>
+<a href="supprimer_res.php"> Delete a Reservation </a>
 
 </form>
 </div>
@@ -469,6 +490,7 @@ Wide
 <div class="btn-settings"></div>
 </div>
 
+<script src="script.js"></script>
 <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/vendor/jquery-1.11.2.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/jquery.flexslider-min.js"></script>

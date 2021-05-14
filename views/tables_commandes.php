@@ -250,10 +250,7 @@ $confirmation="CONFIRMED";}
 <form method="POST" action="printfact.php">
 						<input type="submit" name="print" value="IMPRIMER">
 
-
-
-
-                        <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
+     <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
                         
                         <input type="hidden" value=<?PHP echo $com['idplat']; ?> name="idplat">
                         <input type="hidden" value=<?PHP echo $com['location']; ?> name="adresse">
