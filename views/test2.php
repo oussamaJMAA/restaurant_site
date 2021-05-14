@@ -41,27 +41,6 @@ hedha iji ta7t el body <div id="error">
 	<div>*/
   
  
-  $suc=0;
-  $u1=null;
-  $error="";
-  if(isset($_POST['nom']) && isset($_POST['prenom'])
-  &&isset($_POST['email'])&& isset($_POST['login'])
-  && isset($_POST['password'])&&!empty($_POST['password']))
-  {
-      $nom=$_POST['nom'];
-      $prenom=$_POST['prenom'];
-      $email=$_POST['email'];
-      $login=$_POST['login'];
-      $password=$_POST['password'];
-
-
-  $u1=new utilisateur($nom,$prenom,$email,$login,$password);
-  $userC=new UtilisateurC();
-  
-  $suc=1;
-  }
-  else
-      $error="";
 
    
 
@@ -174,34 +153,8 @@ height: 225px;
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<div id="error">
-	<?php echo $error;?>
-	</div>
-	<div>
- 
-	<?php
-	if($suc==1){
-        
-        if ( preg_match ( " /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/ " , $password ) )
-        {
-            $userC->update($u1);
-        ?>
-                                                                        
-<div class="alert alert-success">
-				<strong><?php echo "password changed succesfully"; ?></strong>
-			</div>
-        <?php
-        }  else {
-        ?>
-        <?php
-      
-?><div class="alert alert-danger">
-<strong><?php echo "wrong password" ?></strong>
-</div>
-<?php
-        }
-        
-?>
+
+   
 
 
 
@@ -213,19 +166,7 @@ height: 225px;
 
 
 
-<?php 
-  }
-    ?>
-
-
-
-    
-
-
-
- 
-	</div>
-	<div>
+	
 
 <section class="page_header">
 <div class="container">
@@ -248,53 +189,53 @@ height: 225px;
 </div>
 </div>
 <div class="reservation-form wow fadeInUp">
-<form action="" method="POST">
+<form action="update.php" method="POST">
 <div class="row">
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label for="datepicker" style="color:white">Date</label>
- <input type="text" name="nom" class="form-control"  placeholder="Pick a date" style="display:none">
+<label for="datepicker" >Date</label>
+ <input type="text" name="nom" class="form-control"  placeholder="Pick a date" >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label for="name">Your Email Adress</label>
-<input type="text" class="form-control" value="<?php print($userRow['email']) ?>"   name="email" placeholder="Enter your Email Adress"  >
+<label for="name">Enter your new password</label>
+<input type="text" class="form-control"    name="password" placeholder="Enter your new password"  >
+<input type="hidden" class="form-control"  value ="<?php print($userRow['password']) ?>"  name="cpassword" placeholder="Enter your new password"  >
+</div>
+</div>
+<div class="col-md-4 col-sm-6">
+<div class="form-group">
+<label for="timepicker">Current login</label>
+<input type="text" class="form-control"  name="clogin" value="<?php print($userRow['login']) ?>" placeholder="Current login" disabled >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label  style="color:white" for="timepicker">Time</label>
-<input type="text" class="form-control"  name="prenom" placeholder="Pick a time"  style="display:none">
+<label for="email">Email Address</label>
+<input type="email" class="form-control"   name="email" value="<?php print($userRow['email']) ?>" placeholder="Your Email ID"  >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label   style="color:white" for="email">Email Address</label>
-<input type="email" class="form-control"   placeholder="Your Email ID"  style="display:none">
+<label   for="guests">Re-enter your password</label>
+<input class="form-control" type="text"   placeholder="How many of you?" >
 
 </div>
 </div>
 <div class="col-md-4 col-sm-6">
 <div class="form-group">
-<label  style="display:none" for="guests">Guests</label>
-<input class="form-control" type="number"  name="login" placeholder="How many of you?"  style="display:none">
-
-</div>
-</div>
-<div class="col-md-4 col-sm-6">
-<div class="form-group">
-<label for="phone">New Password </label>
-<input type="text"  name="password" class="form-control"  placeholder="Enter your New Password" >
+<label for="phone">New Login </label>
+<input type="text"  name="login" class="form-control"  placeholder="Enter your New Login" >
 
 </div>
 </div>
 <div class="col-md-12 col-sm-12">
 <div class="reservation-btn">
-<button type="submit"   class="btn btn-default btn-lg" >Save Changes</button>
+<button type="submit"  name="save" class="btn btn-default btn-lg" >Save Changes</button>
 <div id="js-reservation-result" data-success-msg="Form submitted successfully." data-error-msg="Oops. Something went wrong."></div>
 
 <br>
