@@ -11,7 +11,7 @@ include "../controller/reservationC.php";
 
 session_start();
 // On teste si la variable de session existe et contient une valeur
-if(empty($_SESSION['e']))
+if(empty($_SESSION['email']))
 {
     // Si inexistante ou nulle, on redirige vers le formulaire de login
     header('Location: cnx.php');
@@ -20,7 +20,7 @@ if(empty($_SESSION['e']))
    else {
     try
          {
-    $user_id = $_SESSION['e'];
+    $user_id = $_SESSION['email'];
     $db = config::getConnexion();
     $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
      $stmt->execute(array(":user_id"=>$user_id));

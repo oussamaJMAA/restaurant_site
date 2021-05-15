@@ -143,7 +143,7 @@ else{
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                             
                                                 <th>Full Name</th>
                                                 <th>Adress Email</th>
                                                 <th>Phone Number</th>
@@ -163,7 +163,7 @@ else{
                                     foreach($liste as $res){
                                ?>
                                     <tr>
-<td> <?php echo $res['id']; ?></td>
+
 <td> <?php echo $res['full_name']; ?>
 </td>
 <td> <?php echo $res['email']; ?>
