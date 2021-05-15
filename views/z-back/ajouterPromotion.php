@@ -1,14 +1,14 @@
 <?php 
 include "../../controller/promotionC.php"; 
-include "../../controller/platC.php";
+include "../../controller/platC.php"; 
 
 
 
 $PromotionC=new PromotionC();
-$listePlatPromo=$PromotionC->afficherlist_promo();
+$listePlatPromo=$PromotionC->afficherlist_promo(); 
 
 $PlatC=new PlatC();
-$listePlat=$PlatC->afficherlist_plat();
+$listePlat=$PlatC->afficherlist_plat(); 
  
 
 ?>
@@ -17,7 +17,7 @@ $listePlat=$PlatC->afficherlist_plat();
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
