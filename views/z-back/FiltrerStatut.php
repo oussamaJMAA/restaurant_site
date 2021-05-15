@@ -1,12 +1,22 @@
 <?php 
-include "../../controller/platC.php";
+include "../../controller/formC.php";
 
-session_start();
+ session_start(); 
 
+ if (empty($_SESSION['id']))
+ {
+     echo "<script type='text/javascript'>";
+echo "alert('Please Login First');
+window.location.href='../cnx.php';";
+echo "</script>";
+    
 
-$PlatC=new PlatC();
-$listePlatt=$PlatC->rechercher_plat($_POST['recherche']);
- 
+ }
+
+$FormC=new FormC();
+$listeStatut=$FormC->Filtrer_form($_POST['recherche']); 
+//$listeStatut=$FormC->afficherlist_form(); 
+
 
 ?>
 
@@ -28,7 +38,7 @@ $listePlatt=$PlatC->rechercher_plat($_POST['recherche']);
             <a class="navbar-brand" href="index.php">Admin</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form method="post" action="rechercherPlat.php" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <form method="post" action="FiltrerStatut.php" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" id="recherche" name="recherche" />
                     <div class="input-group-append">
@@ -132,91 +142,77 @@ $listePlatt=$PlatC->rechercher_plat($_POST['recherche']);
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4 " style="text-align: center;" >Gestion Plat</h1>
-
-
+                        <h1 class="mt-4" style="text-align: center;">Gestion Blog</h1>
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                Table Plat
-                                <a class=".btn btn-default" href="ajouterPlat.php" style="margin-left: 35%;text-transform: uppercase; ">Ajouter Plat</a>
+                                Table Blog
                             </div>
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr>                                                
-                                                <th>#</th>
+                                            <tr>
                                                 <th>Image</th>
-                                                <th>Nom</th>
-                                                <th>Description</th>
-                                                <th>Prix</th>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
+                                                <th>Titre</th>
+                                                <th>Contenu</th>
+                                                <th>Date</th>
+                                                <th>Likes</th>
+                                                <th>Ecrite par</th>
+                                                <th>Comments</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
-                                                <th>#</th>
                                                 <th>Image</th>
-                                                <th>Nom</th>
-                                                <th>Description</th>
-                                                <th>Prix</th>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
+                                                <th>Titre</th>
+                                                <th>Contenu</th>
+                                                <th>Date</th>
+                                                <th>Likes</th>
+                                                <th>Ecrite par</th>
+                                                <th>Comments</th>
+                                                <th>Delete</th>
                                         </tfoot>
-                                        <tbody>
+                                        <tbody align="center">
                                              <?PHP
-                                                foreach($listePlatt as $row)
-                                                {
+
+                                                foreach($listeStatut as $row){
+
+
                                                 ?>
                                             <tr>
-                                                <td><?php echo $row->id_plat; ?></td>
-
                                                 <td>
-                                                    <img style="width: 150px;" src="../z-front/img/menu/1/<?php echo $row->image; ?>">
+                                                    <img style="width: 100px;" src="../z-front/img/blog/<?php echo $row->image;?>">
                                                 </td>
 
-                                                <td><?php echo $row->nom; ?></td>
-                                                <td><?php echo $row->description; ?></td>
-                                                <td><?php echo $row->prix; ?></td>
-                                    
+                                                <td><?php echo $row->titre; ?></td>
+                                                <td><?php echo $row->contenu; ?></td>
+                                                <td style="width: 85px;"><?php echo $row->Date;?></td>
+                                                <td><?php echo $row->likes; ?></td>
+                                                <td><?php echo $row->nom." ".$row->prenom ;?></td>
                                                 <td>
-                                                    <form method="POST" action="modifierPlat.php">
+                                                    <form method="POST" action="AfficherComments.php?id=<?php echo $row->id; ?>">
                                                     <button  class="btn btn-primary">
-                                                    <i class="fa fa-edit"></i></button>
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->image; ?>" name="image"  >
-
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->id_plat; ?>" name="id_plat">
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->image; ?>" name="image">
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->nom; ?>" name="nom">
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->description; ?>"name="description">
-                                                    <input type="hidden" value="<?PHP 
-                                                    echo $row->prix; ?>" name="prix">
+                                                    <i class="fa fa-bars"></i></button>
+                                                    
+                                                    <input type="hidden" name="image"
+                                                    value="<?php echo $row->image; ?>">
                                                     </form>
                                                 </td>
                                                 <td> 
-                                                    <form method="POST" action="supprimerPlat.php">
+                                                    <form method="POST" action="supprimerStatut.php">
                                                     <button  class="btn btn-danger">
                                                     <i class="fa fa-trash"></i></button>
                                                         <input type="hidden" value="<?PHP 
-                                                        echo $row['id_plat']; ?>" name="id_plat"></form>
+                                                        echo $row->id; ?>" name="id"></form>
                                                 </td>
                                             </tr>
-                                            <?PHP 
-
-                                                    }?>
+                                            <?PHP }?>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </main>

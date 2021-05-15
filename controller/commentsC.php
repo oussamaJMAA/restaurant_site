@@ -107,7 +107,7 @@ $db = config::getConnexion();
 
 function afficherlist_comments($id_Form)
 {
-$sql="SELECT  c.contenu ,c.id,nom,prenom,C.id_User FROM `form` f INNER JOIN comments c INNER JOIN user u WHERE c.id_Form=:id_Form and c.id_User=u.id group by c.id";
+$sql="SELECT  c.contenu ,c.id,nom,prenom,C.id_User FROM `form` f INNER JOIN comments c INNER JOIN utilisateur u WHERE c.id_Form=:id_Form and c.id_User=u.id group by c.id";
 
 $db = config::getConnexion();
 	try{

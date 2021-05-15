@@ -7,7 +7,7 @@ include"../../controller/commentsC.php";
  if (empty($_SESSION['id']))
  {
     echo "<script type='text/javascript'>";	
-	echo "alert('Please Login First');window.location.href='signin.php';";
+	echo "alert('Please Login First');window.location.href='../cnx.php';";
 	echo "</script>";
  }
  
@@ -24,7 +24,7 @@ $listeForms=$FormC->afficherlist_form();
 
 <head>
 <meta charset="utf-8">
-<title>Tomato Blog</title>
+<title>YummyFood! Blog</title>
 <meta name="author" content="Surjith S M">
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
@@ -60,7 +60,7 @@ $listeForms=$FormC->afficherlist_form();
 <div class="row">
 <div class="col-md-12 text-center">
 <h2 class="text-uppercase wow fadeInDown">Accueil</h2>
-<p class="wow fadeInUp">Tomato is a delicious restaurant</p>
+<p class="wow fadeInUp">YummyFood! is a delicious restaurant</p>
 </div>
 </div>
 </div>

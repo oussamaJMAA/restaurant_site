@@ -37,7 +37,7 @@ function ajouterform($form)
 
 function afficherlist_form()
 {
-		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN user u where u.id = f.id_User order by `Date` DESC ;";
+		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN utilisateur u where u.id = f.id_User order by `Date` DESC ;";
 		$db = config::getConnexion();
 		try
 		{
@@ -52,7 +52,7 @@ function afficherlist_form()
 function afficherlist_form_user($id_User)
 {
 
-		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN user u where u.id = :id_User and f.id_User=:id_User";
+		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN utilisateur u where u.id = :id_User and f.id_User=:id_User";
 		$db = config::getConnexion();
 		try{
 		$req=$db->prepare($sql);
@@ -166,7 +166,31 @@ function incrementerlike($id)
         }
 }
 
-		
+function Filtrer_form($chaine)
+{
+		$sql="SELECT f.id, `titre`, `image`, `contenu`, `likes`, `Date`, `id_User`,nom,prenom FROM `form`f INNER JOIN utilisateur u 
+
+		where u.id = f.id_User AND
+		(
+		titre LIKE '%$chaine%' OR image LIKE '%$chaine%' OR  contenu LIKE '%$chaine%' OR 
+		likes LIKE '%$chaine%' OR `Date` LIKE '%$chaine%' OR nom LIKE '%$chaine%' OR 
+		prenom LIKE '%$chaine%'
+		)
+		order by `Date` DESC ;";
+
+		$db = config::getConnexion();
+		try
+		{
+			$req=$db->prepare($sql);
+			//$req->bindValue(':chaine',$condition);
+ 	    	$req->execute();
+ 			$liste= $req->fetchALL(PDO::FETCH_OBJ);
+			return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+}
 	
 }//Fin class
 

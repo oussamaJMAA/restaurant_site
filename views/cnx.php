@@ -2,7 +2,6 @@
 
 
 include "../controller/UtilisateurC.php";
-require_once('recaptcha/recaptchalib.php');
 session_start();
 
 if(isset($_SESSION["email"]))	//check condition user login not direct back to index.php page
@@ -509,10 +508,20 @@ if(isset($_POST['btn_login']))	//button name is "btn_login"
 
 if (($row['role']=='admin')&&($username==$row["login"])&&($password==$row["password"])){
  
-
+              $_SESSION["email"] = $row["email"];
+            $_SESSION["id"]=$row["id"];
+            $_SESSION["nom"]=$row["nom"];
+            $_SESSION["prenom"]=$row["prenom"];
+            $_SESSION["login"]=$row["login"];
+            $_SESSION["password"]=$row["password"];
+            $_SESSION["role"]=$row ["role"];
+            $_SESSION["location"]=$row["location"];
+            $_SESSION["caption"]=$row["caption"];
+            $_SESSION["verification"]=$row["verification"];
+            $_SESSION["gender"]=$row["gender"];
   $_SESSION["email"] = $row["email"];	//session name is "user_login"
 							//user login success message
-						header("Location: tables.php");
+						header("Location: z-back/index.php");
 }
 
              /*   if( $_POST["email"]=="admin"&&$_POST["password"]=="admin"){

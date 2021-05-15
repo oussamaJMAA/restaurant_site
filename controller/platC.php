@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__ . '/../config2.php';
+include_once __DIR__ . '/../config.php';
 include_once __DIR__ . '/../model/plat.php';
 
 class PlatC 
@@ -84,6 +84,58 @@ function afficherlist_plat()
             die('Erreur: '.$e->getMessage());
         }	
 }
+
+
+function rechercher_plat($condition)
+{
+		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat` 
+		where id_plat =:condition OR nom=:condition OR image=:condition OR description=:condition OR prix=:condition ; ";
+		$db = config::getConnexion();
+		try
+		{
+			$req=$db->prepare($sql);
+			$req->bindValue(':condition',$condition);
+ 	    	$req->execute();
+ 			$liste= $req->fetchALL(PDO::FETCH_OBJ);
+			return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+}
+
+
+function rechercher_plat_front($condition)
+{
+		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat` 
+		
+		where 
+		id_plat LIKE '%$condition%' OR 
+		nom LIKE '%$condition%' OR 
+		image LIKE '%$condition%' OR 
+		description LIKE '%$condition%' OR 
+		prix LIKE '%$condition%'  ; ";
+
+
+		$db = config::getConnexion();
+		try
+		{
+			$req=$db->prepare($sql);
+			//$req->bindValue(':condition',$condition);
+ 	    	$req->execute();
+ 			$liste= $req->fetchALL(PDO::FETCH_OBJ);
+			return $liste;
+		}
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }	
+}
+
+
+
+
+
+
 
 function afficherlist_plat_desc()
 {

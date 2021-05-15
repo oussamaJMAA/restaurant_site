@@ -1,6 +1,6 @@
 <?php
 include "../../controller/promotionC.php";
-include_once "../../controller/userC.php";
+include_once "../../controller/UtilisateurC.php";
 require_once '../../PHPMailer-5.2-stable/PHPMailerAutoload.php';
 
     $Date1= new DateTime($_POST['date_activation']);
@@ -36,14 +36,14 @@ require_once '../../PHPMailer-5.2-stable/PHPMailerAutoload.php';
 
             header('Location:afficherPlat&Promotion.php');
 
-            $UserC=new UserC();
-        $listeusers=$UserC->afficher_mail_user();
+            $UtilisateurC=new UtilisateurC();
+        $listeusers=$UtilisateurC->afficher_mail_user();
 
 
 foreach ($listeusers as $row) 
 {
            
-    echo $row['mail'];
+    echo $row['email'];
     $mail = new PHPMailer;
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
@@ -54,7 +54,7 @@ foreach ($listeusers as $row)
     $mail->Port = 587;                                    // TCP port to connect to
 
     $mail->setFrom('nasreddine.elmadhkour@esprit.tn', 'Restaurent');
-    $mail->addAddress($row['mail'], 'Joe User');     // Add a recipient
+    $mail->addAddress($row['email'], 'Joe User');     // Add a recipient
 
     $mail->Subject = 'Promotion Tomato';
     $mail->Body    = '<h2>Promo<h2>';

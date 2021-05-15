@@ -1,7 +1,7 @@
 <?PHP
-	include "../config.php";
-	
-	require_once '../model/Utilisateur.php';
+
+    include_once __DIR__ . '/../config.php';
+	require_once __DIR__ . '/../model/Utilisateur.php';
 
 	class UtilisateurC {
 
@@ -79,6 +79,24 @@ return $req;
 				die('Erreur: '.$e->getMessage());
 			}
 		}
+
+
+    function afficher_mail_user()
+{
+        $sql="SELECT email FROM `Utilisateur` ";
+        $db = config::getConnexion();
+        try{
+
+        $liste=$db->query($sql);
+
+        return $liste;
+        }
+        catch (Exception $e){
+            die('Erreur: '.$e->getMessage());
+        }
+}
+
+
 		function modifierUtilisateur($Utilisateur, $id){
 			try {
 				$db = config::getConnexion();

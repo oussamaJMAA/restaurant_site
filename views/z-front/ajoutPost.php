@@ -1,6 +1,6 @@
 <?php
 include_once "../../controller/formC.php";
-include_once "../../controller/userC.php";
+include_once "../../controller/UtilisateurC.php";
 require_once '../../PHPMailer-5.2-stable/PHPMailerAutoload.php';
     $error = "";
     
@@ -17,14 +17,14 @@ require_once '../../PHPMailer-5.2-stable/PHPMailerAutoload.php';
             $FormC->ajouterform($form);
             header('Location:afficherStatut.php');
         
-        $UserC=new UserC();
-        $listeusers=$UserC->afficher_mail_user();
+        $UtilisateurC=new UtilisateurC();
+        $listeusers=$UtilisateurC->afficher_mail_user();
 
 
         foreach ($listeusers as $row) 
         {
            
-            echo $row['mail'];
+            echo $row['email'];
  
 
 
@@ -41,7 +41,7 @@ $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, 
 $mail->Port = 587;                                    // TCP port to connect to
 
 $mail->setFrom('nasreddine.elmadhkour@esprit.tn', 'Restaurent');
-$mail->addAddress($row['mail'], 'Joe User');     // Add a recipient
+$mail->addAddress($row['email'], 'Joe User');     // Add a recipient
 
 $mail->Subject = 'Resto Notification';
 $mail->Body    = '<h1>New Post <h1>';
