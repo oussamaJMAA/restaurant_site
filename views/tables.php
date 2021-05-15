@@ -1,13 +1,65 @@
 
+<?php
+// On prolonge la session
+include "../controller/UtilisateurC.php";
+session_start();
+// On teste si la variable de session existe et contient une valeur
+if(empty($_SESSION['email']))
+{
+    // Si inexistante ou nulle, on redirige vers le formulaire de login
+    header('Location: cnx.php');
+ 
+   }
+   else {
+    try
+         {
+    $user_id = $_SESSION['email'];
+    $db = config::getConnexion();
+    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
+     $stmt->execute(array(":user_id"=>$user_id));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+         }
+         catch(PDOException $e)
+         {
+             $e->getMessage();
+         }		
+     }
+    
+?>
+
+
+
+
+
+
+
 <?PHP
-	include "../controller/UtilisateurC.php";
+	
 
 	$utilisateurC=new UtilisateurC();
 	$listeUsers=$utilisateurC->afficherUtilisateurs();
 
 ?>
 
+<?php
+$select_stmt=$db->prepare("SELECT (SELECT count(*) FROM utilisateur WHERE gender='Male') AS Male, (SELECT count(*) FROM utilisateur WHERE gender='Female') AS Female"); // sql select query
+$select_stmt->execute();
+  
+  
+$data = $select_stmt->fetchAll();
 
+$male=$data[0]['Male'];
+$female=$data[0]['Female'];
+
+ 
+ $dataPoints = array( 
+     array("label"=>"Male", "y"=>$male),
+     array("label"=>"Female", "y"=>$female)
+   
+ )
+  
+ ?>
 
 
 
@@ -21,10 +73,45 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Admin</title>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <link href="cssB/styles.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/cssB/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/jsB/all.min.js" crossorigin="anonymous"></script>
     </head>
+  
+ <style>
+
+.del{
+    position:relative ; 
+    top:50%;
+    left:50%;
+}
+</style>
+
+<script>
+ window.onload = function() {
+  
+  
+ var chart = new CanvasJS.Chart("chartContainer", {
+     animationEnabled: true,
+     title: {
+         text: "Number of female and male"
+     },
+     subtitles: [{
+         text: "<?php echo date('l \t\h\e jS'); ?>"
+     }],
+     data: [{
+         type: "pie",
+         yValueFormatString: "#,##\"\"",
+         indexLabel: "{label} ({y})",
+         dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+     }]
+ });
+ chart.render();
+  
+ }
+ </script>
+
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="index.html">Yummy Food!</a>
@@ -34,7 +121,9 @@
                 <div class="input-group">
                     <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
+       
                         <button class="btn btn-primary" type="button" name="btn-search"><i class="fas fa-search"></i></button>
+                      
                     </div>
                 </div>
             </form>
@@ -118,16 +207,20 @@ if(isset($_POST["btn-search"])&&isset($_POST["search"])){
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Commandes
                             </a>
-                            <a class="nav-link" href="stat.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Statistique_client
-                            </a>
-                        </div>
-                    </div>
+                     <br>
+                     <br>
+                     <br>
+                     <br><br>
+                     <br><br><br><br><br><br><br><br><br><br><br>
+                  
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+              
+                        <div class="small">Logged in as</div>
+                       <?php echo $userRow['login'] ; ?>
+                       <br>
+                   
                     </div>
+                    <a  style ="color:red" href="deconnexion.php" class="btn">disconnect ? </a>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -138,13 +231,16 @@ if(isset($_POST["btn-search"])&&isset($_POST["search"])){
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Tables</li>
                         </ol>
+                  
                         <div class="card mb-4">
                             <div class="card-body">
-                               Yummy Food DataBase!
+                               Yummy Food DataBase! 
+                               <div id="chartContainer" class="del" style="height: 370px; width: 200px;"></div>
                                <form method="POST" action="pdf.php">
 <input  type="submit" name="go" value="Afficher pdf">
 </form>
                             </div>
+                            
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
@@ -190,7 +286,7 @@ if(isset($_POST["tri"])){
 					<td><?PHP echo $user['email']; ?></td>
 					<td><?PHP echo $user['login']; ?></td>
 					<td><?PHP echo $user['password']; ?></td>
-                    <td> <?PHP echo '<p><img src="'.$user['location'].'" width="32px" height="32px"></p>'; ?></td>
+                    <td> <?PHP echo '<p><img src="'.$user['location'].'" onerror="this.onerror=null; this.src="img/default.png""  width="32px" height="32px"></p>'; ?></td>
 					<td>
 						<form method="POST" action="supprimerUtilisateur.php">
 						<input type="submit" name="supprimer" value="supprimer">
@@ -207,13 +303,16 @@ if(isset($_POST["tri"])){
                                 </div>
 
 
-                
+                    
 
 
                             </div>
                         </div>
+                     
                     </div>
+             
                 </main>
+                
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
