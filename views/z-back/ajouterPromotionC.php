@@ -8,12 +8,12 @@ require_once '../../PHPMailer-5.2-stable/PHPMailerAutoload.php';
     if($Date1>$Date2)
     {  
         echo "False";
-         echo "<script type='text/javascript'>"; 
-        echo "alert('Date activation obligatoire <  Date date_expiration'); 
-        window.location.href='../z-back/afficherPlat&Promotion.php';"; 
-        echo "</script>"; 
+         echo "<script type='text/javascript'>";
+        echo "alert('Date activation obligatoire <  Date date_expiration');
+        window.location.href='../z-back/afficherPlat&Promotion.php';";
+        echo "</script>";
     }
-    else 
+    else
     {    
     $error = "";
     

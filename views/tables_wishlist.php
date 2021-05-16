@@ -165,10 +165,10 @@ if(isset($_POST["tri"])){
                                            
                                            
                                            <th> ID CIENT</th>
-                                           <th> ID_PLAT </th>
-                                           <th>Image_PLAT </th>
-                                           <th>Nom_PLAT</th>
-                                           <th>Prix_Plat</th>
+                                           <th> ID PLAT </th>
+                                           <th>Image PLAT </th>
+                                           <th>Nom PLAT</th>
+                                           <th>Prix Plat</th>
                                           
                                            
                                            
@@ -203,14 +203,21 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 ?>
 <td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
 
+<?php
+  $p=new resC();
+  $listePlat=$p->afficher_plat_id($com['idplat']);
+foreach($listePlat as $roww)
+{
+
+
+?>
 
 
 
 
-
-<td> <?php echo $row['nom_plat']; ?>
+<td> <?php echo $roww['nom']; ?>
 </td>
-<td> <?php echo $row['prix_plat']; ?>
+<td> <?php echo $roww['prix']; ?>
 </td>
 
 </tr>	
@@ -218,6 +225,7 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 <?php 
                                }                                                                                                      
 }
+                                    }
 ?>
 
 

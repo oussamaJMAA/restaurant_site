@@ -142,8 +142,8 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                         <thead>
                                             <tr>
                                            
-                                           
-                                                <th> ID CIENT</th>
+                                            <th>ID CIENT</th>
+                                                <th>CIENT</th>
                                                 <th> PLAT </th>
                                                 <th>QUANTITE </th>
                                                 
@@ -164,16 +164,26 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                    include_once "../model/commandes.php";
                                    include "../controller/commandesC.php";
                                     $com=new commandesC();
-                                    $liste=$com->recherche_com($_POST["search"]);
+                                  
+                                    $liste=$com->
+                                    recherche_com($_POST["search"]);
+                                 
                                     foreach($liste as $com){
                                ?>
                                     <tr>
+                                    <td> <?php echo $com["idclient"] ?></td>
+                                 <?php
+ $u=new commandesC();
+                                  
+ $listeu=$u->afficher_utilisateur_id($com['idclient']);
+
+ foreach($listeu as $u){
+
+?>
 
 
 
-
-
-                                    <td> <?php echo $com['idclient']; ?></td>
+                                    <td> <?php echo $u["nom"].' '.$u["prenom"] ; ?></td>
                     <?php
 
 $idp=$com['idplat'];
@@ -191,7 +201,15 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 <td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
 
 
+<?php
+ $comp=new commandesC();
+ $idp=$com['idplat'];                          
+ $listep=$comp->afficher_plat_id($idp);
 
+ foreach($listep as $comp){
+
+
+?>
 
 
 
@@ -199,7 +217,7 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 </td>
 <td> <?php echo $com['date']; ?>
 </td>
-<td> <?php echo $com['prixtotal'].'DT'; ?>
+<td> <?php echo $comp['prix'].'DT'; ?>
 </td>
 <td> <?php echo $com['phone']; ?>
 </td>
@@ -214,10 +232,11 @@ $result=$bb->somme_commandes($com["idclient"]);
 
 ?>
 
+
+
 <td> 
 <?php echo $result.'DT' ?>
 </td>
-
 
 <?php
 if(($com["location"])==""&&($com["phone"])==0){
@@ -232,6 +251,9 @@ $confirmation="CONFIRMED";}
 <?php echo $confirmation ?>
 </td>
 
+
+
+
 <td>
 <form method="POST" action="supprimer_c.php">
 						<input type="submit" name="Delete" value="Delete">
@@ -240,19 +262,17 @@ $confirmation="CONFIRMED";}
 						</form>
 					</td>
 	
-	
 <td>
 <form method="POST" action="printfact.php">
 						<input type="submit" name="print" value="IMPRIMER">
 
-            <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
+     <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
                         
                         <input type="hidden" value=<?PHP echo $com['idplat']; ?> name="idplat">
                         <input type="hidden" value=<?PHP echo $com['location']; ?> name="adresse">
                         <input type="hidden" value=<?PHP echo $com['phone']; ?> name="phone">
                         <input type="hidden" value=<?PHP echo $com['date']; ?> name="datec">
                         <input type="text" value=<?php echo $com['prixtotal'].'DT'; ?> name="prix" style="display:none">
-					
 						</form>
 					</td>
 	
@@ -262,6 +282,8 @@ $confirmation="CONFIRMED";}
 <?php 
                                }                                                                                                      
 }
+                                    }
+                                }
 ?>
 
 						

@@ -1,8 +1,10 @@
 <?php
 include "../controller/UtilisateurC.php";
+include "../controller/promotionC.php"; 
+include "../controller/platC.php";
 session_start();
 // On teste si la variable de session existe et contient une valeur
-if(empty($_SESSION['e']))
+if(empty($_SESSION['email']))
 {
     // Si inexistante ou nulle, on redirige vers le formulaire de login
     header('Location: cnx.php');
@@ -11,7 +13,7 @@ if(empty($_SESSION['e']))
    else {
     try
          {
-    $user_id = $_SESSION['e'];
+    $user_id = $_SESSION['email'];
     $db = config::getConnexion();
     $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
      $stmt->execute(array(":user_id"=>$user_id));
@@ -107,15 +109,14 @@ foreach($liste as $wish){
 
 <?php
 
-$idp=$wish['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
 
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
+$PlatC=new PlatC();
+$idp=$wish['idplat'];
+$listePlat=$PlatC->afficher_plat_id($idp);
+foreach($listePlat as $row)
 {
+
+
 
 
 ?>
@@ -130,13 +131,13 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 </td>
 
 <td>
-<a href="#"><img  src="img/shop/<?php echo $row['image_plat']; ?>"></a>
+<a href="#"><img  src="img/shop/<?php echo $row['image']; ?>"></a>
 </td>
 <td>
-<a href="#"><?php echo $row['nom_plat']; ?></a>
+<a href="#"><?php echo $row['nom']; ?></a>
 </td>
 <td>
-<span class="amount"><?php echo $row['prix_plat'] ; ?></span>
+<span class="amount"><?php echo $row['prix'] ; ?></span>
 </td>
 
 <?php

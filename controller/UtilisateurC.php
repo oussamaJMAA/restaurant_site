@@ -8,6 +8,25 @@
 
 
 
+        public function afficher_utilisateur_id($id_user)
+        { //affichage tout les commandes
+            $sql="select * from utilisateur where id=:id_user";
+            $db=config::getConnexion();
+            $req=$db->prepare($sql);
+            $req->bindValue(':id_user',$id_user);
+            try
+            {
+                $req->execute();
+               // $query->execute();
+        return $req;
+                
+        
+            }
+            catch(Exeption $e)
+            {
+                die('Erreur: '.$e->getMessage());
+            }
+        }
 
 
 		
@@ -366,6 +385,26 @@ return $req;
             }
     
     
+
+public function afficher_plat_id($id_plat)
+{ //affichage tout les commandes
+	$sql="select * from plat where id_plat=:id_plat";
+	$db=config::getConnexion();
+	$req=$db->prepare($sql);
+	$req->bindValue(':id_plat',$id_plat);
+	try
+	{
+		$req->execute();
+	   // $query->execute();
+return $req;
+		
+
+	}
+	catch(Exeption $e)
+	{
+		die('Erreur: '.$e->getMessage());
+	}
+}
             public function afficher_list()
             {
                 $sql="select * from list";

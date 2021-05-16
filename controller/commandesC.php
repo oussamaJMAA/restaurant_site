@@ -8,6 +8,50 @@ class commandesC{
 //idcommande, idclient,idplat,quantite,prixtotal
 
 
+public function afficher_plat_id($id_plat)
+{ //affichage tout les commandes
+    $sql="select * from plat where id_plat=:id_plat";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+    $req->bindValue(':id_plat',$id_plat);
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+
+
+public function afficher_utilisateur_id($id_user)
+{ //affichage tout les commandes
+    $sql="select * from utilisateur where id=:id_user";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+    $req->bindValue(':id_user',$id_user);
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+
+
+
+
     public function ajouter_panier($idclient,$idplat,$quantite,$prixtotal)
     { //ajout au panier mais pas encore confirmer
         $sql="insert into commandes(idclient,idplat,quantite,prixtotal)
@@ -280,7 +324,7 @@ return $req;
 
 
 public function recherche_com($s){
-    $sql="SELECT * from commandes where idclient= :s or idplat=:s or prixtotal= :s or quantite =:s";
+    $sql="SELECT * from commandes where idclient= :s or idplat=:s or prixtotal= :s or quantite =:s or date=:s or phone=:s or location=:s";
     $db=config::getConnexion();
     $req=$db->prepare($sql);
     $req->bindValue(':s',$s);
@@ -301,16 +345,17 @@ return $req;
 
 
 
-public function delete_cB($idcommande){
+public function delete_cB($idcommande,$date){
     //supprimer m panier
-            $sql="DELETE FROM commandes where idcommande = :idcommande"  ;
+            $sql="DELETE FROM commandes where idcommande = :idcommande and date=:date"  ;
             $db=config::getConnexion();
     
             try
             {
                 $query=$db->prepare($sql);
              $query->execute([
-                    'idcommande'=>$idcommande
+                    'idcommande'=>$idcommande,
+                    'date'=>$date
                
           ]);
                 

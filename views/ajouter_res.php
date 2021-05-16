@@ -72,7 +72,7 @@ $mail->isSMTP();                            // Set mailer to use SMTP
 $mail->Host = 'smtp.gmail.com';             // Specify main and backup SMTP servers
 $mail->SMTPAuth = true;                     // Enable SMTP authentication
 $mail->Username = 'roukaia70@gmail.com';          // SMTP username
-$mail->Password = 'aa'; // SMTP password
+$mail->Password = 'sousourourou9899@'; // SMTP password
 $mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 587;                          // TCP port to connect to
 $mail->setFrom('roukaia70@gmail.com', 'roukaia khelifi');
@@ -343,10 +343,6 @@ $today = $year . '-' . $month . '-' . $day;
 </div>
 </div>
 </div>
-
-<a href="modifier_res.php"> Modify a Reservation </a>
-<br>
-<a href="supprimer_res.php"> Delete a Reservation </a>
 
 </form>
 </div>

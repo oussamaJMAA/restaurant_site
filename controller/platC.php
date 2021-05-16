@@ -72,7 +72,7 @@ function modifierplat($plat,$id)
 
 function afficherlist_plat()
 {
-		$sql="SELECT `id_plat`, `nom`, `image`, `description`, `prix` FROM `plat`;";
+		$sql="SELECT * FROM plat";
 		$db = config::getConnexion();
 		try
 		{
@@ -164,6 +164,28 @@ function Supprimerplat($id)
         catch (Exception $e){
             die('Erreur: '.$e->getMessage());
         }
+}
+
+
+
+public function afficher_plat_id($id_plat)
+{ //affichage tout les commandes
+	$sql="select * from plat where id_plat=:id_plat";
+	$db=config::getConnexion();
+	$req=$db->prepare($sql);
+	$req->bindValue(':id_plat',$id_plat);
+	try
+	{
+		$req->execute();
+	   // $query->execute();
+return $req;
+		
+
+	}
+	catch(Exeption $e)
+	{
+		die('Erreur: '.$e->getMessage());
+	}
 }
 
 

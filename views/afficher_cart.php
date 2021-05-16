@@ -2,6 +2,9 @@
 
 include_once "../model/commandes.php";
 include "../controller/commandesC.php";
+include "../controller/promotionC.php"; 
+include "../controller/platC.php";
+
 session_start();
 // On teste si la variable de session existe et contient une valeur
 if(empty($_SESSION['email']))
@@ -109,18 +112,15 @@ foreach($liste as $c){
 <tbody>
 
 <?php
-	require_once "dbconfig.php";
-    try{
-    $idp=$c['idplat'];
-	$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp");	
-	$select_stmt->execute(
-        array('idp' => $idp)
-    );
-}catch(PDOException $e)
+
+
+$PlatC=new PlatC();
+$idp=$c['idplat'];
+$listePlat=$PlatC->afficher_plat_id($idp);
+foreach($listePlat as $row)
 {
-    echo $e->getMessage();
-}
-	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
+
+
 	?>
 
 
@@ -129,25 +129,25 @@ foreach($liste as $c){
 <tr>
 
 <form method="post" action="modiferpanier.php">
-<td> <img  src="img/shop/<?php echo $row['image_plat']; ?>">
+<td> <img  src="img/shop/<?php echo $row['image']; ?>">
 </td>
-<td><a href="test3.php"><?php echo $row['nom_plat']; ?></a>
+<td><a href="test3.php"><?php echo $row['nom']; ?></a>
 </td>
 <td><span class="amount" disabled><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
 </td>
 <td><input type="text" value=<?php echo $c["quantite"] ?> name="test" style="width:25px">
 </td>
-<td> <input type="text" value=<?php echo $row["prix_plat"].'DT' ?>  name="prixtotal" style="width:57px;border-color:rgba(0,0,0,0)" disabled>
+<td> <input type="text" value=<?php echo $row["prix"].'DT' ?>  name="prixtotal" style="width:67px;border-color:rgba(0,0,0,0)" disabled>
 
 </td>
-<td><input type="text" class="amount" value=<?php echo $c['prixtotal'].'DT'; ?> style="width:57px;border-color:rgba(0,0,0,0)" disabled>
+<td><input type="text" class="amount" value=<?php echo $c['prixtotal'].'DT'; ?> style="width:67px;border-color:rgba(0,0,0,0)" disabled>
 </td>
 <td> <input type="submit" value="UPDATE" name="update">
 
 <input type="hidden" name="idplat" value=<?php echo $c["idplat"] ?>>
 
 <input type="hidden" name="idclient" value=<?php echo $c["idclient"] ?>>
-<input type="text" name="prixtotal" value=<?php echo $row["prix_plat"] ?> style="display:none">
+<input type="text" name="prixtotal" value=<?php echo $row["prix"] ?> style="display:none">
 <input type="hidden" name="idcomm" value=<?php echo $c["idcommande"] ?>>
 </td>
 

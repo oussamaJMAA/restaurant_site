@@ -142,8 +142,8 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                         <thead>
                                             <tr>
                                            
-                                           
-                                                <th> ID CIENT</th>
+                                            <th> ID CIENT</th>
+                                                <th>CIENT</th>
                                                 <th> PLAT </th>
                                                 <th>QUANTITE </th>
                                                 
@@ -170,12 +170,19 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                     foreach($liste as $com){
                                ?>
                                     <tr>
+                                    <td> <?php echo $com["idclient"] ?></td>
+                                 <?php
+ $u=new commandesC();
+                                  
+ $listeu=$u->afficher_utilisateur_id($com['idclient']);
+
+ foreach($listeu as $u){
+
+?>
 
 
 
-
-
-                                    <td> <?php echo $com['idclient']; ?></td>
+                                    <td> <?php echo $u["nom"].' '.$u["prenom"] ; ?></td>
                     <?php
 
 $idp=$com['idplat'];
@@ -193,7 +200,15 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 <td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
 
 
+<?php
+ $comp=new commandesC();
+ $idp=$com['idplat'];                          
+ $listep=$comp->afficher_plat_id($idp);
 
+ foreach($listep as $comp){
+
+
+?>
 
 
 
@@ -201,7 +216,7 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 </td>
 <td> <?php echo $com['date']; ?>
 </td>
-<td> <?php echo $com['prixtotal'].'DT'; ?>
+<td> <?php echo $comp['prix'].'DT'; ?>
 </td>
 <td> <?php echo $com['phone']; ?>
 </td>
@@ -243,6 +258,7 @@ $confirmation="CONFIRMED";}
 						<input type="submit" name="Delete" value="Delete">
 					
                         <input type="hidden" value=<?PHP echo $com['idcommande']; ?> name="idcommande">
+                        <input type="hidden" value=<?PHP echo $com['date']; ?> name="date">
 						</form>
 					</td>
 	
@@ -266,7 +282,8 @@ $confirmation="CONFIRMED";}
 <?php 
                                }                                                                                                      
 }
-
+                                    }
+                                }
 ?>
 
 						
