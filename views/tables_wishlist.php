@@ -179,6 +179,7 @@ if(isset($_POST["tri"])){
 <?php
                                  
                                    include "../controller/utilisateurC.php";
+                                   
                                     $com=new resC();
                                     $liste=$com->afficher_list();
                                     foreach($liste as $com){
@@ -188,20 +189,15 @@ if(isset($_POST["tri"])){
                                     <td> <?php echo $com['id_user']; ?></td>
                                     <td> <?php echo $com['idplat']; ?></td>
                     <?php
+$u=new resC();
+                                  
+$listeu=$u->afficher_plat_id($com['idplat']);
 
-$idp=$com['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
-
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
-{
+foreach($listeu as $u){
 
 
 ?>
-<td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
+<td style="text-align: center;"> <img src="z-front/img/menu/1/<?php echo $u['image']; ?>"  width="300px" >  </td>
 
 <?php
   $p=new resC();

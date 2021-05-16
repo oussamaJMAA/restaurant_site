@@ -163,6 +163,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                <?php
                                    include_once "../model/commandes.php";
                                    include "../controller/commandesC.php";
+                                  
                                     $com=new commandesC();
                                   
                                     $liste=$com->afficher_commandes_all();
@@ -185,19 +186,16 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                     <td> <?php echo $u["nom"].' '.$u["prenom"] ; ?></td>
                     <?php
 
-$idp=$com['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
 
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
+$PlatC=new commandesC();
+$idp=$com['idplat'];
+$listePlat=$PlatC->afficher_plat_id($idp);
+foreach($listePlat as $row)
 {
 
 
 ?>
-<td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
+<td> <img src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250">  </td>
 
 
 <?php
@@ -255,8 +253,8 @@ $confirmation="CONFIRMED";}
 
 <td>
 <form method="POST" action="supprimer_c.php">
-						<input type="submit" name="Delete" value="Delete">
-					
+						<input type="submit" name="Delete" value="Delete" >
+				
                         <input type="hidden" value=<?PHP echo $com['idcommande']; ?> name="idcommande">
                         <input type="hidden" value=<?PHP echo $com['date']; ?> name="date">
 						</form>

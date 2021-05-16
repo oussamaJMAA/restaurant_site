@@ -90,7 +90,7 @@ foreach($listePlat as $row)
 	<div class="shop-products">
 		<div class="col-md-4 col-sm-6">
             <div class="product-info">
-			<a href="#"><img class="product-img" src="img/shop/<?php echo $row['image']; ?>"></a>
+			<a href="#"><img class="product-img" src="z-front/img/menu/1/<?php echo $row['image']; ?>"></a>
 		
             <div class="card-body">
 				<h4 class="card-title text-primary"><?php echo $row['nom']; ?> </h4>

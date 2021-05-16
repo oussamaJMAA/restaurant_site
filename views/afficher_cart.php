@@ -129,7 +129,7 @@ foreach($listePlat as $row)
 <tr>
 
 <form method="post" action="modiferpanier.php">
-<td> <img  src="img/shop/<?php echo $row['image']; ?>">
+<td> <img  src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250">
 </td>
 <td><a href="test3.php"><?php echo $row['nom']; ?></a>
 </td>

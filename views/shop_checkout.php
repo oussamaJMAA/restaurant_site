@@ -2,6 +2,8 @@
 
 include_once "../model/commandes.php";
 include "../controller/commandesC.php";
+include "../controller/promotionC.php"; 
+include "../controller/platC.php";
 session_start();
 // On teste si la variable de session existe et contient une valeur
 if(empty($_SESSION['email']))
@@ -105,18 +107,13 @@ foreach($liste as $c){
 <tbody>
 
 <?php
-	require_once "dbconfig.php";
-    try{
-    $idp=$c['idplat'];
-	$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp");	
-	$select_stmt->execute(
-        array('idp' => $idp)
-    );
-}catch(PDOException $e)
+
+$PlatC=new PlatC();
+$idp=$c['idplat'];
+$listePlat=$PlatC->afficher_plat_id($idp);
+foreach($listePlat as $row)
 {
-    echo $e->getMessage();
-}
-	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
+
 	?>
 
 <tr>
@@ -144,12 +141,12 @@ foreach($liste as $c){
 </td>
 
 <td>
-<img  src="img/shop/<?php echo $row['image_plat']; ?>">
+<img  src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250">
 </td>
 <td>
-<a href="test3.php"><?php echo $row['nom_plat']; ?></a>
+<a href="test3.php"><?php echo $row['nom']; ?></a>
 </td>
-<input type="hidden" value=<?php echo $row['nom_plat']; ?> name="plat">
+<input type="hidden" value=<?php echo $row['nom']; ?> name="plat">
 <td>
 <span class="amount"><?php echo $userRow['nom'].' '.$userRow['prenom']; ?></span>
 </td>
