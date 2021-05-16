@@ -131,7 +131,7 @@ foreach($listePlat as $row)
 </td>
 
 <td>
-<a href="#"><img  src="img/shop/<?php echo $row['image']; ?>"></a>
+<a href="#"><img  src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250px"></a>
 </td>
 <td>
 <a href="#"><?php echo $row['nom']; ?></a>

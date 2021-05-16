@@ -1,7 +1,21 @@
+<?php 
+include "../controller/promotionC.php"; 
+include "../controller/platC.php";
 
 
-<html>
-    <head>
+
+$PromotionC=new PromotionC();
+$listePlatPromo=$PromotionC->afficherlist_promo();
+
+$PlatC=new PlatC();
+$listePlat=$PlatC->afficherlist_plat();
+ 
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -17,22 +31,15 @@
             <a class="navbar-brand" href="index.html">Yummy Food!</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="POST" action="recherche_com.php">
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="POST" action="rechercherPlat.php">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." name="search" aria-label="Search" aria-describedby="basic-addon2" />
+                    <input class="form-control" type="text" placeholder="Search for..." name="search" aria-label="Search" id="recherche" name="recherche" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" name="btn-search"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
 
-
-            <?php
-if(isset($_POST['btn-search'])&& isset($_POST['search'])){
-    header("Location:recherche_com.php");
-}
-
-?>
 
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
@@ -49,7 +56,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
         </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             
@@ -107,7 +114,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                             </a>
                             <a class="nav-link" href="afficherPlat&PromotionB.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Plats et Promotions
+                               Plats et Promotions
                             </a>
                         </div>
                     </div>
@@ -115,204 +122,87 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                         <div class="small">Logged in as:</div>
                         Admin
                     </div>
+             
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Commandes</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="tables.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Commandes</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                               Yummy Food DataBase!
-                               
-                            </div>
-                        </div>
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table mr-1"></i>
-                                DataTable Example
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                           
-                                            <th>ID CIENT</th>
-                                                <th>CIENT</th>
-                                                <th> PLAT </th>
-                                                <th>QUANTITE </th>
-                                                
-                                                
-                                                <th>DATE</th>
-                                                <th>PRIX PLAT</th>
-                                                <th>PHONE</th>
-                                                <th>ADRESSE</th>
-                                                <th>PRIX COMMANDE</th>
-                                                <th>CONFIRMATION</th>
-                                                <th> DELETE</th>
-                                                <th> PRINT </th>
-				                                
-                                            </tr>
-                                        </thead>
-</tbody>
-                               <?php
-                                   include_once "../model/commandes.php";
-                                   include "../controller/commandesC.php";
-                                    $com=new commandesC();
-                                  
-                                    $liste=$com->
-                                    recherche_com($_POST["search"]);
-                                 
-                                    foreach($liste as $com){
-                               ?>
-                                    <tr>
-                                    <td> <?php echo $com["idclient"] ?></td>
-                                 <?php
- $u=new commandesC();
-                                  
- $listeu=$u->afficher_utilisateur_id($com['idclient']);
+                        <h1 class="mt-4 " style="text-align: center;" >Modifier Promotion</h1>
 
- foreach($listeu as $u){
+                         <center>
+                        <div class="card mb-4" style="background: rgb(183 193 199); width: 70%; border-radius: 20px; margin-top: 50px; color: white;">
+                           
 
-?>
+<form class="form-group" id="ajouterPromotion-form" action="modifierPromotionC.php" method="post">
+<div class="form-group">
 
 
+<div>
+<input type="hidden" value="<?PHP echo $_POST['id_promo']; ?>" name="id_promo">
+<input class="form-control" name="val_promo" id="val_promo" placeholder="Remise" type="number" max="100" min="0" required="required" 
+style=" width: 20%; margin-top:2%;" 
+value="<?php echo $_POST['val_promo'];?>" />
+<div style=" width: 20%; margin-top:2%; text-align: center;" >
+<label for="pet-select" >Choisir un plat :</label>
 
-                                    <td> <?php echo $u["nom"].' '.$u["prenom"] ; ?></td>
-                    <?php
-
-$idp=$com['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
-
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
-{
-
-
-?>
-<td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
-
-
-<?php
- $comp=new commandesC();
- $idp=$com['idplat'];                          
- $listep=$comp->afficher_plat_id($idp);
-
- foreach($listep as $comp){
-
-
-?>
-
-
-
-<td> <?php echo $com['quantite']; ?>
-</td>
-<td> <?php echo $com['date']; ?>
-</td>
-<td> <?php echo $comp['prix'].'DT'; ?>
-</td>
-<td> <?php echo $com['phone']; ?>
-</td>
-<td> <?php echo $com['location']; ?>
-</td>
-
-
-<?php
-
-$bb=new commandesC();
-$result=$bb->somme_commandes($com["idclient"]);
-
-?>
-
-
-
-<td> 
-<?php echo $result.'DT' ?>
-</td>
-
-<?php
-if(($com["location"])==""&&($com["phone"])==0){
-    $confirmation="NOT CONFIRMED";
-}else{
-
-$confirmation="CONFIRMED";}
-?>
-
-
-<td> 
-<?php echo $confirmation ?>
-</td>
-
-
-
-
-<td>
-<form method="POST" action="supprimer_c.php">
-						<input type="submit" name="Delete" value="Delete">
-					
-                        <input type="hidden" value=<?PHP echo $com['idcommande']; ?> name="idcommande">
-						</form>
-					</td>
-	
-<td>
-<form method="POST" action="printfact.php">
-						<input type="submit" name="print" value="IMPRIMER">
-
-     <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
-                        
-                        <input type="hidden" value=<?PHP echo $com['idplat']; ?> name="idplat">
-                        <input type="hidden" value=<?PHP echo $com['location']; ?> name="adresse">
-                        <input type="hidden" value=<?PHP echo $com['phone']; ?> name="phone">
-                        <input type="hidden" value=<?PHP echo $com['date']; ?> name="datec">
-                        <input type="text" value=<?php echo $com['prixtotal'].'DT'; ?> name="prix" style="display:none">
-						</form>
-					</td>
-	
-
-</tr>	
-
+<select name="id_plat" id="id_plat">
 <?php 
-                               }                                                                                                      
+
+foreach ($listePlat as $row ) 
+{
+   
+    echo '<option value="'.$row['id_plat'].'">'.$row['id_plat']." ".$row['nom'].'</option>"';
+
 }
-                                    }
-                                }
+
+
+$Date=date('Y-m-d');//strval($Date);
 ?>
 
-						
-                                    </table>
-                                </div>
+</select>
+
+</div>
 
 
-                          
-                                <form method="POST" action="tri_com.php">
-<input type="submit" name="tri" value="Order By Date">
+<label style="margin-left: 20%;margin-top: 40px;" for="cheese">Date Activation</label>
+
+<input type="date" id="date_activation" name="date_activation" 
+min="<?php echo $Date;?>" value="<?php echo $_POST['date_activation'];?>" >
+
+<label for="cheese">Date Expiration</label>
+
+<input type="date" id="date_expiration" name="date_expiration" min="<?php echo $Date;?>"
+value="<?php echo $_POST['date_expiration'];?>" 
+style="margin-right: 20%;">
+
+
+<button  class="btn btn-default btn-lg btn-block" id="js-contact-btn" style="margin-top:20px; "
+>Modifier</button>
+</div>
 </form>
 
-<?php
-if(isset($_POST["tri"])){
-
-    header("Location:tri_com.php");
-}
-?>
 
 
 
-                            </div>
+
+
+
+
+
+
+
+
+
+
                         </div>
+                        </center>
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; WeDon'tByte</div>
+                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -324,10 +214,10 @@ if(isset($_POST["tri"])){
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/jsB/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="jsB/scripts.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/jsB/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.20/jsB/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
         <script src="assetsB/demo/datatables-demo.js"></script>
     </body>
 </html>

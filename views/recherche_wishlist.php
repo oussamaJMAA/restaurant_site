@@ -97,9 +97,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                Commandes
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="afficherPlat&PromotionB.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                Plats et Promotions
                             </a>
                         </div>
                     </div>
@@ -112,10 +112,10 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Tables</h1>
+                        <h1 class="mt-4">WishList</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Tables</li>
+                            <li class="breadcrumb-item"><a href="tables.php">Dashboard</a></li>
+                            <li class="breadcrumb-item active">WishList</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
