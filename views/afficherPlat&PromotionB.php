@@ -245,7 +245,7 @@ $listePlat=$PlatC->afficherlist_plat();
                                                 <td><?php echo $row['id_promo'] ?></td>
 
                                                 <td>
-                                                    <img style="width: 150px;" src="../z-front/img/menu/1/<?php echo $row['image'] ?>">
+                                                    <img style="width: 150px;" src="z-front/img/menu/1/<?php echo $row['image'] ?>">
                                                 </td>
 
                                                 <td><?php echo $row['val_promo'] ?> %</td>

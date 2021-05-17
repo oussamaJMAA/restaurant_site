@@ -9,9 +9,9 @@
     private $time;
     private $guests;
     private  $id; 
+private $idclient;
 
-
-    public function __construct($full_name,$email,$phone,$date,$time,$guests)
+    public function __construct($full_name,$email,$phone,$date,$time,$guests,$idclient)
     {
      
         $this->full_name=$full_name;
@@ -20,7 +20,7 @@
         $this->date=$date;
         $this->time=$time;
         $this->guests=$guests;
-     
+     $this->idclient=$idclient;
 
     }
     

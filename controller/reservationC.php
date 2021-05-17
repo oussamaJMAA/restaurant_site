@@ -30,10 +30,10 @@ return $sql;
 
 
 
-    public function ajouter($res)
+    public function ajouter($res,$idclient)
     {
-        $sql="insert into reservation(full_name,email,phone,guests,date,time)
-        values (:full_name,:email,:phone,:guests,:date,:time)";
+        $sql="insert into reservation(full_name,email,phone,guests,date,time,idclient)
+        values (:full_name,:email,:phone,:guests,:date,:time,:idclient)";
         $db=config::getConnexion();
 
         try
@@ -45,7 +45,8 @@ return $sql;
                 'phone'=>$res->getphone(),
               'guests'=>$res->getguests(),
               'date'=>$res->getdate(),
-              'time'=>$res->gettime()
+              'time'=>$res->gettime(),
+              'idclient'=>$idclient
             ]);
         }
         catch(Exeption $e)
