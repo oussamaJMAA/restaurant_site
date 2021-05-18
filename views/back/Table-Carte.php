@@ -149,11 +149,7 @@ $listecarte=$carteC->afficherCarte();
                                             <tr>
                                                 
                                                 <th>id</th>
-                                                <th>Prenom</th>
-                                                <th>Nom</th>
-                                                <th>Email</th>
-                                                <th>Password</th>
-                                                <th>TotalPoints</th>
+                                                <th>Etat</th>
                                                 <th>Date Creation</th>
                                                 <th>Date Expiration</th>
                                                 <th>Modifier Carte</th>
@@ -163,11 +159,7 @@ $listecarte=$carteC->afficherCarte();
                                         <tfoot>
                                                 
                                                 <th>id</th>
-                                                <th>Prenom</th>
-                                                <th>Nom</th>
-                                                <th>Email</th>
-                                                <th>Password</th>
-                                                <th>TotalPoints</th>
+                                                <th>Etat</th>
                                                 <th>Date Creation</th>
                                                 <th>Date Expiration</th>
                                                 <th>Modifier Carte</th>
@@ -184,11 +176,7 @@ $listecarte=$carteC->afficherCarte();
                                                 <td><?php echo $row['id'] ;?></td>
 
                                                 
-                                                <td><?php echo $row['prenom']; ?></td>
-                                                <td><?php echo $row['nom']; ?></td>
-                                                <td><?php echo $row['email'] ;?></td>
-                                                <td><?php echo $row['password'] ;?></td>
-                                                <td><?php echo $row['totalpoints'];?></td>
+                                                <td><?php echo $row['etat'];?></td>
                                                 <td><?php echo $row['date_creat'];?></td>
                                                 <td><?php echo $row['date_expir'];?></td>
                                                 
@@ -200,15 +188,7 @@ $listecarte=$carteC->afficherCarte();
                                                         <input type="hidden" value="<?PHP 
                                                         echo $row['id']; ?>" name="id">
                                                         <input type="hidden" value="<?PHP 
-                                                        echo $row['prenom']; ?>" name="prenom">
-                                                        <input type="hidden" value="<?PHP 
-                                                        echo $row['nom']; ?>" name="nom">
-                                                        <input type="hidden" value="<?PHP 
-                                                        echo $row['email']; ?>" name="email">
-                                                        <input type="hidden" value="<?PHP 
-                                                        echo $row['password']; ?>" name="password">
-                                                        <input type="hidden" value="<?PHP 
-                                                        echo $row['totalpoints']; ?>" name="totalpoints"></form>
+                                                        echo $row['etat']; ?>" name="etat"></form>
                                                         <input type="hidden" value="<?PHP 
                                                         echo $row['date_creat']; ?>" name="date_creat"></form>
                                                         <input type="hidden" value="<?PHP 
@@ -220,7 +200,9 @@ $listecarte=$carteC->afficherCarte();
                                                     <button  class="btn btn-danger">
                                                     <i class="fa fa-trash"></i></button>
                                                         <input type="hidden" value="<?PHP 
-                                                        echo $row['id']; ?>" name="id"></form>
+                                                        echo $row['id']; ?>" name="id">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['etat']; ?>" name="etat"></form>
                                                 </td>
 
 
@@ -230,7 +212,7 @@ $listecarte=$carteC->afficherCarte();
                                     </table>
                                 </div>
                             </div>
-                            <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block"  href="ajoutercarte.php">Create Account</a></div>
+                            <div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block"  href="ajoutercarte.php">Create Card</a></div>
                         </div>
                     </div>
                 </main>

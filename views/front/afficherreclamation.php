@@ -239,11 +239,19 @@ if (prenom.value.substring(0,1)<'A'||prenom.value.substring(0,1)>'Z' ){
 </ul>
 </li>
 
+
 <li class="dropdown">
 <a href="ajouterreclamation.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Claim<span class="caret"></span></a>
 <ul class="dropdown-menu">
 <li><a href="afficherreclamation.php">Claim List</a></li>
 </ul>
+<!--
+<li class="dropdown">
+<a href="ajouterreclamation.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact<span class="caret"></span></a></li>
+<ul class="dropdown-menu">
+<li><a href="shop_account_detail.html">Claim List</a></li>
+</ul>
+        -->
 
 <li class="dropdown">
 <a class="css-pointer dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-shopping-cart fsc pull-left"></i><span class="cart-number">3</span><span class="caret"></span></a>
@@ -324,35 +332,70 @@ if (prenom.value.substring(0,1)<'A'||prenom.value.substring(0,1)>'Z' ){
 <a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a>
 </div>
 </div>
-<div class="col-md-6">
-<form method="POST" action="modifierReclamationC.php" >
-<input type="hidden" value="<?PHP 
-    echo $_POST['id']; ?>" name="id">
-<div class="form-group">
-<input value="<?php echo $_POST["nom"];?>" class="form-control" name="nom" id="nom" placeholder="Full Name" type="text"   />
-</div>
-<div class="form-group">
-<input value="<?php echo $_POST["email"];?>" class="form-control" type="email" name="email" id="email" placeholder="Email Address"  />
-</div>
-<div class="form-group">
-<!--<input class="form-control" placeholder="Subject" type="text" id="sujet" name="sujet" required="required"> -->
-<select class="form-control" name="sujet">
-<option value="">Subject</option>
-<option value="Plats">Plats</option>
-<option value="Service">Service</option>
-<option value="Articles">Articles</option>
-<option value="Reservation">Reservation</option>
-<option value="Prix">Prix</option>
-</select>
-</div>
-<div class="form-group">
-<textarea  class="form-control" name="message" id="message" placeholder="Message" rows="5" required="required"></textarea>
-</div>
-<!--<a href="ajouterreclamationC.php"><input type="button" value="Send Message"  /></a>-->
-<!--<div class="form-group mt-4 mb-0"><a class="btn btn-primary btn-block"  href="ajouterreclamationC.php">Send Message</a></div>-->
-<div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" href="modifierReclamationC.php">Send Message</button></div>
 
 
+
+                            <table id="dataTable" width="100%" cellspacing="0" border="3" align="center">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th>id  </th>
+                                                <th>Nom</th>
+                                                <th>Email</th>
+                                                <th>Sujet</th>
+                                                <th>Message</th>
+                                                <th>Modifier Reclamation</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                                
+                                                <th>id</th>
+                                                <th>Nom</th>
+                                                <th>Email</th>
+                                                <th>Sujet</th>
+                                                <th>Message</th>
+                                                <th>Modifier Reclamation</th>
+
+                                        </tfoot>
+                                        <tbody>
+                                             <?PHP
+
+                                                foreach($listereclamation as $row){
+
+
+                                                ?>
+                                            <tr>
+                                                <td><?php echo $row['id'] ;?></td>
+
+                                                
+                                                <td><?php echo $row['nom']; ?></td>
+                                                <td><?php echo $row['email'] ;?></td>
+                                                <td><?php echo $row['sujet'] ;?></td>
+                                                <td><?php echo $row['message'];?></td>
+                                                
+                                                <td> 
+                                                    <form method="POST" action="modifierreclamation.php">
+                                                    <button  class="btn">Modifier
+                                                   </button>
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['id']; ?>" name="id">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['nom']; ?>" name="nom">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['email']; ?>" name="email">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['sujet']; ?>" name="sujet">
+                                                        <input type="hidden" value="<?PHP 
+                                                        echo $row['message']; ?>" name="message"></form>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    
+                                        <?PHP }?>
+
+                                    </table>    
 
 
 

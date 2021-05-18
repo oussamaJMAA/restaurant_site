@@ -9,14 +9,16 @@ include "../../controller/carteC.php";
     
 
     echo "0";
-    echo $_POST['id'];
+    //echo $_POST['id'];
+    //echo $_POST['etat'];
+    //echo $_POST['date_creat'];
+    //echo $_POST['date_expir'];
 
-    if ( !empty($_POST["prenom"]) && !empty($_POST["nom"]) && !empty($_POST["email"]) && !empty($_POST["password"]) 
-    && !empty($_POST["totalpoints"])    ) 
+    if ( !empty($_POST["etat"]) && !empty($_POST["date_creat"]) && !empty($_POST["date_expir"])  ) 
     {
         echo "1";
     
-    $carte = new carte( $_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['password'],$_POST['totalpoints']);
+    $carte = new carte( $_POST['etat'],$_POST['date_creat'],$_POST['date_expir'] );
         $carteC->modifierCarte($carte,$_POST['id']);
 
         header('Location:Table-Carte.php');

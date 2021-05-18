@@ -22,7 +22,7 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Card</h3></div>
                                     <div class="card-body">
                                         <form method="POST" action="ajoutercarteC.php" >
-                                            <div class="form-row">
+                                          <!--  <div class="form-row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputFirstName">First Name</label>
@@ -51,24 +51,24 @@
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputtotalpoints">Nombre de points</label>
                                                         <input class="form-control py-4" name="totalpoints" type="number" placeholder="Nombre de points" />
-                                                    </div>
-                                                </div>
-                                                 <!--   <div class="form-group">
-                                                        <label class="small mb-1" for="inputetat">Etat de la carte</label>
-                                                        <input value="<?php //echo $_POST['etat'];?>" class="form-control py-4" name="etat" type="text" placeholder="Etat de la carte" />
                                                     </div> -->
-                                                   <!-- <div class="col-md-6">
+                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputetat">Etat de la carte</label>
+                                                        <input  class="form-control py-4" name="etat" type="text" placeholder="Etat de la carte" />
+                                                    </div> 
+                                                    <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputdate_creat">Date de creation</label>
-                                                        <input value="<?php //echo $_POST['date_creat'];?>" class="form-control py-4" name="date_creat" type="date"  />
+                                                        <input value="<?php echo $_POST['date_creat'];?>" class="form-control py-4" name="date_creat" type="date"  />
                                                     </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputdate_expir">Date d'expiration</label>
-                                                        <input value="<?php// echo $_POST['date_expir'];?>" class="form-control py-4" name="date_expir" type="date" />
+                                                        <input value="<?php echo $_POST['date_expir'];?>" class="form-control py-4" name="date_expir" type="date" />
                                                     </div>
-                                                    </div> -->
+                                                    </div> 
                                                 </div>
                                             </div>
                                             <div class="form-group mt-4 mb-0"><button class="btn btn-primary btn-block" >Create Card</button></div>

@@ -7,8 +7,8 @@ class carteC
 { 
     function ajouterCarte($carte)
     {
-        $sql="INSERT INTO `cartefidelite` (`prenom`,`nom`,`email`,`password`,`totalpoints`)
-        VALUES (:prenom,:nom,:email,:password,:totalpoints)";
+        $sql="INSERT INTO `cartefidelite` (`etat`,`date_creat`,`date_expir`)
+        VALUES (:etat,:date_creat,:date_expir)";
 
 
         $db=config::getConnexion();
@@ -18,23 +18,14 @@ class carteC
             $req=$db->prepare($sql);
 
 
-		$prenom=$carte->getprenom(); 
-        $nom=$carte->getnom(); 
-		$email=$carte->getMail();     
-		$password=$carte->getPass(); 
-        $totalpoints=$carte->getTotalpoints();
-    //    $etat=$carte->getetat();
-     //   $date_creat=$carte->getdate_creat();
-     //   $date_expir=$carte->getdate_expir(); 
+		
+        $etat=$carte->getetat();
+        $date_creat=$carte->getdate_creat();
+        $date_expir=$carte->getdate_expir(); 
 
-		$req->bindValue(':prenom',$prenom);
-		$req->bindValue(':nom',$nom);
-		$req->bindValue(':email',$email);
-		$req->bindValue(':password',$password);	        
-        $req->bindValue(':totalpoints',$totalpoints);
-    //    $req->bindValue(':etat',$etat);
-  //    $req->bindValue(':date_creat',$date_creat);
-    //    $req->bindValue(':date_expir',$date_expir);
+        $req->bindValue(':etat',$etat);
+        $req->bindValue(':date_creat',$date_creat);
+        $req->bindValue(':date_expir',$date_expir);
 
         $req->execute();
         }
@@ -67,28 +58,19 @@ class carteC
     public function modifierCarte($carte,$id)
 	{
  	$db=config::getConnexion();
- 	$sql="UPDATE `cartefidelite` SET `prenom`=:prenom,`nom`=:nom ,`email`=:email,`password`=:password,`totalpoints`=:totalpoints WHERE `id`=:id";
+ 	$sql="UPDATE `cartefidelite` SET `etat`=:etat,`date_creat`=:date_creat ,`date_expir`=:date_expir WHERE `id`=:id";
  		try{
 
         $req=$db->prepare($sql);
 
-		$prenom=$carte->getprenom(); 
-        $nom=$carte->getnom(); 
-		$email=$carte->getMail();     
-		$password=$carte->getPass(); 
-        $totalpoints=$carte->getTotalpoints(); 
-      //  $etat=$carte->getetat();
-       // $date_creat=$carte->getdate_creat();
-      //  $date_expir=$carte->getdate_expir();
+        $etat=$carte->getetat();
+        $date_creat=$carte->getdate_creat();
+        $date_expir=$carte->getdate_expir();
 
-		$req->bindValue(':prenom',$prenom);
-		$req->bindValue(':nom',$nom);
-		$req->bindValue(':email',$email);
-		$req->bindValue(':password',$password);	        
-        $req->bindValue(':totalpoints',$totalpoints);
-      //  $req->bindValue(':etat',$etat);
-      //  $req->bindValue(':date_creat',$date_creat);
-      //  $req->bindValue(':date_expir',$date_expir);
+		
+        $req->bindValue(':etat',$etat);
+        $req->bindValue(':date_creat',$date_creat);
+        $req->bindValue(':date_expir',$date_expir);
         $req->bindValue(':id',$id);
 	
 			
@@ -102,13 +84,14 @@ class carteC
 	}
 
 
-    public function SupprimerCarte($id){
-		$sql="DELETE  from cartefidelite where  id=:id ";
+    public function SupprimerCarte($id,$etat){
+        $sql="UPDATE `cartefidelite` SET `etat`=:etat WHERE `id`=:id";
 		$db = config::getConnexion();
 		try{
 		$req=$db->prepare($sql);
 		$req->bindValue(':id',$id);
- 	    $req->execute();
+		$req->bindValue(':etat',$etat);
+        $req->execute();
 		}
         catch (Exception $e){
             die('Erreur: '.$e->getMessage());
@@ -118,7 +101,7 @@ class carteC
 
 
     public function triCarte(){
-        $sql="SELECT * from cartefidelite order by totalpoints DESC";
+        $sql="SELECT * from cartefidelite order by date_creat DESC";
         $db=config::getConnexion();
         try
         {

@@ -10,6 +10,10 @@ include "../../Controller/ReclamationC.php";
 
     echo "0";
     echo $_POST["nom"];
+    echo $_POST["email"];
+    echo $_POST["sujet"];
+    echo $_POST["message"];
+
 
     if ( !empty($_POST["nom"]) && !empty($_POST["email"]) && !empty($_POST["sujet"]) 
     && !empty($_POST["message"]) ) 
@@ -20,7 +24,7 @@ include "../../Controller/ReclamationC.php";
         $reclamationC->ajouterReclamation($reclamation);
 
         //header('Location:Table-Reclamation.php');
-        header('Location:ajouterreclamation.php');
+        header('Location:afficherreclamation.php');
     }
     
     else

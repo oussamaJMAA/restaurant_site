@@ -11,6 +11,10 @@ include "../../Controller/reclamationC.php";
 
     echo "0";
     echo $_POST['id'];
+    echo $_POST['nom'];
+    echo $_POST['email'];
+    echo $_POST['sujet'];
+    echo $_POST['message'];
 
     if ( !empty($_POST["nom"]) && !empty($_POST["email"]) && !empty($_POST["sujet"]) 
     && !empty($_POST["message"]) ) 

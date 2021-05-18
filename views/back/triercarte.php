@@ -148,30 +148,25 @@ $listecarte=$carteC->triCarte();
                                         <thead>
                                             <tr>
                                                 
-                                            <th>id</th>
-                                                <th>Prenom</th>
-                                                <th>Nom</th>
-                                                <th>Email</th>
-                                                <th>Password</th>
-                                                <th>TotalPoints</th>
+                                            <th>id</th>                                                
+                                                <th>Etat</th>
                                                 <th>Date Creation</th>
                                                 <th>Date Expiration</th>
                                                 <th>Modifier Carte</th>
                                                 <th>Desactiver Carte</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                                 
                                         <th>id</th>
-                                                <th>Prenom</th>
-                                                <th>Nom</th>
-                                                <th>Email</th>
-                                                <th>Password</th>
-                                                <th>TotalPoints</th>
+                                                <th>Etat</th>
                                                 <th>Date Creation</th>
                                                 <th>Date Expiration</th>
                                                 <th>Modifier Carte</th>
                                                 <th>Desactiver Carte</th>
+                                                <th></th>
+
                                         </tfoot>
                                         <tbody>
                                              <?PHP
@@ -183,12 +178,8 @@ $listecarte=$carteC->triCarte();
                                             <tr>
                                                 <td><?php echo $row['id'] ;?></td>
 
-                                                
-                                                <td><?php echo $row['prenom']; ?></td>
-                                                <td><?php echo $row['nom']; ?></td>
-                                                <td><?php echo $row['email'] ;?></td>
-                                                <td><?php echo $row['password'] ;?></td>
-                                                <td><?php echo $row['totalpoints'];?></td>
+                                                                                                
+                                                <td><?php echo $row['etat'];?></td>
                                                 <td><?php echo $row['date_creat'];?></td>
                                                 <td><?php echo $row['date_expir'];?></td>
                                                 
@@ -197,29 +188,25 @@ $listecarte=$carteC->triCarte();
                                                     <form method="POST" action="modifierCarte.php">
                                                     <button  class="btn">Modifier
                                                    </button>
-                                                  <!--      <input type="hidden" value="<?PHP 
-                                                       // echo $row['id']; ?>" name="id">
+                                                    <input type="hidden" value="<?PHP 
+                                                        echo $row['etat']; ?>" name="etat">
                                                         <input type="hidden" value="<?PHP 
-                                                       // echo $row['prenom']; ?>" name="prenom">
+                                                        echo $row['date_creat']; ?>" name="date_creat">
                                                         <input type="hidden" value="<?PHP 
-                                                      //  echo $row['nom']; ?>" name="nom">
-                                                        <input type="hidden" value="<?PHP 
-                                                      //  echo $row['email']; ?>" name="email">
-                                                        <input type="hidden" value="<?PHP 
-                                                       // echo $row['password']; ?>" name="password">
-                                                        <input type="hidden" value="<?PHP 
-                                                      //  echo $row['totalpoints']; ?>" name="totalpoints"></form>
-                                               --> </td>
+                                                        echo $row['date_expir']; ?>" name="date_expir"></form>
+                                                        
+                                                </td>
                                                
-<!--
+
                                                 <td> 
-                                                    <form method="POST" action="supprimerCarte.php">
+                                                    <form method="POST" action="supprimerCarte.php"> 
                                                     <button  class="btn btn-danger">
                                                     <i class="fa fa-trash"></i></button> 
                                                         <input type="hidden" value="<?PHP 
-                                                       // echo $row['id']; ?>" name="id"></form>
+                                                        echo $row['id']; ?>" name="id"></form> 
                                                 </td>
--->
+                                                
+                                                
 
                                             </tr>
                                             <?PHP }?>

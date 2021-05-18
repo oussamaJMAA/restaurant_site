@@ -11,14 +11,13 @@ require_once 'mail.php';
     
 
     echo "0";
-    echo $_POST["prenom"];
+    echo $_POST["etat"];
 
-    if ( !empty($_POST["prenom"]) && !empty($_POST["nom"]) && !empty($_POST["email"]) && !empty($_POST["password"]) 
-    && !empty($_POST["totalpoints"]) ) 
+    if ( !empty($_POST["etat"]) && !empty($_POST["date_creat"]) && !empty($_POST["date_expir"])  ) 
     {
         echo "1";
     
-    $carte = new carte( $_POST['prenom'],$_POST['nom'],$_POST['email'],$_POST['password'],$_POST['totalpoints']);
+    $carte = new carte( $_POST['etat'],$_POST['date_creat'],$_POST['date_expir']);
         $carteC->ajouterCarte($carte);
 
         header('Location:Table-Carte.php');
@@ -27,7 +26,7 @@ require_once 'mail.php';
     else
         $error = "Missing information";
 
-
+/*
 
 $mail->setFrom('yummyfoodd3@gmail.com', 'Chebbi Meriem');
 $mail->addAddress($_POST["email"]); 
@@ -36,6 +35,6 @@ $mail->Body    = 'Votre Carte Fidélité a été ajoutée avec succes <b>Bravo</
 
 $mail->send();
 
-
+*/
     
 ?>
