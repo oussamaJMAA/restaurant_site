@@ -16,7 +16,7 @@
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Reservation</h2>
+<h2 class="text-uppercase">Reset-Password</h2>
 <p>Welcome to YummyFood !</p>
 </div>
 </div>
@@ -28,7 +28,7 @@
 <div class="row">
 <div class="col-md-12">
 <div class="page-header wow fadeInDown">
-<h1>Reservations<small>Book a table online. Leads will reach in your email.</small></h1>
+<h1>Password-Recovery <small>Don't worry your password will be changed once you enter the new one </small></h1>
 </div>
 </div>
 </div>

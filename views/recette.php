@@ -23,6 +23,7 @@ $liste=$reC->afficher_recette();
         <meta name="author" content="" />
         <title>Admin</title>
         <link href="z-back/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
         <link href="https://cdn.datatables.net/1.10.20/z-back/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/jsB/all.min.js" crossorigin="anonymous"></script>
     </head>
@@ -66,15 +67,15 @@ $liste=$reC->afficher_recette();
                             </a>
                           
                             <a class="nav-link collapsed" href="tables.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                                 Clients
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
                           
                             <a class="nav-link collapsed" href="tables_wishlist.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                                 WishList
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                <div class="sb-sidenav-collapse-arrow"></div>
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
@@ -104,20 +105,20 @@ $liste=$reC->afficher_recette();
                             </div>
                             
                             <a class="nav-link" href="tables_commandes.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                                 Commandes
                             </a>
                             <a class="nav-link" href="afficherPlat&PromotionB.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                                Plats et Promotions
                             </a>
                             <a class="nav-link" href="afficherCommentsB.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                               Blogs & Comments
                             </a>
                             
                             <a class="nav-link" href="ajout_admin.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"></div>
                              Ajout Admin
                             </a>
 

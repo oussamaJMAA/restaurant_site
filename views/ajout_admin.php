@@ -7,7 +7,8 @@ if(isset($_POST['create'])) //button name "btn_register"
 	$password=$_POST["password"];	
     $nom=$_POST["nom"];
     $prenom=$_POST["prenom"];	
-    $gender=$_POST["genre"];	//textbox name "txt_password"
+    $gender=$_POST["genre"];
+    $password2=$_POST['password2'];	//textbox name "txt_password"
 			//textbox name "txt_password"
             if(empty($prenom)){
                 $errorMsg[]="Please enter your  first name";	//check email textbox not empty 
@@ -18,20 +19,24 @@ if(isset($_POST['create'])) //button name "btn_register"
 	else if(empty($username)){
 		$errorMsg[]="Please enter username";	//check username textbox not empty 
 	}
+    else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+		$errorMsg[]="Please enter a valid email address";	//check proper email format 
+	}
 	else if(empty($email)){
 		$errorMsg[]="Please enter email";	//check email textbox not empty 
 	}
-	else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-		$errorMsg[]="Please enter a valid email address";	//check proper email format 
-	}
+	
   
-    /*
+    
 	else if(empty($password)){
 		$errorMsg[]="Please enter password";	//check passowrd textbox not empty
 	}
 	else if(strlen($password) < 6){
 		$errorMsg[] = "Password must be atleast 6 characters";	//check passowrd must be 6 characters
-	}*/
+	}
+    else if($password!=$password2){
+        $errorMsg[] = "Passwords don't match";
+    }
 	else
 	{	
         try {
@@ -107,8 +112,8 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
 
 ?>
 
-            <!-- Navbar-->
-            <ul class="navbar-nav ml-auto ml-md-0">
+          <!-- Navbar-->
+          <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -125,12 +130,12 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            
+                         
                             <a class="nav-link" href="tables_res.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Reservations
                             </a>
-                          
+                           
                             <a class="nav-link collapsed" href="tables.php" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Clients
@@ -173,7 +178,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                     </div>
                                 </nav>
                             </div>
-                            
+                      
                             <a class="nav-link" href="tables_commandes.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Commandes
@@ -182,27 +187,34 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                Plats et Promotions
                             </a>
-
                             <a class="nav-link" href="afficherCommentsB.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                               Blogs & Comments
                             </a>
-
                             
                             <a class="nav-link" href="ajout_admin.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                              Ajout Admin
-                            </a> <a class="nav-link" href="recette.php">
+                            </a>
+                          
+                            <a class="nav-link" href="recette.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Recettes
                             </a>
-
-                        </div>
-                    </div>
+                     <br>
+                     <br>
+                     <br>
+                     <br><br>
+                     <br><br><br><br><br><br><br><br><br><br><br>
+                  
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
+              
+                        <div class="small">Logged in as</div>
+                       <?php echo $userRow['login'] ; ?>
+                       <br>
+                   
                     </div>
+                    <a  style ="color:red" href="deconnexion.php" class="btn">disconnect ? </a>
                 </nav>
             </div>
               <div id="layoutSidenav_content">
@@ -213,6 +225,35 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                            
                             
                             <div class="col-lg-7">
+
+
+                            <?php
+		if(isset($errorMsg))
+		{
+			foreach($errorMsg as $error)
+			{
+			?>
+				<div class="alert alert-danger">
+					<strong>WRONG ! <?php echo $error; ?></strong>
+				</div>
+            <?php
+			}
+		}
+		if(isset($registerMsg))
+		{
+		?>
+			<div class="alert alert-success">
+				<strong><?php echo $registerMsg; ?></strong>
+			</div>
+        <?php
+		}
+		?> 
+
+
+
+
+
+
                             <?php
 		
 		if(isset($loginMsg))
@@ -262,7 +303,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-                                                        <input class="form-control py-4"  type="password" placeholder="Confirm password" />
+                                                        <input class="form-control py-4"   name="password2" type="password" placeholder="Confirm password" />
                                                     </div>
                                                 </div>
                                             </div>

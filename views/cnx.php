@@ -442,7 +442,7 @@ if(isset($_POST['btn_register'])) //button name "btn_register"
                     $mail->Port = 587;                   // set the SMTP port for the your server
             
                     $mail->Username = 'jemaaoussama64@gmail.com';          // SMTP username
-            $mail->Password = 'rourousousou9899@.'; //put the password here
+            $mail->Password = 'Sousou96566945'; //put the password here
             
             $mail->setFrom('jemaaoussama64@gmail.com', 'oussama jemaa'); //replace with your values
                     $mail->AddAddress($email);

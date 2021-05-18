@@ -501,7 +501,7 @@ return $req;
 
 
             public function tri_user(){
-                $sql="SELECT * from utilisateur order by id,nom,prenom";
+                $sql="SELECT * from utilisateur order by login";
                 $db=config::getConnexion();
                 $req=$db->prepare($sql);
                

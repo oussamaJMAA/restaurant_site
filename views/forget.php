@@ -158,7 +158,7 @@ if(isset($_POST['submitmail'])){
 		  {
 			  $id= $row['id'];
 		  }
-			  $url="http://localhost/final/views/reset-pass.php?id=" . base64_encode($id) . "";
+			  $url="http://localhost/restaurant_site/views/reset-pass.php?id=" . base64_encode($id) . "";
 			  
 			  $message=" 
 <html>
@@ -519,7 +519,7 @@ if(isset($_POST['submitmail'])){
         $mail->Port = 587;                   //replace values with yours
  
         $mail->Username = 'jemaaoussama64@gmail.com'; //replace values with yours
-        $mail->Password = 'rourousousou9899@.';           //replace values with yours
+        $mail->Password = 'Sousou96566945';           //replace values with yours
  
         $mail->SetFrom('jemaaoussama64@gmail.com', 'oussama jemaa'); //replace values with yours
         $mail->AddAddress($email);

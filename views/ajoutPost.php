@@ -1,6 +1,5 @@
 <?php
 include_once "../controller/formC.php";
-include_once "../controller/UtilisateurC.php";
 require_once '../PHPMailer-5.2-stable/PHPMailerAutoload.php';
     $error = "";
     

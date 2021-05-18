@@ -128,7 +128,7 @@ if(empty($_SESSION['email']))
 </li>
 
 <li>
-<a href="recipe.html">Recipe</a>
+<a href="recette_user.php">Recipe</a>
 
 </li>
 
@@ -145,7 +145,14 @@ if(empty($_SESSION['email']))
 
 </li>
 <li><a href="contact.php">Contact</a></li>
+<li class="dropdown">
+<a href="deconnexion.php"  ><span class="glyphicon glyphicon-log-out"></span></a>
 
+</li>
+<li class="dropdown">
+<a href="test2.php"  > <span class="glyphicon glyphicon-cog"></span></a>
+
+</li>
 
 
 <li><img   id="current_photo" style ="margin-top:13px" src="<?php echo $userRow['location']; ?>"  onerror="this.onerror=null; this.src='img/default.png'" class="img-rounded" width="32x" height="32px" /></li>

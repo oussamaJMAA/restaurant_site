@@ -5,10 +5,7 @@ include "../controller/commentsC.php";
 
  if (empty($_SESSION['id']))
  {
-     echo "<script type='text/javascript'>";
-echo "alert('Please Login First');
-window.location.href='z-front/signin.php';";
-echo "</script>";
+ header('Location:cnx.php');
     
 
  }
