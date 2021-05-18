@@ -92,7 +92,7 @@ if(empty($_SESSION['email']))
 <th>CLIENT(E)</th>
 <th>PLAT</th>
 <th>QUANTITE</th>
-<th>PRIX</th>
+<th>PRIX COMMANDES</th>
 <th>DATE</th>
 <th>PHONE</th>
 <th>LOCATION</th>
@@ -101,12 +101,13 @@ if(empty($_SESSION['email']))
 <?php
 
 
-$c=new commandesC();
+$a=new commandesC();
 $client=$userRow['id'];
-$liste=$c->afficher_commandes($client);
-foreach($liste as $c){
+$liste=$a->afficher_commandes($client);
+foreach($liste as $a){
 
 ?>
+
 <tbody>
 <tr>
 <td>
@@ -116,7 +117,7 @@ foreach($liste as $c){
 <?php
 
 $PlatC=new PlatC();
-$idp=$c['idplat'];
+$idp=$a['idpl'];
 $listePlat=$PlatC->afficher_plat_id($idp);
 foreach($listePlat as $row)
 {
@@ -126,24 +127,26 @@ foreach($listePlat as $row)
 <img  src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250">
 </td>
  <td>
-<?php echo $c['quantite'] ?>
+<?php echo $a['quantite'] ?>
 </td>
 <td>
-<?php echo $c['prixtotal'].'DT'?>
+<?php echo $a['prixtotal'].'DT'?>
 </td>
 <td>
-<?php echo $c["date"] ?>
+<?php echo $a["date"] ?>
 </td>
 <td>
-<?php echo $c["phone"] ?>
+<?php echo $a["phone"] ?>
 </td>
 <td>
-<?php echo $c["location"] ?>
+<?php echo $a["location"] ?>
 </td>
+
 </tr>
 
 <?php
     }
+
 }
 ?>
 </tbody>

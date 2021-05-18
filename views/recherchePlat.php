@@ -1,14 +1,11 @@
 <?php
-include "../controller/promotionC.php"; 
 include "../controller/platC.php";
 
 session_start();
 
-$PromotionC=new PromotionC();
-$listePlatPromo=$PromotionC->afficherlist_promo();
 
 $PlatC=new PlatC();
-$listePlat=$PlatC->afficherlist_plat();
+$listePlat=$PlatC->rechercher_plat_front($_POST['rechercher']);
 
 
 ?>
@@ -19,13 +16,13 @@ $listePlat=$PlatC->afficherlist_plat();
 <!-- Mirrored from demo.web3canvas.com/themeforest/tomato/menu_grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:31 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Yummy Food !</title>
+<title>YummyFood! Responsive Restaurant HTML5 Template</title>
 <meta name="author" content="Surjith S M">
 
-<meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
-<meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
+<meta name="description" content="YummyFood! is a Responsive HTML5 Template for Restaurants and food related services.">
+<meta name="keywords" content="YummyFood!, responsive, html5, restaurant, template, food, reservation">
 
-<script src="../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
+<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
 
 <meta name="viewport" content="width=device-width">
 
@@ -67,32 +64,10 @@ $listePlat=$PlatC->afficherlist_plat();
 <div class="row">
 <div class="col-md-12 text-center">
 <h2 class="text-uppercase">Menu</h2>
-<p>Tomato is a delicious restaurant website template</p>
+<p>YummyFood! is a delicious restaurant website template</p>
 </div>
 </div>
 <div class="cart-item clearfix " >
-<?php 
-	$listeplatt=$PlatC->afficherlist_plat_desc();
-	$nbrimage=0;
-
-	foreach ($listeplatt as $roww) 
-	{ 
-		
-		if($nbrimage <3)
-		{
-			echo '<img src="img/menu/1/';
-			echo $roww['image'];
-			echo '">';
-		}
-
-		$nbrimage++;
-
-	}
-
-?>
-
-
-	
 </div>
 </div>
 </section>
@@ -102,7 +77,7 @@ $listePlat=$PlatC->afficherlist_plat();
 <div class="row">
 <div class="col-md-12">
 <div class="page-header wow fadeInDown">
-<h1>Plat<small></small></h1>
+
 </div>
 </div>
 </div>
@@ -110,7 +85,7 @@ $listePlat=$PlatC->afficherlist_plat();
 <div class="row">
 <div class="col-md-12">
 <div class="menu-tags4">
-<h3 class="tagsort4-active">Promotions</h3>
+<h3 class="tagsort4-active">Plat</h3>
 
 </div>
 </div>
@@ -119,59 +94,20 @@ $listePlat=$PlatC->afficherlist_plat();
 <div class="row menu-items4">
 
 <?php
-
-foreach ($listePlatPromo as $row ) 
-	{
-	$remise=$row['prix']-($row['prix']*$row['val_promo']/100);
-	echo'<div class="menu-item4 col-sm-4 col-xs-12 starter dinner desserts"><div class="menu-info"><img src="img/menu/1/';
-	echo $row['image']; 
-	echo'" class="img-responsive" alt="" /><a href="menu_all.html"><div class="menu4-overlay"><h4>';
-	echo $row['nom'] ;
-	echo'</h4><p>';
-	echo $row['description'];
-	echo'<span class="price" style="text-decoration:line-through; Color:#e400007a;">';
-	echo $row['prix'];
-	echo' Dt</span><span class="price" ">';
-	echo $remise ;
-	echo' Dt</span></div></a></div></div>';
-	}
-
-echo'</div><div class="row"><div class="col-md-12"><div class="menu-tags4">
-<h3 class="tagsort4-active">Sans Promotions</h3></div></div></div><div class="row menu-items4">';
-
-
 foreach($listePlat as $row) 
 { 	
 
-	
-	$plat_promo_exist=0;
-	$listePlatProm=$PromotionC->afficherlist_promo();
-
-	foreach($listePlatProm as $row2)
-	{
-		if(  $row2['id_plat'] == $row['id_plat'] )
-			$plat_promo_exist=1;
-	}
-
-
-
-	if($plat_promo_exist==0)
-	{
 	echo'<div class="menu-item4 col-sm-4 col-xs-12 starter dinner desserts"><div class="menu-info"><img src="img/menu/1/';
-	echo $row['image']; 
+	echo $row->image; 
 	echo'" class="img-responsive" alt="" /><a href="menu_all.html"><div class="menu4-overlay"><h4>';
-	echo $row['nom'];
+	echo $row->nom;
 	echo'</h4><p>';
-	echo $row['description'];
+	echo $row->description;
 	echo'<span class="price">';
-	echo $row['prix']; 
+	echo $row->prix; 
 	echo' Dt</span></div></a></div></div>';
 
 	}
-
-}
-
-
 
 
 ?>
@@ -188,8 +124,6 @@ foreach($listePlat as $row)
 <div class="col-md-12">
 <h1>Subscribe</h1>
 <p>Get updates about new dishes and upcoming events</p>
-
-
 <form class="form-inline" action="recherchePlat.php" method="POST">
 <div class="form-group">
 <input class="e-mail form-control" name="rechercher" id="rechercher" type="text" placeholder="Rechercher" required>
@@ -198,9 +132,6 @@ foreach($listePlat as $row)
 <i class="fa fa-angle-right"></i>
 </button>
 </form>
-
-
-
 </div>
 </div>
 </div>

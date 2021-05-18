@@ -48,6 +48,17 @@ if(empty($_SESSION['email']))
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
+
+
+<div class="body">
+<div class="main-wrapper">
+
+<?php include_once 'header.php'; ?> 
+
+
+
+
 <section class="page_header">
 <div class="container">
 <div class="row">
@@ -138,6 +149,8 @@ foreach($listePlat as $row)
 
 }
 	?>
+</div>
 
+</div>
 </div></body>
 </html>

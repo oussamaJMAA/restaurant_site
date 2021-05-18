@@ -219,6 +219,13 @@ if (!(isNaN(phone)) || phone.value.match(t) ){
 <br>
 
 <p class="error" id="errorname"></p>
+
+
+
+
+
+
+
 <form method="post" action="shop_account_detail.php" name="form-checkout" onsubmit="return verif()">
 
 <div class="row">
@@ -295,15 +302,17 @@ Free Shipping
  </table>
 
 
+
+
 </div>
 <div class="text-center top-space-lg">
 <button class="btn btn-default btn-lg" type="submit" name="pay">Pay Now</button>
 <input type="hidden" name="idc" value=<?php echo $c["idclient"] ?>>
 <input type="hidden" name="idcomm" value=<?php echo $c["idcommande"] ?>>
-
-
+<input type="hidden" name="quantite" value=<?php echo $c["quantite"] ?>>
+<input type="hidden" name="prtt" value=<?php echo $c["prixtotal"] ?>>
+<input type="hidden" name="plat" value=<?php echo $c["idplat"] ?>>
 </div>
-
 
 
 

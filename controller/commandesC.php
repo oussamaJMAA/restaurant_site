@@ -161,9 +161,10 @@ return $req;
 //Cruds Commandes
 //all included
 
-public function ajouter_cart($idclient,$date,$phone,$location)
+public function ajouter_cart($idcommande,$idclient,$date,$phone,$location,$quantite,$prixtotal,$idplat)
 { //ajout au panier mais pas encore confirmer
-    $sql="update commandes set date=:date , phone=:phone , location =:location where idclient=:idclient";
+    $sql=" INSERT INTO list_com(idcommande,idclient,date,phone,location,quantite,prixtotal,idpl)
+                        VALUES(:idcommande,:idclient,:date,:phone,:location,:quantite,:prixtotal,:idplat) ";
     $db=config::getConnexion();
 
     try
@@ -172,11 +173,16 @@ public function ajouter_cart($idclient,$date,$phone,$location)
               
         $query->execute(array(
                
-            ':date'=>$date,
+           
+         
+            ':idcommande'=>$idcommande,
             ':idclient'=>$idclient,
+            ':date'=>$date,
             ':phone'=>$phone,
             ':location'=>$location,
-           
+            ':quantite'=>$quantite,
+            ':prixtotal'=>$prixtotal,
+            ':idplat'=>$idplat
 
            ));
     }
@@ -187,6 +193,28 @@ public function ajouter_cart($idclient,$date,$phone,$location)
 }
 
 public function afficher_commandes($idclient)
+{ //affichage tout les commandes
+    $sql="select * from list_com where idclient=:idclient";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+    $req->bindValue(':idclient',$idclient);
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
+
+
+
+public function afficher_commandes1($idclient)
 { //affichage tout les commandes
     $sql="select * from commandes where idclient=:idclient";
     $db=config::getConnexion();
@@ -282,7 +310,7 @@ return $sum;
 
 
 
-public function afficher_commandes_all()
+public function afficher_commandes_all1()
 { //affichage tout les commandes
     $sql="select * from commandes";
     $db=config::getConnexion();
@@ -301,9 +329,33 @@ return $req;
         die('Erreur: '.$e->getMessage());
     }
 }
+
+
+
+
+
+public function afficher_commandes_all()
+{ //affichage tout les commandes
+    $sql="select * from list_com";
+    $db=config::getConnexion();
+    $req=$db->prepare($sql);
+
+    try
+    {
+        $req->execute();
+       // $query->execute();
+return $req;
+        
+
+    }
+    catch(Exeption $e)
+    {
+        die('Erreur: '.$e->getMessage());
+    }
+}
 public function tri_com()
 { //affichage tout les commandes
-    $sql="select * from commandes order by date,prixtotal";
+    $sql="select * from list_com order by date,prixtotal";
     $db=config::getConnexion();
     $req=$db->prepare($sql);
 
@@ -324,7 +376,7 @@ return $req;
 
 
 public function recherche_com($s){
-    $sql="SELECT * from commandes where idclient= :s or idplat=:s or prixtotal= :s or quantite =:s or date=:s or phone=:s or location=:s";
+    $sql="SELECT * from list_com where idclient= :s or prixtotal= :s or quantite =:s or date=:s or phone=:s or location=:s";
     $db=config::getConnexion();
     $req=$db->prepare($sql);
     $req->bindValue(':s',$s);
@@ -345,17 +397,17 @@ return $req;
 
 
 
-public function delete_cB($idcommande,$date){
+public function delete_cB($idcommande){
     //supprimer m panier
-            $sql="DELETE FROM commandes where idcommande = :idcommande and date=:date"  ;
+            $sql="DELETE FROM list_com where idcommande = :idcommande"  ;
             $db=config::getConnexion();
     
             try
             {
                 $query=$db->prepare($sql);
              $query->execute([
-                    'idcommande'=>$idcommande,
-                    'date'=>$date
+                    'idcommande'=>$idcommande
+                
                
           ]);
                 

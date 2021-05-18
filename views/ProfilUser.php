@@ -115,94 +115,39 @@ if(empty($_SESSION['email']))
 <div id="navbar" class="navbar-collapse collapse">
 <ul class="nav navbar-nav navbar-right">
 <li class="dropdown">
-<a href="index-2.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+<a href="ProfilUser.php">Home</a>
 
 </li>
 <li>
-<a href="test3.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
-<ul class="dropdown-menu">
-
-</ul>
-</li>
-<li>
-<a href="ajouter_res.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reservation</span></a>
-<ul class="dropdown-menu">
-
-</ul>
-</li>
-<li class="dropdown">
-<a href="about.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="about.html">About</a></li>
-<li><a href="gallery.html">Gallery</a></li>
-<li><a href="elements.html">Shortcodes</a></li>
-<li><a href="shop_account.html">Login / Signup</a></li>
-<li><a href="404.html">404 Page</a></li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="recipe.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recipe<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="recipe.html">Recipe - 2Col</a></li>
-<li><a href="recipe_3col.html">Recipe - 3Col</a></li>
-<li><a href="recipe_4col.html">Recipe - 4Col</a></li>
-<li><a href="recipe_masonry.html">Recipe - Masonry</a></li>
-<li>
-<a href="recipe_detail-image.html">Recipe - Single <span class="caret-right"></span></a>
-<ul class="dropdown-menu">
-<li><a href="recipe_detail-image.html">Recipe - Image</a></li>
-<li><a href="recipe_detail-slider.html">Recipe - Gallery</a></li>
-<li><a href="recipe_detail-video.html">Recipe - Video</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="blog_right_sidebar.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog<span class="caret"></span></a>
-<ul class="dropdown-menu">
- <li><a href="blog_right_sidebar.html">Blog - Right Sidebar</a></li>
-<li><a href="blog_left_sidebar.html">Blog - Left Sidebar</a></li>
-<li><a href="blog_fullwidth.html">Blog - Fullwidth</a></li>
-<li><a href="blog_masonry.html">Blog - Masonry</a></li>
-<li>
-<a href="blog_single_image.html">Blog - Single <span class="caret-right"></span></a>
-<ul class="dropdown-menu">
-<li><a href="blog_single_image.html">Blog - Image</a></li>
-<li><a href="blog_single_slider.html">Blog - Gallery</a></li>
-<li><a href="blog_single_video.html">Blog - Video</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="dropdown">
-<a href="shop_fullwidth.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Shop<span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="shop_fullwidth.html">Shop - Full</a></li>
-<li><a href="shop_left_sidebar.html">Shop - Left Sidebar</a></li>
-<li><a href="shop_right_sidebar.html">Shop - Right Sidebar</a></li>
-<li>
-<a href="shop_single_full.html">Shop - Single <span class="caret-right"></span></a>
-<ul class="dropdown-menu">
-<li><a href="shop_single_full.html">Shop - Full</a></li>
-<li><a href="shop_single_left.html">Shop - Left Sidebar</a></li>
-<li><a href="shop_single_right.html">Shop - Right Sidebar</a></li>
-</ul>
-</li>
-<li><a href="shop_cart.html">Shop - Cart</a></li>
-<li><a href="shop_checkout.html">Shop - Checkout</a></li>
-<li><a href="shop_account.html">Shop - Account</a></li>
-<li><a href="shop_account_detail.html">Shop - Account Detail</a></li>
-</ul>
-</li>
-<li><a href="contact.html">Contact</a></li>
-<li class="dropdown">
-<a href="deconnexion.php"  ><span class="glyphicon glyphicon-log-out"></span></a>
+<a href="afficherPlat&Promotion.php">Menu</a>
 
 </li>
-<li class="dropdown">
-<a href="test2.php"  > <span class="glyphicon glyphicon-cog"></span></a>
+<li>
+<a href="ajouter_res.php">Reservation</span></a>
 
 </li>
+
+<li>
+<a href="recipe.html">Recipe</a>
+
+</li>
+
+
+<li class="dropdown">
+<a href="afficherStatut.php">Blog</a>
+
+</li>
+
+
+
+<li>
+<a href="testmenu.php">Shop</a>
+
+</li>
+<li><a href="contact.php">Contact</a></li>
+
+
+
 <li><img   id="current_photo" style ="margin-top:13px" src="<?php echo $userRow['location']; ?>"  onerror="this.onerror=null; this.src='img/default.png'" class="img-rounded" width="32x" height="32px" /></li>
 <li><a href="#"><?php echo $userRow['login']; ?></a></li>
 <!--

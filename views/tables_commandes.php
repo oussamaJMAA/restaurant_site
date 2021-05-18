@@ -153,7 +153,7 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                                 <th>PHONE</th>
                                                 <th>ADRESSE</th>
                                                 <th>PRIX COMMANDE</th>
-                                                <th>CONFIRMATION</th>
+                                           
                                                 <th> DELETE</th>
                                                 <th> PRINT </th>
 				                                
@@ -170,8 +170,16 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                  
                                     foreach($liste as $com){
                                ?>
+
+
+
+
                                     <tr>
                                     <td> <?php echo $com["idclient"] ?></td>
+                                
+                                
+                                
+                                
                                  <?php
  $u=new commandesC();
                                   
@@ -180,15 +188,20 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
  foreach($listeu as $u){
 
 ?>
-
-
+ 
 
                                     <td> <?php echo $u["nom"].' '.$u["prenom"] ; ?></td>
+
+
+
+                                 
+
+
                     <?php
 
 
 $PlatC=new commandesC();
-$idp=$com['idplat'];
+$idp=$com['idpl'];
 $listePlat=$PlatC->afficher_plat_id($idp);
 foreach($listePlat as $row)
 {
@@ -198,23 +211,13 @@ foreach($listePlat as $row)
 <td> <img src="z-front/img/menu/1/<?php echo $row['image']; ?>" width="250">  </td>
 
 
-<?php
- $comp=new commandesC();
- $idp=$com['idplat'];                          
- $listep=$comp->afficher_plat_id($idp);
-
- foreach($listep as $comp){
-
-
-?>
-
 
 
 <td> <?php echo $com['quantite']; ?>
 </td>
 <td> <?php echo $com['date']; ?>
 </td>
-<td> <?php echo $comp['prix'].'DT'; ?>
+<td> <?php echo $row['prix'].'DT'; ?>
 </td>
 <td> <?php echo $com['phone']; ?>
 </td>
@@ -235,19 +238,6 @@ $result=$bb->somme_commandes($com["idclient"]);
 <?php echo $result.'DT' ?>
 </td>
 
-<?php
-if(($com["location"])==""&&($com["phone"])==0){
-    $confirmation="NOT CONFIRMED";
-}else{
-
-$confirmation="CONFIRMED";}
-?>
-
-
-<td> 
-<?php echo $confirmation ?>
-</td>
-
 
 
 
@@ -266,11 +256,12 @@ $confirmation="CONFIRMED";}
 
      <input type="hidden" value=<?PHP echo $com['idclient']; ?> name="idclient">
                         
-                        <input type="hidden" value=<?PHP echo $com['idplat']; ?> name="idplat">
+                        <input type="hidden" value=<?PHP echo $com['idpl']; ?> name="idplat">
                         <input type="hidden" value=<?PHP echo $com['location']; ?> name="adresse">
                         <input type="hidden" value=<?PHP echo $com['phone']; ?> name="phone">
                         <input type="hidden" value=<?PHP echo $com['date']; ?> name="datec">
-                        <input type="text" value=<?php echo $com['prixtotal'].'DT'; ?> name="prix" style="display:none">
+                        <input type="hidden" value=<?PHP echo $com['idlc']; ?> name="idlc">
+                        <input type="hidden" value=<?php echo $result ?> name="prix">
 						</form>
 					</td>
 	
@@ -281,7 +272,8 @@ $confirmation="CONFIRMED";}
                                }                                                                                                      
 }
                                     }
-                                }
+                                
+                            
 ?>
 
 						

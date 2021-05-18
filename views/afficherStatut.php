@@ -1,14 +1,20 @@
-<?php
-include "../controller/promotionC.php"; 
-include "../controller/platC.php";
+<?php 
+include "../controller/formC.php";
+include"../controller/commentsC.php";
 
-session_start();
+ 
+ session_start();
+ if (empty($_SESSION['id']))
+ {
+    echo "<script type='z-front/text/javascript'>";	
+	echo "alert('Please Login First');window.location.href='cnx.php';";
+	echo "</script>";
+ }
+ 
 
-$PromotionC=new PromotionC();
-$listePlatPromo=$PromotionC->afficherlist_promo();
-
-$PlatC=new PlatC();
-$listePlat=$PlatC->afficherlist_plat();
+$FormC=new FormC();
+$listeForms=$FormC->afficherlist_form(); 
+ 
 
 
 ?>
@@ -16,32 +22,23 @@ $listePlat=$PlatC->afficherlist_plat();
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/menu_grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:31 GMT -->
 <head>
 <meta charset="utf-8">
-<title>Yummy Food !</title>
+<title>YummyFood! Blog</title>
 <meta name="author" content="Surjith S M">
-
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
-
-<script src="../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
-
+<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
+<link rel="shortcut icon" href="img/favicon.ico">
 <meta name="viewport" content="width=device-width">
-
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
-<!--[if lt IE 9]>
-            <script src="js/vendor/html5-3.6-respond-1.4.2.min.js"></script>
-        <![endif]-->
 </head>
-<body>
-<!--[if lt IE 8]>
-    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-<![endif]-->
 
+
+<body>
 <div class="preloder animated">
 <div class="scoket">
 <img src="img/preloader.svg" alt="" />
@@ -50,137 +47,114 @@ $listePlat=$PlatC->afficherlist_plat();
 <div class="body">
 <div class="main-wrapper">
 
-
-
-
-
+<!--***********************************Header********************************************* -->
 <?php include_once 'header.php'; ?> 
 
 
-
-
-
-
+</div>
+</div>
 
 <section class="page_header">
+
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase">Menu</h2>
-<p>Tomato is a delicious restaurant website template</p>
+<h2 class="text-uppercase wow fadeInDown">Accueil</h2>
+<p class="wow fadeInUp">YummyFood! is a delicious restaurant</p>
 </div>
-</div>
-<div class="cart-item clearfix " >
-<?php 
-	$listeplatt=$PlatC->afficherlist_plat_desc();
-	$nbrimage=0;
-
-	foreach ($listeplatt as $roww) 
-	{ 
-		
-		if($nbrimage <3)
-		{
-			echo '<img src="img/menu/1/';
-			echo $roww['image'];
-			echo '">';
-		}
-
-		$nbrimage++;
-
-	}
-
-?>
-
-
-	
 </div>
 </div>
 </section>
 
-<section class="menu menu2">
+<div class="blog-content">
 <div class="container">
 <div class="row">
-<div class="col-md-12">
-<div class="page-header wow fadeInDown">
-<h1>Plat<small></small></h1>
-</div>
-</div>
-</div>
-<div class="food-menu wow fadeInUp">
-<div class="row">
-<div class="col-md-12">
-<div class="menu-tags4">
-<h3 class="tagsort4-active">Promotions</h3>
-
-</div>
-</div>
-</div>
-
-<div class="row menu-items4">
+<div class="col-md-10 col-md-offset-1">
+<hr>
+<center>
+<a href="ajouterStatut.php" class="btn btn-default" 
+style="border-top-right-radius:10px;border-top-left-radius:10px;">Ajouter Post</a>
+<a href="affichermesStatut.php" class="btn btn-default" 
+style="border-top-right-radius:10px;border-top-left-radius:10px;">Mes Statuts</a>
+</center>
+<hr>
 
 <?php
-
-foreach ($listePlatPromo as $row ) 
+$CommentsC=new CommentsC();
+foreach($listeForms as $row) 
+{
+	if($_SESSION['id']==$row['id_User'])
 	{
-	$remise=$row['prix']-($row['prix']*$row['val_promo']/100);
-	echo'<div class="menu-item4 col-sm-4 col-xs-12 starter dinner desserts"><div class="menu-info"><img src="img/menu/1/';
-	echo $row['image']; 
-	echo'" class="img-responsive" alt="" /><a href="menu_all.html"><div class="menu4-overlay"><h4>';
-	echo $row['nom'] ;
-	echo'</h4><p>';
-	echo $row['description'];
-	echo'<span class="price" style="text-decoration:line-through; Color:#e400007a;">';
-	echo $row['prix'];
-	echo' Dt</span><span class="price" ">';
-	echo $remise ;
-	echo' Dt</span></div></a></div></div>';
+		$myPost=1;
 	}
+	else
+		$myPost=0;
+ 		
+ 	$nbrComments=$CommentsC->count($row['id']);	
+    	
 
-echo'</div><div class="row"><div class="col-md-12"><div class="menu-tags4">
-<h3 class="tagsort4-active">Sans Promotions</h3></div></div></div><div class="row menu-items4">';
-
-
-foreach($listePlat as $row) 
-{ 	
 
 	
-	$plat_promo_exist=0;
-	$listePlatProm=$PromotionC->afficherlist_promo();
-
-	foreach($listePlatProm as $row2)
-	{
-		if(  $row2['id_plat'] == $row['id_plat'] )
-			$plat_promo_exist=1;
-	}
-
-
-
-	if($plat_promo_exist==0)
-	{
-	echo'<div class="menu-item4 col-sm-4 col-xs-12 starter dinner desserts"><div class="menu-info"><img src="img/menu/1/';
-	echo $row['image']; 
-	echo'" class="img-responsive" alt="" /><a href="menu_all.html"><div class="menu4-overlay"><h4>';
-	echo $row['nom'];
-	echo'</h4><p>';
-	echo $row['description'];
-	echo'<span class="price">';
-	echo $row['prix']; 
-	echo' Dt</span></div></a></div></div>';
-
-	}
-
-}
-
-
-
-
 ?>
 
+<article class="wow fadeInUp" style="background-color:#ffeaea4f;" >
+<div class="post-img">
+<img src="img/blog/<?php echo $row['image'] ?>" class="img-responsive" alt="" style="border-radius: 30px;" />
+<div class="post-format"><i class="fa fa-file-image-o"></i></div>
+</div>
+<div class="row">
+<div class="col-md-7 col-sm-7">
+<h4><a ><?php echo $row['titre'] ?></a></h4>
+</div>
+<div class="col-md-7 col-sm-7" style="margin-left: -20%;margin-top:-3%;text-align: right;">
+<div class="post-date">
+	<?php echo $row['likes'] ?>
+	<a href="ajouterLikesC.php?id=<?php echo $row['id']; ?>" >
+		<img src="img/like.png" style="height: 30px; margin-bottom: 5px;">Likes</a>|
+
+	<?php echo $nbrComments; ?>
+	<a href="afficherComments.php?id=<?php echo $row['id'];?>"><img src="img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
+	
+
+	if($myPost==1)
+	{echo'
+	 |<a href="modifierStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
+	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="img/Remove.png" style="width: 20px; margin-bottom:6px ;" >Remove</a><br>';
+	}?>
+	<a style="color:#8e8e8e ;margin-left: 70%;"><?php echo $row['Date'] ?> </a>
+
+
 
 </div>
 </div>
 </div>
-</section>
+<hr><p><?php echo $row['contenu'] ?></p>
+</article>
+<?php  } ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="clearfix"></div>
+<ul class="pagi_nation">
+<li class="active"><a href="blog_fullwidth.html">1</a></li>
+<li><a href="blog_fullwidth.html">2</a></li>
+<li><a href="blog_fullwidth.html">3</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 
 <section class="subscribe">
 <div class="container">
@@ -188,19 +162,14 @@ foreach($listePlat as $row)
 <div class="col-md-12">
 <h1>Subscribe</h1>
 <p>Get updates about new dishes and upcoming events</p>
-
-
-<form class="form-inline" action="recherchePlat.php" method="POST">
+<form class="form-inline" action="https://demo.web3canvas.com/themeforest/tomato/php/subscribe.php" id="invite" method="POST">
 <div class="form-group">
-<input class="e-mail form-control" name="rechercher" id="rechercher" type="text" placeholder="Rechercher" required>
+<input class="e-mail form-control" name="email" id="address" type="email" placeholder="Your Email Address" required>
 </div>
 <button type="submit" class="btn btn-default">
 <i class="fa fa-angle-right"></i>
 </button>
 </form>
-
-
-
 </div>
 </div>
 </div>
@@ -214,20 +183,24 @@ foreach($listePlat as $row)
 <p>Duis leo justo, condimentum at purus eu,Aenean sed dolor sem. Etiam massa libero, auctor vitae egestas et, accumsan quis nunc.Duis leo justo, condimentum at purus eu, posuere pretium tellus.</p>
 <a href="about.html">Read more &rarr;</a>
 </div>
+
+
+
+
 <div class="col-md-4  col-sm-6">
 <h1>Recent post</h1>
 <div class="footer-blog clearfix">
 <a href="blog_right_sidebar.html">
 <img src="img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Hand picked ingredients for our best customers</p>
-<p class="footer-blog-date">29 may 2015</p>
+<p class="footer-blog-date">24 Apr 2021</p>
 </a>
 </div>
 <div class="footer-blog clearfix last">
 <a href="blog_right_sidebar.html">
 <img src="img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Daily special foods that you will going to love</p>
-<p class="footer-blog-date">29 may 2015</p>
+<p class="footer-blog-date">24 Apr 2021</p>
 </a>
 </div>
 </div>
@@ -254,12 +227,12 @@ foreach($listePlat as $row)
 </a>
 <a href="http://www.linkedin.com/">
 <i class="fa fa-linkedin"></i>
- </a>
+</a>
 </div>
 <div class="footer-address">
 <p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
 <p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
-<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e0939590908f9294a092859394819592818e94ce838f8d">[email&#160;protected]</a></p>
+<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="74070104041b06003406110700150106151a005a171b19">[email&#160;protected]</a></p>
 </div>
 </div>
 </div>
@@ -343,5 +316,5 @@ Wide
 <script src="js/vendor/mc/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/menu_grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:31 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/blog_fullwidth.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:55 GMT -->
 </html>
