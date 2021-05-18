@@ -1,44 +1,64 @@
 <?php 
 include "../controller/formC.php";
-include"../controller/commentsC.php";
-
+include "../controller/commentsC.php";
  
- session_start();
+session_start();
+ 
+
+ //$LikesC=new LikesC();
  if (empty($_SESSION['id']))
  {
-    echo "<script type='z-front/text/javascript'>";	
-	echo "alert('Please Login First');window.location.href='cnx.php';";
+    echo "<script type='text/javascript'>";	
+	echo "alert('Please Login First');window.location.href='signin.php';";
 	echo "</script>";
  }
- 
 
-$FormC=new FormC();
-$listeForms=$FormC->afficherlist_form(); 
- 
+if(isset($_GET['id']))
+{
+	$FormC=new FormC();
+	$listeForms=$FormC->recupererform($_GET['id']); 
 
+	foreach($listeForms as $row) 
+	{
+	$titre=$row->titre;
+	$contenu=$row->contenu;
+	$image=$row->image;
+
+	}
+
+     $CommentsC=new CommentsC();
+ 	 $listeComments=$CommentsC->afficherlist_comments($_GET['id']); 
+
+ 	$nbrComments=0;
+
+ 	$nbrComments=$CommentsC->count($_GET['id']);
+
+
+}
 
 ?>
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="utf-8">
-<title>YummyFood! Blog</title>
+<title>Tomato Responsive Restaurant HTML5 Template</title>
 <meta name="author" content="Surjith S M">
+
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
-<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
-<link rel="shortcut icon" href="z-front/img/favicon.ico">
+<script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script><link rel="shortcut icon" href="img/favicon.ico">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="css/plugin.css">
 <link rel="stylesheet" href="css/main.css">
 </head>
-
-
 <body>
+
 <div class="preloder animated">
 <div class="scoket">
 <img src="z-front/img/preloader.svg" alt="" />
@@ -47,20 +67,18 @@ $listeForms=$FormC->afficherlist_form();
 <div class="body">
 <div class="main-wrapper">
 
-<!--***********************************Header********************************************* -->
-<?php include_once 'header.php'; ?> 
+
+<?php include 'header.php'; ?> <!--***************************Header***************************** -->
 
 
-</div>
-</div>
+
 
 <section class="page_header">
-
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase wow fadeInDown">Accueil</h2>
-<p class="wow fadeInUp">YummyFood! is a delicious restaurant</p>
+<h2 class="text-uppercase">Blog Page</h2>
+<p>Tomato is a delicious restaurant website template</p>
 </div>
 </div>
 </div>
@@ -69,89 +87,147 @@ $listeForms=$FormC->afficherlist_form();
 <div class="blog-content">
 <div class="container">
 <div class="row">
-<div class="col-md-10 col-md-offset-1">
-<hr>
-<center>
-<a href="ajouterStatut.php" class="btn btn-default" 
-style="border-top-right-radius:10px;border-top-left-radius:10px;">Ajouter Post</a>
-<a href="affichermesStatut.php" class="btn btn-default" 
-style="border-top-right-radius:10px;border-top-left-radius:10px;">Mes Statuts</a>
-</center>
-<hr>
-
-<?php
-$CommentsC=new CommentsC();
-foreach($listeForms as $row) 
-{
-	if($_SESSION['id']==$row['id_User'])
-	{
-		$myPost=1;
-	}
-	else
-		$myPost=0;
- 		
- 	$nbrComments=$CommentsC->count($row['id']);	
-    	
-
+<div class="col-md-9">
 
 	
-?>
 
-<article class="wow fadeInUp" style="background-color:#ffeaea4f;" >
+<article>
+
+<!-------------------------------AFFICHER comments----------------------------------- -->
+
+
+
 <div class="post-img">
-<img src="z-front/img/blog/<?php echo $row['image'] ?>" class="img-responsive" alt="" style="border-radius: 30px;" />
-<div class="post-format"><i class="fa fa-file-image-o"></i></div>
+<img src="z-front/img/blog/<?php echo $image ?>" class="img-responsive" alt="" style="border-radius: 30px;"/>
+<div class="post-format"><i class="fa fa-picture-o"></i></div>
 </div>
+<h4><a ><?php echo $titre ?></a></h4>
+<hr>
+<p><?php echo $contenu ?></p>
+<hr>
+<div class="comments-area">
+<h3><?php echo $nbrComments ?> Comments</h3>
+
+
+
+<ul class="commentlist">
+<?php 
+
+foreach($listeComments as $row) {  
+
+  ?>
+<li>
+<div class="comment">
+<span class="comment-image">
+<img alt="avatar image" src="img/xtra/1.jpg" class="avatar" height="70" width="70">
+</span>
+<span class="comment-info d-text-c">
+<span>5 days ago &nbsp; / &nbsp; <a class="comment-reply-link d-text-c" href="index-2.html">Reply</a>
+</span><?php echo $row->nom." ". $row->prenom ?></span>
+
+<p><?php echo $row->contenu ?></p>
+
+<?php if ($_SESSION['id'] == $row->id_User ) { ?>
+
+<form method="POST" action="supprimerComments.php?id=<?php echo $_GET['id'];?>">
+	<button  class="btn btn-danger" style="margin-left: 85%;">
+	<i class="fa fa-trash"></i></button>
+    <input type="hidden" value="<?php echo $row->id; ?>" name="id_Comment">       
+</form>
+
+<form method="POST" action="modifierComments.php?id=<?php echo $_GET['id'];?>">
+	<button  class="btn btn-warning" style="margin-left: 93%;margin-top:-61px;">
+	<i class="fa fa-edit"></i></button>
+    <input type="hidden" value="<?php echo $row->id; ?>" name="id_Comment">       
+</form>
+
+<?php } ?>
+
+
+</div>
+<?php } ?>
+
+
+
+
+
+
+<hr>
+<div id="respond" class="comment-respond">
+<h3>Leave a Comment</h3>
+
+
+<form method="post" id="ajouter-commentaire" class="comment-form" 
+action="ajouterComments.php?id=<?php echo $_GET['id'];?>">
+
 <div class="row">
-<div class="col-md-7 col-sm-7">
-<h4><a ><?php echo $row['titre'] ?></a></h4>
-</div>
-<div class="col-md-7 col-sm-7" style="margin-left: -20%;margin-top:-3%;text-align: right;">
-<div class="post-date">
-	<?php echo $row['likes'] ?>
-	<a href="ajouterLikesC.php?id=<?php echo $row['id']; ?>" >
-		<img src="z-front/img/like.png" style="height: 30px; margin-bottom: 5px;">Likes</a>|
-
-	<?php echo $nbrComments; ?>
-	<a href="afficherComments.php?id=<?php echo $row['id'];?>"><img src="z-front/img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
-	
-
-	if($myPost==1)
-	{echo'
-	 |<a href="modifierStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
-	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/Remove.png" style="width: 20px; margin-bottom:6px ;" >Remove</a><br>';
-	}?>
-	<a style="color:#8e8e8e ;margin-left: 70%;"><?php echo $row['Date'] ?> </a>
-
-
+<div class="col-md-6">
 
 </div>
+<div style="margin-left: 10%;margin-right: 10%;">
+<textarea placeholder="Comment" name="contenu" id="contenu" style="border-top-left-radius: 30px; resize: none;"></textarea>
+</div>
+<div class="col-md-12">
+<button class="btn btn-default btn-block">Post Comment</button>
 </div>
 </div>
-<hr><p><?php echo $row['contenu'] ?></p>
+</form>
+
+<script src="js/ajouterCommente.js"></script>
+
+
+ </div>
+</div>
 </article>
-<?php  } ?>
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-<div class="clearfix"></div>
-<ul class="pagi_nation">
-<li class="active"><a href="blog_fullwidth.html">1</a></li>
-<li><a href="blog_fullwidth.html">2</a></li>
-<li><a href="blog_fullwidth.html">3</a></li>
+</div>
+<aside class="col-md-3">
+<div class="side-widget">
+<form class="search">
+<input type="text" placeholder="Search">
+<button><i class="fa fa-chevron-right"></i></button>
+</form>
+</div>
+<div class="side-widget">
+<h5>Categories</h5>
+<ul class="side-cat">
+<li><i class="fa fa-chevron-right"></i> <a href="blog_single_image.html">Typesetting Industry</a></li>
+<li><i class="fa fa-chevron-right"></i> <a href="blog_single_image.html">Lorem Ipsum is simply</a></li>
+<li><i class="fa fa-chevron-right"></i> <a href="blog_single_image.html">Unknown printer took</a></li>
+<li><i class="fa fa-chevron-right"></i> <a href="blog_single_image.html">Scrmbled it to make</a></li>
+<li><i class="fa fa-chevron-right"></i> <a href="blog_single_image.html">Five centuries, but also</a></li>
 </ul>
 </div>
+<div class="side-widget">
+<h5>Recent Post</h5>
+<ul class="recent-post">
+<li>
+<img src="z-front/img/blog/1/1.jpg" alt="" />
+<div class="rp-info">
+<a href="blog_single_image.html">Typesetting Industry</a>
+<span>Oct-05-2015</span>
+</div>
+</li>
+<li>
+<img src="z-front/img/blog/1/2.jpg" alt="" />
+<div class="rp-info">
+<a href="blog_single_image.html">Post Heading Here</a>
+<span>Oct-06-2015</span>
+</div>
+</li>
+<li>
+<img src="z-front/img/blog/1/3.jpg" alt="" />
+<div class="rp-info">
+<a href="blog_single_image.html">Post Heading Here</a>
+<span>Oct-07-2015</span>
+</div>
+</li>
+</ul>
+</div>
+</aside>
 </div>
 </div>
 </div>
@@ -183,24 +259,20 @@ foreach($listeForms as $row)
 <p>Duis leo justo, condimentum at purus eu,Aenean sed dolor sem. Etiam massa libero, auctor vitae egestas et, accumsan quis nunc.Duis leo justo, condimentum at purus eu, posuere pretium tellus.</p>
 <a href="about.html">Read more &rarr;</a>
 </div>
-
-
-
-
 <div class="col-md-4  col-sm-6">
 <h1>Recent post</h1>
 <div class="footer-blog clearfix">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Hand picked ingredients for our best customers</p>
-<p class="footer-blog-date">24 Apr 2021</p>
+<p class="footer-blog-date">29 may 2015</p>
 </a>
 </div>
 <div class="footer-blog clearfix last">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Daily special foods that you will going to love</p>
-<p class="footer-blog-date">24 Apr 2021</p>
+<p class="footer-blog-date">29 may 2015</p>
 </a>
 </div>
 </div>
@@ -232,10 +304,10 @@ foreach($listeForms as $row)
 <div class="footer-address">
 <p><i class="fa fa-map-marker"></i>28 Seventh Avenue, Neew York, 10014</p>
 <p><i class="fa fa-phone"></i>Phone: (415) 124-5678</p>
-<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="74070104041b06003406110700150106151a005a171b19">[email&#160;protected]</a></p>
+<p><i class="fa fa-envelope-o"></i><a href="https://demo.web3canvas.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bac9cfcacad5c8cefac8dfc9cedbcfc8dbd4ce94d9d5d7">[email&#160;protected]</a></p>
 </div>
 </div>
-</div>
+ </div>
 </div>
 
 <div class="footer-copyrights">
@@ -316,5 +388,5 @@ Wide
 <script src="js/vendor/mc/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/blog_fullwidth.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:55 GMT -->
+<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/blog_single_image.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:56 GMT -->
 </html>

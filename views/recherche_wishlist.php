@@ -18,14 +18,26 @@
             <a class="navbar-brand" href="index.html">Yummy Food!</a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="POST" action="recherche_wishlist.php">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                        <button class="btn btn-primary" name="btn-search" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
             </form>
+
+
+
+            <?php
+if(isset($_POST['btn-search'])&& isset($_POST['search'])){
+    header("Location:recherche_wishlist.php");
+}
+else{
+    echo "Search ?";
+}
+?>
+
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
@@ -101,6 +113,19 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Plats et Promotions
                             </a>
+                            <a class="nav-link" href="afficherCommentsB.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                              Blogs & Comments
+                            </a>
+                            
+                            <a class="nav-link" href="ajout_admin.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                             Ajout Admin
+                            </a>
+                            <a class="nav-link" href="recette.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Recettes
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -118,6 +143,8 @@
                             <li class="breadcrumb-item active">WishList</li>
                         </ol>
                         <div class="card mb-4">
+
+
                             <div class="card-body">
                                Yummy Food DataBase!
                                
@@ -137,10 +164,10 @@
                                            
                                            
                                            <th> ID CIENT</th>
-                                           <th> ID_PLAT </th>
-                                           <th>Image_PLAT </th>
-                                           <th>Nom_PLAT</th>
-                                           <th>Prix_Plat</th>
+                                           <th> ID PLAT </th>
+                                           <th style="text-align: center;">PLAT </th>
+                                           <th>NOM PLAT</th>
+                                           <th>PRIX</th>
                                           
                                            
                                            
@@ -161,28 +188,24 @@
                                     <td> <?php echo $com['idplat']; ?></td>
                     <?php
 
-$idp=$com['idplat'];
-require_once "dbconfig.php";
-$select_stmt=$db->prepare("SELECT * FROM menu where id_plat=:idp ");	
-$select_stmt->execute(array(
-':idp'=>$idp
 
-));
-while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
+$PlatC=new resC();
+$idp=$com['idplat'];
+$listePlat=$PlatC->afficher_plat_id2($idp);
+foreach($listePlat as $row)
 {
 
-
 ?>
-<td> <img src="img/shop/<?php echo $row['image_plat']; ?>"  width="100px" >  </td>
+<td style="text-align: center;"> <img src="z-front/img/menu/1/<?php echo $row['image']; ?>"  width="300px" >  </td>
 
 
 
 
 
 
-<td> <?php echo $row['nom_plat']; ?>
+<td> <?php echo $row['nom']; ?>
 </td>
-<td> <?php echo $row['prix_plat']; ?>
+<td> <?php echo $row['prix']; ?>
 </td>
 
 </tr>	
@@ -198,6 +221,20 @@ while($row=$select_stmt->fetch(PDO::FETCH_ASSOC))
 						
                                     </table>
                                 </div>
+                                
+
+
+                        <form method="POST" action="tri_wish.php">
+<input type="submit" name="tri" value="Trier">
+</form>
+
+<?php
+if(isset($_POST["tri"])){
+
+    header("Location:tri_wish.php");
+}
+?>
+
                             </div>
                         </div>
                     </div>

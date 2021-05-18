@@ -38,11 +38,6 @@ else{
 }
 ?>
 
-
-
-
-
-
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
@@ -118,6 +113,20 @@ else{
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Plats et Promotions
                             </a>
+                            <a class="nav-link" href="afficherCommentsB.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                              Blogs & Comments
+                            </a>
+
+                            
+                            <a class="nav-link" href="ajout_admin.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                             Ajout Admin
+                            </a>
+                            <a class="nav-link" href="recette.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Recettes
+                            </a>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -135,6 +144,12 @@ else{
                             <li class="breadcrumb-item active">WishList</li>
                         </ol>
                         <div class="card mb-4">
+
+
+
+
+
+
                             <div class="card-body">
                                Yummy Food DataBase!
                                
@@ -143,18 +158,7 @@ else{
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table mr-1"></i>
-                                <form method="POST" action="tri_wish.php">
-<input type="submit" name="tri" value="Trier">
-</form>
-
-<?php
-if(isset($_POST["tri"])){
-
-    header("Location:tri_wish.php");
-}
-?>
-
-
+                                DataTable Example
                             </div>
                            
                             <div class="card-body">
@@ -166,9 +170,9 @@ if(isset($_POST["tri"])){
                                            
                                            <th> ID CIENT</th>
                                            <th> ID PLAT </th>
-                                           <th>Image PLAT </th>
-                                           <th>Nom PLAT</th>
-                                           <th>Prix Plat</th>
+                                           <th style="text-align: center;">PLAT </th>
+                                           <th>NOM PLAT</th>
+                                           <th>PRIX</th>
                                           
                                            
                                            
@@ -179,7 +183,6 @@ if(isset($_POST["tri"])){
 <?php
                                  
                                    include "../controller/utilisateurC.php";
-                                   
                                     $com=new resC();
                                     $liste=$com->afficher_list();
                                     foreach($liste as $com){
@@ -189,31 +192,25 @@ if(isset($_POST["tri"])){
                                     <td> <?php echo $com['id_user']; ?></td>
                                     <td> <?php echo $com['idplat']; ?></td>
                     <?php
-$u=new resC();
-                                  
-$listeu=$u->afficher_plat_id($com['idplat']);
-
-foreach($listeu as $u){
 
 
-?>
-<td style="text-align: center;"> <img src="z-front/img/menu/1/<?php echo $u['image']; ?>"  width="300px" >  </td>
-
-<?php
-  $p=new resC();
-  $listePlat=$p->afficher_plat_id($com['idplat']);
-foreach($listePlat as $roww)
+$PlatC=new resC();
+$idp=$com['idplat'];
+$listePlat=$PlatC->afficher_plat_id2($idp);
+foreach($listePlat as $row)
 {
 
-
 ?>
+<td style="text-align: center;"> <img src="z-front/img/menu/1/<?php echo $row['image']; ?>"  width="300px" >  </td>
 
 
 
 
-<td> <?php echo $roww['nom']; ?>
+
+
+<td> <?php echo $row['nom']; ?>
 </td>
-<td> <?php echo $roww['prix']; ?>
+<td> <?php echo $row['prix']; ?>
 </td>
 
 </tr>	
@@ -221,7 +218,6 @@ foreach($listePlat as $roww)
 <?php 
                                }                                                                                                      
 }
-                                    }
 ?>
 
 
@@ -230,6 +226,21 @@ foreach($listePlat as $roww)
 						
                                     </table>
                                 </div>
+
+
+
+                                
+
+                        <form method="POST" action="tri_wish.php">
+<input type="submit" name="tri" value="Trier">
+</form>
+
+<?php
+if(isset($_POST["tri"])){
+
+    header("Location:tri_wish.php");
+}
+?>
                             </div>
                         </div>
                     </div>

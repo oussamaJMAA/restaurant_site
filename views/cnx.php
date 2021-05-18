@@ -2,7 +2,7 @@
 
 
 include "../controller/UtilisateurC.php";
-require_once('recaptcha/recaptchalib.php');
+
 session_start();
 
 if(isset($_SESSION["email"]))	//check condition user login not direct back to index.php page

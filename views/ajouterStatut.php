@@ -1,35 +1,18 @@
 <?php 
-include "../controller/formC.php";
-include"../controller/commentsC.php";
 
- 
- session_start();
- if (empty($_SESSION['id']))
- {
-    echo "<script type='z-front/text/javascript'>";	
-	echo "alert('Please Login First');window.location.href='cnx.php';";
-	echo "</script>";
- }
- 
-
-$FormC=new FormC();
-$listeForms=$FormC->afficherlist_form(); 
- 
-
-
+session_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 <meta charset="utf-8">
-<title>YummyFood! Blog</title>
+<title>Tomato Blog</title>
 <meta name="author" content="Surjith S M">
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
 <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
-<link rel="shortcut icon" href="z-front/img/favicon.ico">
+<link rel="shortcut icon" href="img/favicon.ico">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
@@ -41,98 +24,57 @@ $listeForms=$FormC->afficherlist_form();
 <body>
 <div class="preloder animated">
 <div class="scoket">
-<img src="z-front/img/preloader.svg" alt="" />
+<img src="img/preloader.svg" alt="" />
 </div>
 </div>
 <div class="body">
 <div class="main-wrapper">
 
-<!--***********************************Header********************************************* -->
-<?php include_once 'header.php'; ?> 
+<!--***********************************Header*********************************************-->
+<?php include_once 'header.php'; ?>
 
-
-</div>
-</div>
 
 <section class="page_header">
-
 <div class="container">
 <div class="row">
 <div class="col-md-12 text-center">
-<h2 class="text-uppercase wow fadeInDown">Accueil</h2>
-<p class="wow fadeInUp">YummyFood! is a delicious restaurant</p>
+<h2 class="text-uppercase wow fadeInDown">Blog Page</h2>
+<p class="wow fadeInUp">Tomato is a delicious restaurant website template</p>
 </div>
 </div>
 </div>
 </section>
-
 <div class="blog-content">
 <div class="container">
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
-<hr>
-<center>
-<a href="ajouterStatut.php" class="btn btn-default" 
-style="border-top-right-radius:10px;border-top-left-radius:10px;">Ajouter Post</a>
-<a href="affichermesStatut.php" class="btn btn-default" 
-style="border-top-right-radius:10px;border-top-left-radius:10px;">Mes Statuts</a>
-</center>
+<hr> <div style="margin:auto;">
+	<h3>Charger Post</h3>
+</div>
 <hr>
 
-<?php
-$CommentsC=new CommentsC();
-foreach($listeForms as $row) 
-{
-	if($_SESSION['id']==$row['id_User'])
-	{
-		$myPost=1;
-	}
-	else
-		$myPost=0;
- 		
- 	$nbrComments=$CommentsC->count($row['id']);	
-    	
 
 
-	
-?>
 
-<article class="wow fadeInUp" style="background-color:#ffeaea4f;" >
-<div class="post-img">
-<img src="z-front/img/blog/<?php echo $row['image'] ?>" class="img-responsive" alt="" style="border-radius: 30px;" />
-<div class="post-format"><i class="fa fa-file-image-o"></i></div>
+
+<!--**************************** Ajouter Statuts ************************************ -->
+
+
+
+<form class="contact-form" id="form-statut" action="ajoutPost.php" method="post">
+<div class="form-group">
+<input class="form-control" name="titre" id="titre" placeholder="Titre" type="text" required="required" />
 </div>
-<div class="row">
-<div class="col-md-7 col-sm-7">
-<h4><a ><?php echo $row['titre'] ?></a></h4>
+<div class="form-group">
+<textarea class="form-control" name="contenu" accept="image/jpeg,image/png" id="contenu" placeholder="Contenu" rows="5" style="resize: none;"></textarea>
 </div>
-<div class="col-md-7 col-sm-7" style="margin-left: -20%;margin-top:-3%;text-align: right;">
-<div class="post-date">
-	<?php echo $row['likes'] ?>
-	<a href="ajouterLikesC.php?id=<?php echo $row['id']; ?>" >
-		<img src="z-front/img/like.png" style="height: 30px; margin-bottom: 5px;">Likes</a>|
-
-	<?php echo $nbrComments; ?>
-	<a href="afficherComments.php?id=<?php echo $row['id'];?>"><img src="z-front/img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
-	
-
-	if($myPost==1)
-	{echo'
-	 |<a href="modifierStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
-	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/Remove.png" style="width: 20px; margin-bottom:6px ;" >Remove</a><br>';
-	}?>
-	<a style="color:#8e8e8e ;margin-left: 70%;"><?php echo $row['Date'] ?> </a>
-
-
-
+<div>
+<input class="btn btn-default" type="file" id="image" name="image" style="margin:auto;"><br>
 </div>
-</div>
-</div>
-<hr><p><?php echo $row['contenu'] ?></p>
-</article>
-<?php  } ?>
+<button  class="btn btn-default btn-lg btn-block" id="js-statut-btn">Publier</button>
+</form>
 
-
+<script src="z-front/js/ajouterStatut.js"></script>
 
 
 
@@ -146,15 +88,7 @@ foreach($listeForms as $row)
 
 
 <div class="clearfix"></div>
-<ul class="pagi_nation">
-<li class="active"><a href="blog_fullwidth.html">1</a></li>
-<li><a href="blog_fullwidth.html">2</a></li>
-<li><a href="blog_fullwidth.html">3</a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+</div></div></div></div>
 
 <section class="subscribe">
 <div class="container">
@@ -184,23 +118,20 @@ foreach($listeForms as $row)
 <a href="about.html">Read more &rarr;</a>
 </div>
 
-
-
-
 <div class="col-md-4  col-sm-6">
 <h1>Recent post</h1>
 <div class="footer-blog clearfix">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Hand picked ingredients for our best customers</p>
-<p class="footer-blog-date">24 Apr 2021</p>
+<p class="footer-blog-date">29 may 2015</p>
 </a>
 </div>
 <div class="footer-blog clearfix last">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Daily special foods that you will going to love</p>
-<p class="footer-blog-date">24 Apr 2021</p>
+<p class="footer-blog-date">29 may 2015</p>
 </a>
 </div>
 </div>
@@ -294,7 +225,8 @@ Wide
 </div>
 
 
-<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/vendor/jquery-1.11.2.min.js"></script>
+<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="js/vendor/jquery-1.11.2.min.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/jquery.flexslider-min.js"></script>
 <script src="js/vendor/spectragram.js"></script>
@@ -316,5 +248,5 @@ Wide
 <script src="js/vendor/mc/main.js"></script>
 </body>
 
-<!-- Mirrored from demo.web3canvas.com/themeforest/tomato/blog_fullwidth.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Apr 2021 00:15:55 GMT -->
+
 </html>

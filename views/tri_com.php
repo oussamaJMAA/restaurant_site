@@ -109,6 +109,21 @@ if(isset($_POST['btn-search'])&& isset($_POST['search'])){
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                Plats et Promotions
                             </a>
+
+                            <a class="nav-link" href="afficherCommentsB.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                              Blogs & Comments
+                            </a>
+                            
+                            <a class="nav-link" href="ajout_admin.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                             Ajout Admin
+                            </a>
+                            <a class="nav-link" href="recette.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Recettes
+                            </a>
+
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

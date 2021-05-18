@@ -6,14 +6,14 @@ include"../controller/commentsC.php";
  session_start();
  if (empty($_SESSION['id']))
  {
-    echo "<script type='z-front/text/javascript'>";	
-	echo "alert('Please Login First');window.location.href='cnx.php';";
+    echo "<script type='text/javascript'>";	
+	echo "alert('Please Login First');window.location.href='signin.php';";
 	echo "</script>";
  }
  
 
 $FormC=new FormC();
-$listeForms=$FormC->afficherlist_form(); 
+$listeForms=$FormC->afficherlist_form($_SESSION['id']); 
  
 
 
@@ -24,12 +24,12 @@ $listeForms=$FormC->afficherlist_form();
 
 <head>
 <meta charset="utf-8">
-<title>YummyFood! Blog</title>
+<title>Tomato Blog</title>
 <meta name="author" content="Surjith S M">
 <meta name="description" content="Tomato is a Responsive HTML5 Template for Restaurants and food related services.">
 <meta name="keywords" content="tomato, responsive, html5, restaurant, template, food, reservation">
 <script src="../../cdn-cgi/apps/head/OkbNSnEV_PNHTKP2_EYPrFNyZ8Q.js"></script>
-<link rel="shortcut icon" href="z-front/img/favicon.ico">
+<link rel="shortcut icon" href="img/favicon.ico">
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
@@ -41,7 +41,7 @@ $listeForms=$FormC->afficherlist_form();
 <body>
 <div class="preloder animated">
 <div class="scoket">
-<img src="z-front/img/preloader.svg" alt="" />
+<img src="img/preloader.svg" alt="" />
 </div>
 </div>
 <div class="body">
@@ -60,16 +60,12 @@ $listeForms=$FormC->afficherlist_form();
 <div class="row">
 <div class="col-md-12 text-center">
 <h2 class="text-uppercase wow fadeInDown">Accueil</h2>
-<p class="wow fadeInUp">YummyFood! is a delicious restaurant</p>
+<p class="wow fadeInUp">Tomato is a delicious restaurant</p>
 </div>
 </div>
 </div>
 </section>
 
-<div class="blog-content">
-<div class="container">
-<div class="row">
-<div class="col-md-10 col-md-offset-1">
 <hr>
 <center>
 <a href="ajouterStatut.php" class="btn btn-default" 
@@ -79,78 +75,36 @@ style="border-top-right-radius:10px;border-top-left-radius:10px;">Mes Statuts</a
 </center>
 <hr>
 
-<?php
-$CommentsC=new CommentsC();
-foreach($listeForms as $row) 
+<div class="blog-content">
+<div class="container">
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+
+
+
+<article class="wow fadeInUp">
+<div class="post-img">
+<div class="blog-slider">
+<?php  
+foreach ($listeForms as $row ) 
 {
 	if($_SESSION['id']==$row['id_User'])
 	{
-		$myPost=1;
-	}
-	else
-		$myPost=0;
- 		
- 	$nbrComments=$CommentsC->count($row['id']);	
-    	
-
-
-	
 ?>
 
-<article class="wow fadeInUp" style="background-color:#ffeaea4f;" >
-<div class="post-img">
-<img src="z-front/img/blog/<?php echo $row['image'] ?>" class="img-responsive" alt="" style="border-radius: 30px;" />
-<div class="post-format"><i class="fa fa-file-image-o"></i></div>
+<div>
+<img src="z-front/img/blog/<?php echo $row['image'] ?>" class="img-responsive" alt="" />
 </div>
-<div class="row">
-<div class="col-md-7 col-sm-7">
-<h4><a ><?php echo $row['titre'] ?></a></h4>
-</div>
-<div class="col-md-7 col-sm-7" style="margin-left: -20%;margin-top:-3%;text-align: right;">
-<div class="post-date">
-	<?php echo $row['likes'] ?>
-	<a href="ajouterLikesC.php?id=<?php echo $row['id']; ?>" >
-		<img src="z-front/img/like.png" style="height: 30px; margin-bottom: 5px;">Likes</a>|
+<?php
+	}
 
-	<?php echo $nbrComments; ?>
-	<a href="afficherComments.php?id=<?php echo $row['id'];?>"><img src="z-front/img/commentaire.png" style="height: 20px; margin-bottom: 6px;">Comments</a><?php       
-	
-
-	if($myPost==1)
-	{echo'
-	 |<a href="modifierStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/edit.png" style="width: 20px; margin-bottom:8px ;" > Edit</a>|
-	 <a href="supprimerStatut.php?id='?><?php echo $row['id'];?><?php echo'"><img src="z-front/img/Remove.png" style="width: 20px; margin-bottom:6px ;" >Remove</a><br>';
-	}?>
-	<a style="color:#8e8e8e ;margin-left: 70%;"><?php echo $row['Date'] ?> </a>
+}
+?>
 
 
+<hr>
 
-</div>
-</div>
-</div>
-<hr><p><?php echo $row['contenu'] ?></p>
 </article>
-<?php  } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="clearfix"></div>
-<ul class="pagi_nation">
-<li class="active"><a href="blog_fullwidth.html">1</a></li>
-<li><a href="blog_fullwidth.html">2</a></li>
-<li><a href="blog_fullwidth.html">3</a></li>
-</ul>
 </div>
 </div>
 </div>
@@ -191,14 +145,14 @@ foreach($listeForms as $row)
 <h1>Recent post</h1>
 <div class="footer-blog clearfix">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb8.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Hand picked ingredients for our best customers</p>
 <p class="footer-blog-date">24 Apr 2021</p>
 </a>
 </div>
 <div class="footer-blog clearfix last">
 <a href="blog_right_sidebar.html">
-<img src="z-front/img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
+<img src="img/thumb9.png" class="img-responsive footer-photo" alt="blog photos">
 <p class="footer-blog-text">Daily special foods that you will going to love</p>
 <p class="footer-blog-date">24 Apr 2021</p>
 </a>

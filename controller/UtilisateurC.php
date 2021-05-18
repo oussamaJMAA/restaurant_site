@@ -1,32 +1,33 @@
 <?PHP
-
-    include_once __DIR__ . '/../config.php';
-	require_once __DIR__ . '/../model/Utilisateur.php';
-
+	include "../config.php";
+	
+	require_once '../model/Utilisateur.php';
+	require_once '../model/recette.php';
 	class UtilisateurC {
 
-
-
-
-        public function afficher_utilisateur_id($id_user)
-        { //affichage tout les commandes
-            $sql="select * from utilisateur where id=:id_user";
+        public function affiche_idr($idr)
+        {
+            $sql="SELECT * FROM rate_recette WHERE id_recette=:idr";
             $db=config::getConnexion();
-            $req=$db->prepare($sql);
-            $req->bindValue(':id_user',$id_user);
+    
             try
-            {
-                $req->execute();
-               // $query->execute();
-        return $req;
+            {  
+               $query=$db->prepare($sql);
+               $query->execute([
+    
+                'idr'=>$idr,
+               ]);
+    return $query;
                 
-        
+    
             }
             catch(Exeption $e)
             {
                 die('Erreur: '.$e->getMessage());
             }
         }
+
+
 
 
 		
@@ -71,7 +72,25 @@ return $req;
                 echo 'Erreur: '.$e->getMessage();
             }
         }
+        function archive(){
+            $sql="INSERT INTO archive (nom, prenom, email, login, password) 
+			VALUES (:nom,:prenom,:email, :login, :password)";
+            $db = config::getConnexion();
+            try{
+                $query = $db->prepare($sql);
 
+                $query->execute([
+                    'nom' => $Utilisateur->getNom(),
+                    'prenom' => $Utilisateur->getPrenom(),
+                    'email' => $Utilisateur->getEmail(),
+                    'login' => $Utilisateur->getLogin(),
+                    'password' => $Utilisateur->getPassword()
+                ]);
+            }
+            catch (Exception $e){
+                echo 'Erreur: '.$e->getMessage();
+            }
+        }
 
         function afficherUtilisateurs(){
 			
@@ -98,99 +117,9 @@ return $req;
 				die('Erreur: '.$e->getMessage());
 			}
 		}
-
-
-    function afficher_mail_user()
-{
-        $sql="SELECT email FROM `Utilisateur` ";
-        $db = config::getConnexion();
-        try{
-
-        $liste=$db->query($sql);
-
-        return $liste;
-        }
-        catch (Exception $e){
-            die('Erreur: '.$e->getMessage());
-        }
-}
-
-
-		function modifierUtilisateur($Utilisateur, $id){
-			try {
-				$db = config::getConnexion();
-				$query = $db->prepare(
-					'UPDATE Utilisateur SET 
-						nom = :nom, 
-						prenom = :prenom,
-						email = :email,
-						login = :login,
-						password = :password
-					WHERE id = :id'
-				);
-				$query->execute([
-					'nom' => $Utilisateur->getNom(),
-					'prenom' => $Utilisateur->getPrenom(),
-					'email' => $Utilisateur->getEmail(),
-					'login' => $Utilisateur->getLogin(),
-					'password' => $Utilisateur->getPassword(),
-					'id' => $id
-				]);
-				echo $query->rowCount() . " records UPDATED successfully <br>";
-			} catch (PDOException $e) {
-				$e->getMessage();
-			}
-		}
-		function recupererUtilisateur($id){
-			$sql="SELECT * from Utilisateur where id=$id";
-			$db = config::getConnexion();
-			try{
-				$query=$db->prepare($sql);
-				$query->execute();
-
-				$user=$query->fetch();
-				return $user;
-			}
-			catch (Exception $e){
-				die('Erreur: '.$e->getMessage());
-			}
-		}
-
-		function recupererUtilisateur1($id){
-			$sql="SELECT * from Utilisateur where id=$id";
-			$db = config::getConnexion();
-			try{
-				$query=$db->prepare($sql);
-				$query->execute();
-				
-				$user = $query->fetch(PDO::FETCH_OBJ);
-				return $user;
-			}
-			catch (Exception $e){
-				die('Erreur: '.$e->getMessage());
-			}
-		}
-
-		function connexionUser($email,$password){
-            $sql="SELECT * FROM Utilisateur WHERE email='" . $email . "'  and Password = '". $password."'";
-            $db = config::getConnexion();
-            try{
-                $query=$db->prepare($sql);
-                $query->execute();
-                $count=$query->rowCount();
-
-                if($count==0) {
-                    $message = "pseudo ou le mot de passe est incorrect";
-                } else {
-                    $x=$query->fetch();
-                    $message = $x['role'];
-                }
-            }
-            catch (Exception $e){
-                    $message= " ".$e->getMessage();
-            }
-          return $message;
-        }
+		
+	
+		
 
 
 
@@ -213,6 +142,128 @@ return $req;
 	
 	
 		}
+
+        public function update2($a,$b,$c){
+			$sql="UPDATE utilisateur SET password= :password , login = :login where email = :email" ;
+	
+			$db=config::getConnexion();
+			try
+			{
+				$query=$db->prepare($sql);
+				$query->execute([
+					'email'=>$a,
+					'login'=>$b,
+                    'password'=>$c
+				]);
+			}
+			catch(Exeption $e)
+			{
+				die('Erreur: '.$e->getMessage());
+			}
+	
+	
+		}
+
+
+
+
+        function afficher_recette()
+        {
+                $sql="SELECT `id_recette`, `nom`, `image`, `description` FROM `recette`;";
+                $db = config::getConnexion();
+                try
+                {
+                    $liste=$db->query($sql);
+                    
+                    return $liste;
+                }
+                catch (Exception $e){
+                    die('Erreur: '.$e->getMessage());
+                }	
+        }
+
+
+        function ajouter_recette($recette)
+        {
+            $sql="INSERT INTO `recette`(`id_recette`,`nom`, `image`, `description` ) VALUES 
+          (NULL,:nom,:image,:description)";
+             
+        
+        
+             $db = config::getConnexion();
+                 try{
+                $req=$db->prepare($sql);	
+        
+                $nom =$recette->getnom();
+                $image =$recette->getimage();	
+                $description=$recette->getdescription();
+               
+        
+        
+                $req->bindValue(':nom',$nom);
+                $req->bindValue(':image',$image);
+                $req->bindValue(':description',$description);
+                
+                    
+                    $req->execute();
+                }
+                catch (Exception $e){
+        
+                    echo 'Erreur: '.$e->getMessage();
+                }
+        
+        
+        }
+        function supprimer_recette($id)
+        {
+            $sql="DELETE  from recette  where  id_recette=:id ";
+            $db = config::getConnexion();
+            try{
+            $req=$db->prepare($sql);
+              $req->bindValue(':id',$id);
+              $req->execute();
+            }
+                catch (Exception $e){
+                    die('Erreur: '.$e->getMessage());
+                }
+        }
+        
+        function modifier_recette($recette,$id)
+	{
+ 	$db = config::getConnexion();
+ 	$sql="UPDATE `recette` SET `nom`=:nom ,`image`=:image,`description`=:description WHERE `recette`.`id_recette`=:id";
+
+ 		try{
+
+        $req=$db->prepare($sql);	
+
+
+		$nom        =$recette->getnom();
+		$image      =$recette->getimage();	
+		$description=$recette->getdescription();
+
+
+
+		$req->bindValue(':nom',$nom);
+		$req->bindValue(':image',$image);
+		$req->bindValue(':description',$description);
+		$req->bindValue(':id',$id);		
+        $req->execute();
+        }
+        catch (Exception $e){
+
+            echo 'Erreur: '.$e->getMessage();
+        }
+}
+        
+        
+        
+        
+        
+
+
+
+
 
 		public function delete($user){
 
@@ -337,7 +388,8 @@ return $req;
             }
     
     
-           public function deleteB($id){
+           
+            public function deleteB($id){
                 $sql="DELETE FROM reservation WHERE id= :id";
                 $db = config::getConnexion();
                 $req=$db->prepare($sql);
@@ -355,8 +407,7 @@ return $req;
                 $db=config::getConnexion();
         
                 try
-                {
-                   
+                {  
                    $query=$db->prepare($sql);
                    $query->execute([
         
@@ -385,26 +436,6 @@ return $req;
             }
     
     
-
-public function afficher_plat_id($id_plat)
-{ //affichage tout les commandes
-	$sql="select * from plat where id_plat=:id_plat";
-	$db=config::getConnexion();
-	$req=$db->prepare($sql);
-	$req->bindValue(':id_plat',$id_plat);
-	try
-	{
-		$req->execute();
-	   // $query->execute();
-return $req;
-		
-
-	}
-	catch(Exeption $e)
-	{
-		die('Erreur: '.$e->getMessage());
-	}
-}
             public function afficher_list()
             {
                 $sql="select * from list";
@@ -510,6 +541,49 @@ return $req;
             
             }
             
+
+            function afficher_mail_user()
+            {
+                    $sql="SELECT email FROM `utilisateur` ";
+                    $db = config::getConnexion();
+                    try{
+            
+                    $liste=$db->query($sql);
+            
+                    return $liste;
+                    }
+                    catch (Exception $e){
+                        die('Erreur: '.$e->getMessage());
+                    }
+            }
+
+
+
+
+
+            public function afficher_plat_id2($id_plat)
+            { //affichage tout les commandes
+                $sql="select * from plat where id_plat=:id_plat";
+                $db=config::getConnexion();
+                $req=$db->prepare($sql);
+                $req->bindValue(':id_plat',$id_plat);
+                try
+                {
+                    $req->execute();
+                   // $query->execute();
+            return $req;
+                    
+            
+                }
+                catch(Exeption $e)
+                {
+                    die('Erreur: '.$e->getMessage());
+                }
+            }
+            
+
+
+
 
 
 
