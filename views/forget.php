@@ -158,7 +158,7 @@ if(isset($_POST['submitmail'])){
 		  {
 			  $id= $row['id'];
 		  }
-			  $url="http://localhost/projet3/views/reset-pass.php?id=" . base64_encode($id) . "";
+			  $url="http://localhost/final/views/reset-pass.php?id=" . base64_encode($id) . "";
 			  
 			  $message=" 
 <html>

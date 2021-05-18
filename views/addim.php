@@ -15,7 +15,7 @@ if (!isset($_FILES['image']['tmp_name'])) {
 			
 
 try{
-    $user_id = $_SESSION['e'];
+    $user_id = $_SESSION['email'];
     $db = config::getConnexion();
 			$insert_stmt=$db->prepare("UPDATE utilisateur SET location = :ulocation , caption= :ucaption where  email = :user_id");
 				//update table mta el user eli dkhal 					
@@ -33,9 +33,7 @@ catch(PDOException $e)
 		{
 			$e->getMessage();
 		}
-/*
-			$save=mysql_query("INSERT INTO photos (location, caption) VALUES ('$location','$caption')");
-			header("location: index.php");
-			exit();			*/		
+
+							
 	}
 ?>

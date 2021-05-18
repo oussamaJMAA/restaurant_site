@@ -43,7 +43,26 @@ if(empty($_SESSION['email']))
 ?>
 
 <?php
-$select_stmt=$db->prepare("SELECT (SELECT count(*) FROM utilisateur WHERE gender='Male') AS Male, (SELECT count(*) FROM utilisateur WHERE gender='Female') AS Female"); // sql select query
+ /*
+$db = config::getConnexion();
+$select_stmt=$db->prepare("SELECT * FROM recette");	
+	$select_stmt->execute();
+$r=$stmt->fetch(PDO::FETCH_ASSOC);
+
+  		
+$ab=$r['id_recette'];
+$selecta=$db->prepare( "SELECT AVG(rate) AS average FROM rate_recette where id_recette = :uid " ); // sql select query
+$selecta->execute(array(':uid'=>$ab));
+$data = $selecta->fetchAll();
+
+
+
+
+*/
+
+
+
+$select_stmt=$db->prepare("SELECT (SELECT count(*) FROM utilisateur WHERE gender='Male' and role='admin') AS Male, (SELECT count(*) FROM utilisateur WHERE gender='Female' and role='admin') AS Female"); // sql select query
 $select_stmt->execute();
   
   
@@ -51,14 +70,25 @@ $data = $select_stmt->fetchAll();
 
 $male=$data[0]['Male'];
 $female=$data[0]['Female'];
+$select=$db->prepare("SELECT (SELECT count(*) FROM utilisateur WHERE gender='Male' and role='client') AS Male, (SELECT count(*) FROM utilisateur WHERE gender='Female' and role='client') AS Female"); // sql select query
+$select->execute();
+  
+  
+$data2 = $select->fetchAll();
 
+$male2=$data2[0]['Male'];
+$female2=$data2[0]['Female'];
  
  $dataPoints = array( 
-     array("label"=>"Male", "y"=>$male),
-     array("label"=>"Female", "y"=>$female)
+     array("label"=>"Male", "y"=>$male2),
+     array("label"=>"Female", "y"=>$female2)
    
- )
+ );
+ $dataPoints2 = array( 
+    array("label"=>"Male", "y"=>$male),
+    array("label"=>"Female", "y"=>$female)
   
+);
  ?>
 
 
@@ -84,18 +114,129 @@ $female=$data[0]['Female'];
 .del{
     position:relative ; 
     top:50%;
-    left:50%;
+    left:45%;
+    
+}
+.hi{
+    position:relative ; 
+    top:50%;
+    left:25%;  
+    float:left;
+}
+
+.hi2{
+
+    position:relative ; 
+    top:50%;
+    left:25;  
+    float:left; 
+}
+
+
+
+button{
+  background: #ffffff;
+  border: solid 1px #e6e6e6;
+  border-radius: 2px;
+  display: inline-block;
+  height: 100px;
+  line-height: 100px;
+  margin: 5px;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 100px;
+}
+
+button span {
+  background: #f2594b;
+  border-radius: 4px;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: normal;
+  padding: 5px 10px;
+  position: relative;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+button span:last-child {
+  margin-left: -20px;
+}
+
+button:before,
+button:after {
+  background: #ffffff;
+  border: solid 3px #9fb4cc;
+  border-radius: 4px;
+  content: '';
+  display: block;
+  height: 35px;
+  left: 50%;
+  margin: -17px 0 0 -12px;
+  position: absolute;
+  top: 50%;
+  /*transform:translate(-50%,-50%);*/
+  
+  width: 25px;
+}
+
+button:hover:before,
+button:hover:after {
+  background: #e2e8f0;
+}
+/*a:before{transform:translate(-30%,-60%);}*/
+
+button:before {
+  margin: -23px 0 0 -5px;
+}
+
+button:hover {
+  background: #e2e8f0;
+  border-color: #9fb4cc;
+}
+
+button:active {
+  background: #dae0e8;
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, .25);
+}
+
+button span:first-child {
+  display: none;
+}
+
+button:hover span:first-child {
+  display: inline-block;
+}
+
+button:hover span:last-child {
+  display: none;
+}
+
+button,
+select,
+textarea {
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 </style>
 
 <script>
  window.onload = function() {
-  
+    CanvasJS.addColorSet("colors",
+                [//colorSet Array
+
+                "#6699ff",
+                "#ff33cc"
+                               
+                ]);
   
  var chart = new CanvasJS.Chart("chartContainer", {
      animationEnabled: true,
+     colorSet: "colors",
      title: {
-         text: "Number of female and male"
+         text: "Number of female and male for users"
      },
      subtitles: [{
          text: "<?php echo date('l \t\h\e jS'); ?>"
@@ -104,25 +245,47 @@ $female=$data[0]['Female'];
          type: "pie",
          yValueFormatString: "#,##\"\"",
          indexLabel: "{label} ({y})",
+         indexLabelPlacement: "inside",
          dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
      }]
  });
  chart.render();
-  
+ 
+ var chart2 = new CanvasJS.Chart("chartContainer2", {
+     animationEnabled: true,
+     //backgroundColor: "#F5DEB3",
+     colorSet: "colors",
+     title: {
+         text: "Number of female and male for Admins"
+     },
+     subtitles: [{
+        text: "<?php echo date('l \t\h\e jS'); ?>"
+     }],
+     data: [{
+        theme: "light2",
+         type: "pie",
+         yValueFormatString: "#,##\"\"",
+        indexLabel: "{label} ({y})",
+        indexLabelPlacement: "inside",
+         
+         dataPoints: <?php echo json_encode($dataPoints2, JSON_NUMERIC_CHECK); ?>
+     }]
+ });
+ chart2.render();
  }
  </script>
 
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <a class="navbar-brand" href="index.html">Yummy Food!</a>
-            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+           
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="POST" action="recherche_client.php">
                 <div class="input-group">
                     <input class="form-control" type="text" name="search" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
-       
-                        <button class="btn btn-primary" type="button" name="btn-search"><i class="fas fa-search"></i></button>
+                    
+                  
                       
                     </div>
                 </div>
@@ -207,10 +370,13 @@ if(isset($_POST["btn-search"])&&isset($_POST["search"])){
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Commandes
                             </a>
-
-                            <a class="nav-link" href="afficherPlat&PromotionB.php">
+                            <a class="nav-link" href="ajout_admin.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Plats et Promotions
+                            Ajouter un admin
+                            </a>
+                            <a class="nav-link" href="recette.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Recettes
                             </a>
                      <br>
                      <br>
@@ -231,19 +397,21 @@ if(isset($_POST["btn-search"])&&isset($_POST["search"])){
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <h1 class="mt-4">Clients</h1>
+                        <h1 class="mt-4">Tables</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="tables.php">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Clients</li>
+                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Tables</li>
                         </ol>
                   
                         <div class="card mb-4">
                             <div class="card-body">
-                               Yummy Food DataBase! 
-                               <div id="chartContainer" class="del" style="height: 370px; width: 200px;"></div>
-                               <form method="POST" action="pdf.php">
-<input  type="submit" name="go" value="Afficher pdf">
+                            <!---afficher pdf-------------------------------------------------------->
+                            <form method="POST" action="pdf.php">
+<button class ="hi2" type="submit" name="go" ><span>Download</span><span>Afficher PDF</span></button>
 </form>
+                               <div id="chartContainer2" class="hi" style="height: 370px; width: 200px;"></div>
+                               <div id="chartContainer" class="del" style="height: 370px; width: 200px;"></div>
+
                             </div>
                             
                         </div>

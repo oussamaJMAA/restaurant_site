@@ -1,39 +1,4 @@
 
-<?php
-
-include_once "../model/reservation.php";
-include "../controller/reservationC.php";
-
-
-
-
-
-
-session_start();
-// On teste si la variable de session existe et contient une valeur
-if(empty($_SESSION['email']))
-{
-    // Si inexistante ou nulle, on redirige vers le formulaire de login
-    header('Location: cnx.php');
- 
-   }
-   else {
-    try
-         {
-    $user_id = $_SESSION['email'];
-    $db = config::getConnexion();
-    $stmt = $db->prepare("SELECT * FROM utilisateur WHERE email=:user_id");
-     $stmt->execute(array(":user_id"=>$user_id));
-     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-
-         }
-         catch(PDOException $e)
-         {
-             $e->getMessage();
-         }		
-     }
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +43,8 @@ if(empty($_SESSION['email']))
 </div>
 <div class="row">
 	<?php
-	require_once "dbconfig.php";
+	require_once "../config.php";
+	$db = config::getConnexion();
 	$select_stmt=$db->prepare("SELECT * FROM menu");	
 	$select_stmt->execute();
 	while($row=$select_stmt->fetch(PDO::FETCH_ASSOC)){
@@ -96,23 +62,20 @@ if(empty($_SESSION['email']))
 			
 					<div class="shop-meta">
 
- 
+
 				<form method="POST" action="ajouter_card.php">
 <!--<a href="shop_cart.php"  class="pull-left"><i class="fa fa-shopping-cart"></i> Add to cart</a>-->
-<input type="submit" name="addtocart" value="Add to Cart" style="background-color: rgba(0,0,0,0); border-color:rgba(0,0,0,0);font-size:18px" class="pull-left"><i class="fa fa-heart-o  pull-left"></i>	
+
+<input type="submit" name="addtocart" value="Add to Cart" style="background-color: rgba(0,0,0,0); border-color:rgba(0,0,0,0);font-size:18px" class="pull-left"><i class="fa fa-heart-o  pull-left"></i>						
 <input type="hidden" value=<?PHP echo $row['id_plat']; ?> name="id_plat">
 <input type="hidden" value=<?PHP echo $row['nom_plat']; ?> name="nom_plat">
 <input type="hidden" value=<?PHP echo $row['prix_plat']; ?> name="prix_plat">
 <input type="hidden" value=<?PHP echo $row['image_plat']; ?> name="image_plat">
-<input type="hidden" value=<?PHP echo $userRow['id']; ?> name="idclient">
-
-
-
 	</form>
 
 
 
-<form method="POST" action="ajouter_wish.php">
+<form method="POST" action="ajoutwish.php">
 <i class="fa fa-heart-o  pull-right"></i><input type="submit" name="addwishl" value="Wishlist" style="background-color: rgba(0,0,0,0); border-color:rgba(0,0,0,0);font-size:18px" class="pull-right">						
 <!--<a href="Wishlist.php" id ="addItem" class="pull-right"><i class="fa fa-heart-o"></i> Wishlist</a>-->
 <input type="hidden" value=<?PHP echo $row['id_plat']; ?> name="id_plat">
@@ -131,8 +94,7 @@ if(empty($_SESSION['email']))
         </div>
 		</div>
 	<?php
-
-}
+	}
 	?>
 
 </div></body>

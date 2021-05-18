@@ -2,7 +2,7 @@
 
 
 include "../controller/UtilisateurC.php";
-
+require_once('recaptcha/recaptchalib.php');
 session_start();
 
 if(isset($_SESSION["email"]))	//check condition user login not direct back to index.php page
@@ -62,8 +62,8 @@ if(isset($_POST['btn_register'])) //button name "btn_register"
               else {
                 $new_password = password_hash($password, PASSWORD_DEFAULT); //encrypt password using password_hash()
             
-                $stmt=$db->prepare("INSERT INTO utilisateur (nom,prenom,email,login,password,gender) VALUES
-                                                                (:uname,:uprenom,:uemail,:ulogin,:upassword,:ugender)"); 		//sql insert query					
+                $stmt=$db->prepare("INSERT INTO utilisateur (nom,prenom,email,login,password,gender,role) VALUES
+                                                                (:uname,:uprenom,:uemail,:ulogin,:upassword,:ugender,:urole)"); 		//sql insert query					
                 
                 $stmt->execute(array(
                     ':uname'	=>$nom, 
@@ -71,7 +71,8 @@ if(isset($_POST['btn_register'])) //button name "btn_register"
                     ':uemail'	=>$email, 
                     ':ulogin'	=>$username,
                     'ugender' =>$gender, 					    			
-                ':upassword'=>$new_password));
+                ':upassword'=>$new_password,
+              ':urole' =>"client"));
                 $loginMsg = "Please verify your email";	
 
                 $result = $stmt->rowCount();
@@ -734,13 +735,19 @@ var password = document.getElementById("pass").value;
 
 
 
-
-
          }
+     
+
+
+
+ 
+
+
 
 
       </script> 
       <style>
+ 
          .error{
             color: #D8000C;
             background-color: #FFBABA;
@@ -839,8 +846,9 @@ var password = document.getElementById("pass").value;
                 <div class="col-md-12">
                 <label>Gender</label>
 <br><br>
-<label class="radio-inline"><input type="radio" name="genre" value="Male"required>Male</label>
-<label class="radio-inline"><input type="radio" name="genre" value="Female"required>Female</label>
+<label class="radio-inline"><input  type="radio" name="genre" value="Male"  required>Male</label>
+<label class="radio-inline"><input  type="radio"  name="genre" value="Female"  required>Female</label>
+
 
 
 

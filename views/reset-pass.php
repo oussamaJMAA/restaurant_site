@@ -131,9 +131,11 @@ if (isset($_POST['submitpass'])) {
  
   try {
     $db= config::getConnexion();
+    $pass1= password_hash($password, PASSWORD_DEFAULT);
     $stmt=$db->prepare("UPDATE utilisateur SET `password`=:upassword WHERE `id`=:uid");
-    $stmt->execute(array(':upassword'=>$password, ':uid'=>$id));
-   
+    $stmt->execute(array(':upassword'=>$pass1, ':uid'=>$id));
+    header("refresh:2; cnx.php");
+
 	$msg = "password changed successfully!";
     $msgType = "success";
   
